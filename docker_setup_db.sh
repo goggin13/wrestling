@@ -1,7 +1,7 @@
 docker exec \                
-  find-home-web \         
+  wrestling-web \         
   bundle exec rake db:create 
                              
 docker exec \                
-  find-home-web \         
+  wrestling-web \         
   undle exec rake db:migrate

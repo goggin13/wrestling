@@ -1,11 +1,11 @@
-if docker ps | grep -o find-home-web ; then
-  docker exec -it find-home-web bash
+if docker ps | grep -o wrestling-web ; then
+  docker exec -it wrestling-web bash
 else
 	docker run \
 		-it \
-		--name find-home-console \
-		-v $HOME/Documents/projects/find-home:/var/www/find-home \
+		--name wrestling-console \
+		-v $HOME/Documents/projects/wrestling:/var/www/wrestling \
 		--rm \
-		goggin13/find-home \
+		goggin13/wrestling \
 		bash
 fi

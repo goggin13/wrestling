@@ -6,7 +6,7 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresq
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get install -y yarn
+RUN apt update && apt install -y --no-install-recommends yarn
 
 RUN gem install rails -v 6.0.2
 
@@ -14,7 +14,7 @@ RUN gem install rails -v 6.0.2
 RUN gem install bundler -v 2.1.2
 
 # Define where our application will live inside the image
-ENV RAILS_ROOT /var/www/find-home
+ENV RAILS_ROOT /var/www/wrestling
 ENV RAILS_ENV development
 
 # Create application home. App server will need the pids dir so just create everything in one shot
@@ -31,7 +31,7 @@ COPY Gemfile Gemfile
 # Finish establishing our Ruby enviornment
 RUN bundle install
 
-ENV GOOGLE_APPLICATION_CREDENTIALS /var/www/find-home/google_key.json
+ENV GOOGLE_APPLICATION_CREDENTIALS /var/www/wrestling/google_key.json
 
 # Copy the Rails application into place
 COPY . .

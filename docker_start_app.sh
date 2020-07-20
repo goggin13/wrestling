@@ -1,7 +1,7 @@
 docker run \
   -it \
   -p 3000:3000 \
-  --name find-home-web \
-  -v $HOME/Documents/projects/find-home:/var/www/find-home \
+  --name wrestling-web \
+  -v $HOME/Documents/projects/wrestling:/var/www/wrestling \
   --rm \
-  goggin13/find-home
+  goggin13/wrestling
