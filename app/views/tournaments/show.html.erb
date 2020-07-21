@@ -19,7 +19,10 @@
       </div>
 
       <div class="marquee">
-        <%= home.name %><br/>vs.<br/><%= away.name %>
+        <div class="wrestlers">
+          <%= home.name %><br/>vs.<br/><%= away.name %>
+        </div>
+        <div class="loading">Saving your bet...</div>
       </div>
 
       <div class="away <%= bet.present? && bet.wager == "away" ? " selected" : "" %>">

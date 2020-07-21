@@ -20,15 +20,22 @@ require('jquery')
 
 $(document).ready(function () {
   $(".tournament-match-up.open .home, .tournament-match-up .away").click(function () {
-    parent = $(this).parent(".tournament-match-up")
-    parent.children(".home, .away").removeClass("selected");
-    $(this).addClass("selected");
+    $this = $(this);
+    parent = $this.parent(".tournament-match-up")
+    if (parent.hasClass("loading")) {
+      return false;
+    } else {
+      parent.addClass("loading");
+    }
 
+    parent.children(".home, .away").removeClass("selected");
     match_id = parent.attr("data-match-id");
     wager = $(this).hasClass("home") ? "home" : "away";
-    console.log("match ", match_id, " bet on ", wager);
+
     $.post("/bets.json", {bet: {match_id: match_id, wager: wager}}).done(function (data) {
       console.log(data);
+      $this.addClass("selected");
+      parent.removeClass("loading")
     });
   });
 });

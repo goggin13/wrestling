@@ -1,6 +1,7 @@
 class TournamentsController < ApplicationController
   before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet]
   skip_before_action :authenticate_user!, only: [:bet]
+  skip_before_action :require_admin!, only: [:bet, :show]
 
   def bet
     email = Base64.decode64(params[:c])

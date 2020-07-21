@@ -46,3 +46,12 @@ body {
 .tournament-match-up .selected {
   border: thick dotted black;
 }
+
+.tournament-match-up .marquee .loading,
+.tournament-match-up.loading .marquee .wrestlers {
+  display: none;
+}
+
+.tournament-match-up.loading .marquee .loading {
+  display: block;
+}
