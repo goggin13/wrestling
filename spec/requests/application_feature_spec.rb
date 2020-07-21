@@ -14,8 +14,8 @@ RSpec.describe "Links", type: :feature do
 
     it "shows the logged in user" do
       visit root_path
-      login(@user.email, "password")
-      expect(page).to have_content("Current user: #{@user.email}")
+      login(@user)
+      expect(page).to have_content(@user.email)
     end
   end
 end

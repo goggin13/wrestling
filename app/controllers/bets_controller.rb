@@ -1,5 +1,7 @@
 class BetsController < ApplicationController
+  before_action :require_admin!
   before_action :set_bet, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_admin!, only: [:create]
 
   # GET /bets
   # GET /bets.json

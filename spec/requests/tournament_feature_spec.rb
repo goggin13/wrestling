@@ -3,10 +3,9 @@ require 'rails_helper'
 RSpec.describe "Tournament", type: :feature do
   before do
     @user = FactoryBot.create(:user)
-    login(@user)
     @tournament = FactoryBot.create(:tournament)
-    home_wrestler = FactoryBot.create(:wrestler)
-    away_wrestler = FactoryBot.create(:wrestler)
+    home_wrestler = FactoryBot.create(:wrestler, name: "Kyle Dake")
+    away_wrestler = FactoryBot.create(:wrestler, name: "Frank Chamizo")
     @match = FactoryBot.create(
       :match,
       tournament: @tournament,
@@ -17,6 +16,10 @@ RSpec.describe "Tournament", type: :feature do
   end
 
   describe "show" do
+    before do
+      login(@user)
+    end
+
     it "shows the two wrestlers for the match" do
       visit tournament_path(@tournament)
       expect(page).to have_css(".home")
@@ -54,6 +57,19 @@ RSpec.describe "Tournament", type: :feature do
 
       expect(page).to have_css(".away.selected")
       expect(page).to_not have_css(".home.selected")
+    end
+  end
+
+  describe "display" do
+    it "shows the current match" do
+      @tournament.update(current_match_id: @match.id)
+      visit tournament_display_path(@tournament)
+      expect(page).to have_content("Kyle Dake vs. Frank Chamizo")
+    end
+
+    it "shows no current match" do
+      visit tournament_display_path(@tournament)
+      expect(page).to have_content("#{@tournament.name} is not in session")
     end
   end
 end

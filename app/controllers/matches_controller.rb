@@ -1,10 +1,16 @@
 class MatchesController < ApplicationController
+  before_action :require_admin!
   before_action :set_match, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_admin!, only: [:show]
 
   # GET /matches
   # GET /matches.json
   def index
     @matches = Match.all
+  end
+
+  def display
+    render :layout => false
   end
 
   # GET /matches/1

@@ -16,12 +16,12 @@
     <% if current_user.present? && current_user.admin? %>
       <% tournament = Tournament.first! %>
       <% User.all.each do |user| %>
-        <%= user_tournament_link(user, tournament) %><br/>
+        <%= user_avatar(user) %> | <%= user_tournament_link(user, tournament) %><br/>
       <% end %>
     <% end %>
 
     <% if current_user.present? %>
-      Current user: <%= current_user.email %> | 
+      <%= user_avatar(current_user) %> <%= current_user.email %> | 
       <%= link_to('Logout', destroy_user_session_path, method: :delete) %> 
     <% end %>
 

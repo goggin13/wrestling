@@ -1,13 +1,31 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet]
-  skip_before_action :authenticate_user!, only: [:bet]
-  skip_before_action :require_admin!, only: [:bet, :show]
+  before_action :require_admin!
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet, :display, :not_in_session]
+  skip_before_action :authenticate_user!, only: [:bet, :display, :not_in_session]
+  skip_before_action :require_admin!, only: [:bet, :show, :display, :not_in_session]
 
   def bet
     email = Base64.decode64(params[:c])
     user = User.where(email: email).first!
     sign_in(user)
     redirect_to tournament_path(@tournament)
+  end
+
+  def display
+    @match = @tournament.current_match
+    if @match.nil?
+      redirect_to tournament_not_in_session_path(@tournament)
+    else
+      @home = @match.home_wrestler
+      @home_bets = @match.home_bets
+      @away = @match.away_wrestler
+      @away_bets = @match.away_bets
+
+      render layout: false
+    end
+  end
+
+  def not_in_session
   end
 
   # GET /tournaments

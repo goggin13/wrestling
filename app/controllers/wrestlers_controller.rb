@@ -1,4 +1,5 @@
 class WrestlersController < ApplicationController
+  before_action :require_admin!
   before_action :set_wrestler, only: [:show, :edit, :update, :destroy]
 
   # GET /wrestlers
