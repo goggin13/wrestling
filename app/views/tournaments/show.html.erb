@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @tournament.name %>
+</h1>
+
+<p>
+  Place your bets
+</p>
+
+<ul class="tournament-match-ups">
+  <% @tournament.matches.each do |match| %>
+    <% home, away = [match.home_wrestler, match.away_wrestler] %>
+
+    <li class="tournament-match-up" data-match-id="<%= match.id %>">
+
+      <div class="home">
+        <%= image_tag(home.image_name, class: "wrestler_matchup") %>
+        <p>
+          <% if home.college_year %>
+            <%= image_tag(home.college_image_name, class: "college_logo") %> '<%= home.college_year - 2000 %>
+          <% end %>
+          <br/>
+          <%= home.bio.gsub("\n", "<br/>").html_safe %>
+        </p>
+      </div>
+
+      <div class="marquee">
+        <%= home.name %><br/>vs.<br/><%= away.name %>
+      </div>
+
+      <div class="away">
+        <%= image_tag(away.image_name, class: "wrestler_matchup") %>
+        <p>
+          <% if away.college_year %>
+            <%= image_tag(away.college_image_name, class: "college_logo") %> <%= away.college_year %>
+          <% end %>
+          <br/>
+          <%= away.bio.gsub("\n", "<br/>").html_safe %>
+        </p>
+      </div>
+
+    </li>
+
+  <% end %>
+</ul>
+
+<hr/>
+<%= link_to 'Edit', edit_tournament_path(@tournament) %> |
+<%= link_to 'Back', tournaments_path %>

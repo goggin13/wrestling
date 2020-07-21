@@ -1,0 +1,42 @@
+<%= form_with(model: match, local: true) do |form| %>
+  <% if match.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+
+      <ul>
+        <% match.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :weight %>
+    <%= form.number_field :weight %>
+  </div>
+
+  <div class="field">
+    <%= form.label :home_wrestler_id %>
+    <%= form.number_field :home_wrestler_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :away_wrestler_id %>
+    <%= form.number_field :away_wrestler_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :winner_id %>
+    <%= form.number_field :winner_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tournament_id %>
+    <%= form.text_field :tournament_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

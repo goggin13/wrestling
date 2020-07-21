@@ -1,0 +1,48 @@
+// Place all the styles related to the Tournaments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.tournament-match-up {
+  clear: both;
+  padding: 10px;
+}
+
+.tournament-match-up .home .wrestler_matchup,
+.tournament-match-up .away .wrestler_matchup {
+  width: 150px;
+  height: 200px;
+}
+
+.tournament-match-up .marquee,
+.tournament-match-up .away,
+.tournament-match-up .home {
+  width: 200px;
+  float: left;
+  text-align: center;
+}
+
+.marquee {
+  text-align: center;
+}
+
+.tournament-match-up .away,
+.tournament-match-up .home {
+  cursor: pointer;
+}
+
+.tournament-match-ups {
+  list-style: none;
+}
+
+.college_logo {
+  width: 25px;
+  height: 25px;
+}
+
+body {
+  margin: 0px;
+}
+
+.tournament-match-up .selected {
+  border: thick dotted black;
+}

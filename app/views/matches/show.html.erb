@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @match.weight %>
+</p>
+
+<p>
+  <strong>Home wrestler:</strong>
+  <%= @match.home_wrestler_id %>
+</p>
+
+<p>
+  <strong>Away wrestler:</strong>
+  <%= @match.away_wrestler_id %>
+</p>
+
+<p>
+  <strong>Winner:</strong>
+  <%= @match.winner_id %>
+</p>
+
+<p>
+  <strong>Tournament:</strong>
+  <%= @match.tournament_id %>
+</p>
+
+<%= link_to 'Edit', edit_match_path(@match) %> |
+<%= link_to 'Back', matches_path %>
