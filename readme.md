@@ -57,3 +57,10 @@ rails generate scaffold Tournament name:string
 rails generate scaffold Wrestler name:string college:string college_year:integer bio:text
 rails generate scaffold Match weight:integer home_wrestler_id:integer away_wrestler_id:integer winner_id:integer tournament:references
 rails generate scaffold Bet name:string user_id:integer references:match wager:string
+
+ToDo
+- prevent many bet requests
+- prevent betting on closed matches (not just ones with winner)
+- page for showing current match up
+- admin page to trigger current match up refresh
+- admin page to close match
