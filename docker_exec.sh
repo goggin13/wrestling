@@ -1,5 +1,7 @@
 if docker ps | grep -o wrestling-web ; then
   docker exec -it wrestling-web bash
+elif docker ps | grep -o wrestling-console ; then
+  docker exec -it wrestling-console bash
 else
 	docker run \
 		-it \

@@ -1,5 +1,13 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet]
+  skip_before_action :authenticate_user!, only: [:bet]
+
+  def bet
+    email = Base64.decode64(params[:c])
+    user = User.where(email: email).first!
+    sign_in(user)
+    redirect_to tournament_path(@tournament)
+  end
 
   # GET /tournaments
   # GET /tournaments.json
@@ -64,7 +72,7 @@ class TournamentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tournament
-      @tournament = Tournament.find(params[:id])
+      @tournament = Tournament.find(params[:id] || params[:tournament_id])
     end
 
     # Only allow a list of trusted parameters through.

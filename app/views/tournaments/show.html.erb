@@ -1,43 +1,29 @@
-<p id="notice"><%= notice %></p>
-
 <h1>
   <%= @tournament.name %>
 </h1>
 
 <p>
-  Place your bets
+  Click a wrestler to place your bets
 </p>
 
 <ul class="tournament-match-ups">
   <% @tournament.matches.each do |match| %>
     <% home, away = [match.home_wrestler, match.away_wrestler] %>
 
-    <li class="tournament-match-up" data-match-id="<%= match.id %>">
+    <li class="tournament-match-up <%= match.winner_id.present? ? "closed" : "open" %>" data-match-id="<%= match.id %>">
 
-      <div class="home">
-        <%= image_tag(home.image_name, class: "wrestler_matchup") %>
-        <p>
-          <% if home.college_year %>
-            <%= image_tag(home.college_image_name, class: "college_logo") %> '<%= home.college_year - 2000 %>
-          <% end %>
-          <br/>
-          <%= home.bio.gsub("\n", "<br/>").html_safe %>
-        </p>
+      <% bet = Bet.where(user: current_user, match: match).first %>
+
+      <div class="home <%= bet.present? && bet.wager == "home" ? " selected" : "" %>">
+        <%= render partial: "wrestler", locals: {wrestler: home} %>
       </div>
 
       <div class="marquee">
         <%= home.name %><br/>vs.<br/><%= away.name %>
       </div>
 
-      <div class="away">
-        <%= image_tag(away.image_name, class: "wrestler_matchup") %>
-        <p>
-          <% if away.college_year %>
-            <%= image_tag(away.college_image_name, class: "college_logo") %> <%= away.college_year %>
-          <% end %>
-          <br/>
-          <%= away.bio.gsub("\n", "<br/>").html_safe %>
-        </p>
+      <div class="away <%= bet.present? && bet.wager == "away" ? " selected" : "" %>">
+        <%= render partial: "wrestler", locals: {wrestler: away} %>
       </div>
 
     </li>

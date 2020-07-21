@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :bets
   resources :matches
   resources :wrestlers
-  resources :tournaments
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :tournaments do
+    get "bet" => "tournaments#bet"
+  end
+
+  root to: "tournaments#index"
 end

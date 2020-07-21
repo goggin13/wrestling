@@ -19,7 +19,7 @@ require('jquery')
 //
 
 $(document).ready(function () {
-  $(".tournament-match-up .home, .tournament-match-up .away").click(function () {
+  $(".tournament-match-up.open .home, .tournament-match-up .away").click(function () {
     parent = $(this).parent(".tournament-match-up")
     parent.children(".home, .away").removeClass("selected");
     $(this).addClass("selected");

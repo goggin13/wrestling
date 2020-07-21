@@ -71,6 +71,6 @@ class BetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bet_params
-      params.require(:bet).permit(:match_id, :wager).merge(user_id: 1)
+      params.require(:bet).permit(:match_id, :wager).merge(user_id: current_user.id)
     end
 end
