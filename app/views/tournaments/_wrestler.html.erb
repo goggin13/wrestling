@@ -1,7 +1,7 @@
 <%= image_tag(wrestler.image_name, class: "wrestler_matchup") %>
 <p>
   <% if wrestler.college_year %>
-    <%= image_tag(wrestler.college_image_name, class: "college_logo") %> '<%= wrestler.college_year - 2000 %>
+    <%= image_tag(wrestler.college_image_name, class: "college_logo") %> '<%= (wrestler.college_year - 2000).to_s.rjust(2, "0") %>
   <% end %>
   <br/>
   <%= wrestler.bio.gsub("\n", "<br/>").html_safe %>
