@@ -5,13 +5,13 @@ RSpec.describe "Match", type: :request do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user, email: "goggin13@gmail.com")
     @tournament = FactoryBot.create(:tournament)
-    home_wrestler = FactoryBot.create(:wrestler)
-    away_wrestler = FactoryBot.create(:wrestler)
+    @home_wrestler = FactoryBot.create(:wrestler)
+    @away_wrestler = FactoryBot.create(:wrestler)
     @match = FactoryBot.create(
       :match,
       tournament: @tournament,
-      home_wrestler: home_wrestler,
-      away_wrestler: away_wrestler,
+      home_wrestler: @home_wrestler,
+      away_wrestler: @away_wrestler,
       winner_id: nil,
     )
 
@@ -37,8 +37,8 @@ RSpec.describe "Match", type: :request do
       json = JSON.parse(response.body)
 
       expect(json["payouts"]).to eq(
-        @user.id => "100",
-        @other_user.id => "-100"
+        @user.id.to_s => 200,
+        @other_user.id.to_s => 0
       )
     end
   end
