@@ -44,10 +44,11 @@
 
 body.display {
   padding: 10px;
-  background-image: url('https://sturdavinci.com/wp-content/uploads/edd/2017/12/Hardcore-Multi-Sport-blank-1_edit.jpg');
-  background-position: center;
+  background-image: image-url("wrestling-background.jpg");
+  background-position: top center;
   background-repeat: no-repeat;
   background-color: black;
   color: white;
   font-weight: bold;
+  padding-top: 50px;
 }
