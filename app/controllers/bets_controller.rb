@@ -26,10 +26,13 @@ class BetsController < ApplicationController
   # POST /bets
   # POST /bets.json
   def create
-    bet = Bet.where(bet_params.slice(:user_id, :match_id)).first
-    Rails.logger.info "DEBUG #{bet_params}"
-    bet.destroy if bet.present?
-    @bet = Bet.new(bet_params)
+    current_bet = Bet.where(bet_params.slice(:user_id, :match_id)).first
+    @bet = if current_bet.present?
+      current_bet.assign_attributes(bet_params)
+      current_bet
+    else
+      Bet.new(bet_params)
+    end
 
     respond_to do |format|
       if @bet.save

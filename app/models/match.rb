@@ -16,4 +16,8 @@ class Match < ApplicationRecord
   def title
     home_wrestler.name + " vs. " + away_wrestler.name
   end
+
+  def open?
+    !closed? && !winner_id.present?
+  end
 end

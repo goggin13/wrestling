@@ -74,5 +74,15 @@ RSpec.describe "Bet", type: :request do
       expect(bet.match_id).to eq(@match.id)
       expect(bet.wager).to eq("home")
     end
+
+    it "doesn't destroy the old bet if a bet fails" do
+      FactoryBot.create(:bet, user_id: @user.id, match: @match, wager: "away")
+      @match.update!(closed: true)
+
+      expect do
+        post "/bets.json", params: {bet: {match_id: @match.id, wager: "home"}}
+        expect(response.status).to eq(422)
+      end.to change(Bet, :count).by(0)
+    end
   end
 end

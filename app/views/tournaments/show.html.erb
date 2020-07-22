@@ -11,7 +11,7 @@
     <% @tournament.matches.each do |match| %>
       <% home, away = [match.home_wrestler, match.away_wrestler] %>
 
-      <li class="tournament-match-up <%= match.winner_id.present? ? "closed" : "open" %>" data-match-id="<%= match.id %>">
+      <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
 
         <% bet = Bet.where(user: current_user, match: match).first %>
 
@@ -20,8 +20,19 @@
         </div>
 
         <div class="marquee">
+          <div class="voting_closed">
+            voting closed
+            <p>
+              <%= image_tag("lock.png", size: "50x50") %><br/>
+            </p>
+          </div>
           <div class="wrestlers">
             <p><%= home.name %><br/>vs.<br/><%= away.name %></p>
+          </div>
+          <div class="voting_closed">
+            <p>
+              <%= image_tag("lock.png", size: "50x50") %><br/>
+            </p>
           </div>
           <div class="loading">Saving your bet...</div>
         </div>

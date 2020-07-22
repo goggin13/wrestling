@@ -19,27 +19,32 @@ require('jquery')
 //
 
 $(document).ready(function () {
-  $(".tournament-match-up.open .home, .tournament-match-up .away").click(function () {
+  $(".tournament-match-up.open .home, .tournament-match-up.open .away").click(function () {
     $this = $(this);
-    parent = $this.parent(".tournament-match-up")
-    if (parent.hasClass("loading")) {
+    $parent = $this.parent(".tournament-match-up")
+    if ($parent.hasClass("loading")) {
       return false;
     } else {
-      parent.addClass("loading");
+      $parent.addClass("loading");
     }
 
-    parent.children(".home, .away").removeClass("selected");
-    match_id = parent.attr("data-match-id");
+    match_id = $parent.attr("data-match-id");
     wager = $(this).hasClass("home") ? "home" : "away";
 
     $.post("/bets.json", {bet: {match_id: match_id, wager: wager}})
       .done(function (data) {
         console.log(data);
+        $parent.children(".home, .away").removeClass("selected");
         $this.addClass("selected");
-        parent.removeClass("loading")
+        $parent.removeClass("loading")
       }).fail(function (data) {
-        console.log("Failed to create");
-        console.log(data);
+        console.log(data.responseJSON);
+        if (data.responseJSON.match[0] == "Must be open for betting") {
+          $parent.children(".tournament-match-up.open .home, .tournament-match-up.open .away").unbind("click");
+          $parent.removeClass("loading")
+          $parent.removeClass("open");
+          $parent.addClass("closed");
+        }
       });
   });
 });
