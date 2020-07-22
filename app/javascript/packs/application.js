@@ -43,3 +43,67 @@ $(document).ready(function () {
       });
   });
 });
+
+
+$(document).ready(function () {
+  if (window.location.pathname.includes("display")) {
+    resetVictoryCheck();
+    setInterval(updateCurrentMatch, 5000);
+  }
+});
+
+function updateCurrentMatch () {
+  matchId = $("body").attr("data-match-id");
+  tournamentId = $("body").attr("data-tournament-id");
+
+  $.getJSON("/tournaments/" + tournamentId + ".json")
+    .done(function (tournament) {
+      if (tournament.current_match_id != matchId) {
+        console.log("fadeOut");
+        $("img:visible, p:visible").fadeOut(5000, function () { 
+          console.log("reload");
+          window.location.reload(true);
+        });
+      }
+    }).fail(function (data) {
+      console.log("ERROR - failed to get tournament data");
+      console.log(data);
+    });
+};
+
+function resetVictoryCheck () {
+  setTimeout(checkForVictory, 5000);  
+};
+
+window.displayResults = function (match) {
+  winner_id = match.winner_id
+  if (match.home_wrestler_id === match.winner_id) {
+    loser_id = match.away_wrestler_id;
+  } else {
+    loser_id = match.home_wrestler_id;
+  }
+
+  $winner = $("#wrestler-" + winner_id);
+  $loser = $("#wrestler-" + loser_id);
+
+  $loser.children(".avatars").fadeOut(2500);
+  $loser.children(".wrestler_avatar").fadeOut(2500, function () {
+    $loser.children(".fatality").fadeIn(5000);
+  });
+};
+
+function checkForVictory () {
+  matchId = $("body").attr("data-match-id");
+
+  $.getJSON("/matches/" + matchId + ".json")
+    .done(function (match) {
+      if (match.winner_id) {
+        displayResults(match);
+      } else {
+        resetVictoryCheck();
+      }
+    }).fail(function (data) {
+      console.log("ERROR - failed to get match data");
+      console.log(data);
+    });
+};

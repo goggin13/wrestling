@@ -1,0 +1,13 @@
+<%= form_with(url: tournament_path(tournament), method: "put") do %>
+
+  <%= select_tag "tournament[current_match_id]", options_from_collection_for_select(
+    tournament.matches,
+    "id",
+    "title",
+    tournament.current_match_id,
+  ), 
+  include_blank: true,
+  onchange: "this.form.submit();" %>
+
+  <%= submit_tag("Set current match") %>
+<% end %>

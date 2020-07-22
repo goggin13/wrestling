@@ -9,8 +9,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="display">
-    <div class="matchup_wrestler left">
+  <body class="display" data-tournament-id="<%= @tournament.id %>" data-match-id="<%= @match.id %>">
+
+    <div class="matchup_wrestler left" id="wrestler-<%= @home.id %>">
+      <div class="fatality"><%= random_fatality %></div>
       <div class="avatars left">
         <% @home_bets.each do |bet| %>
           <%= user_avatar(bet.user, "150x150") %>
@@ -20,13 +22,14 @@
       <p><%= @home.name %></p> 
     </div>
 
-    <div class="matchup_wrestler right">
+    <div class="matchup_wrestler right" id="wrestler-<%= @away.id %>">
+      <div class="fatality"><%= random_fatality %></div>
       <div class="avatars right">
         <% @away_bets.each do |bet| %>
           <%= user_avatar(bet.user, "150x150") %>
         <% end %>
       </div>
-      <%= image_tag(@away.image_name, size: "600x800") %>
+      <%= image_tag(@away.image_name, size: "600x800", class: "wrestler_avatar") %>
       <p><%= @away.name %></p>
     </div>
   </body>

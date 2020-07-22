@@ -1,7 +1,31 @@
 class MatchesController < ApplicationController
   before_action :require_admin!
-  before_action :set_match, only: [:show, :edit, :update, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :destroy, :close, :open, :winner]
   skip_before_action :require_admin!, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show]
+
+  def close
+    @match.update!(closed: true)
+    flash[:notice] = "#{@match.title} closed for voting"
+    redirect_to tournament_administer_path(@match.tournament)
+  end
+
+  def open
+    if @match.winner.present?
+      flash[:notice] = "#{@match.title} cannot be opened while there is a winner"
+    else
+      @match.update!(closed: false)
+      flash[:notice] = "#{@match.title} open for voting"
+    end
+    redirect_to tournament_administer_path(@match.tournament)
+  end
+
+  def winner
+    @match.update!(winner_id: match_params[:winner_id], closed: true)
+    winner = @match.winner.nil? ? "None" : @match.winner.name
+    flash[:notice] = "#{@match.title} winner set to #{winner}"
+    redirect_to tournament_administer_path(@match.tournament)
+  end
 
   # GET /matches
   # GET /matches.json
@@ -70,7 +94,7 @@ class MatchesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_match
-      @match = Match.find(params[:id])
+      @match = Match.find(params[:id] || params[:match_id])
     end
 
     # Only allow a list of trusted parameters through.

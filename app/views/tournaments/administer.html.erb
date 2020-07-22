@@ -1,0 +1,30 @@
+<h1>
+  <%= @tournament.name %>
+</h1>
+
+<%= render partial: "tournament_current_match", locals: {tournament: @tournament} %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Match</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tournament.matches.each do |match| %>
+      <tr>
+      <td>
+        <%= match.title %>
+      </td>
+      <td>
+        <%= render partial: "match_status_form", locals: {match: match} %>
+      </td>
+      <td>
+        <%= render partial: "match_winner_form", locals: {match: match} %>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

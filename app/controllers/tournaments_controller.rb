@@ -1,6 +1,6 @@
 class TournamentsController < ApplicationController
   before_action :require_admin!
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet, :display, :not_in_session]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet, :display, :not_in_session, :administer]
   skip_before_action :authenticate_user!, only: [:bet, :display, :not_in_session]
   skip_before_action :require_admin!, only: [:bet, :show, :display, :not_in_session]
 
@@ -26,6 +26,9 @@ class TournamentsController < ApplicationController
   end
 
   def not_in_session
+  end
+
+  def administer
   end
 
   # GET /tournaments
@@ -69,7 +72,7 @@ class TournamentsController < ApplicationController
   def update
     respond_to do |format|
       if @tournament.update(tournament_params)
-        format.html { redirect_to @tournament, notice: 'Tournament was successfully updated.' }
+        format.html { redirect_to tournament_administer_path(@tournament), notice: 'Tournament was successfully updated.' }
         format.json { render :show, status: :ok, location: @tournament }
       else
         format.html { render :edit }
@@ -96,6 +99,6 @@ class TournamentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tournament_params
-      params.require(:tournament).permit(:name)
+      params.require(:tournament).permit(:name, :current_match_id)
     end
 end

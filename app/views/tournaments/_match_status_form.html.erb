@@ -1,0 +1,11 @@
+<% if !match.closed? %>
+  <%= form_with(url: match_close_path(match), method: "post") do %>
+    <%= submit_tag("Close") %>
+  <% end %>
+<% elsif match.winner.present? %>
+  Closed
+<% else %>
+  <%= form_with(url: match_open_path(match), method: "post") do %>
+    <%= submit_tag("Open") %>
+  <% end %>
+<% end %>
