@@ -11,26 +11,47 @@
 
   <body class="display" data-tournament-id="<%= @tournament.id %>" data-match-id="<%= @match.id %>">
 
+    <div id="leaderboard">
+      <% Leaderboard.new(@tournament).results.each do |rank, users| %>
+        <div class="position">
+          <span "position label"><%= rank.ordinalize %> : <%= number_to_currency(users.first[1] / 100.0) %> </span>
+          <div class="users">
+            <% users.each do |user, payout| %>
+              <%= user_avatar(user, "50x50") %> 
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div id="leaderboard-buffer"></div>
+
     <div class="matchup_wrestler left" id="wrestler-<%= @home.id %>">
-      <div class="fatality"><%= random_fatality %></div>
       <div class="avatars left">
         <% @home_bets.each do |bet| %>
-          <%= user_avatar(bet.user, "150x150") %>
+          <div class="bet">
+            <%= user_avatar(bet.user, "150x150") %>
+            <div class="payout"></div>
+          </div>
         <% end %>
       </div>
       <%= image_tag(@home.image_name, size: "600x800", class: "wrestler_avatar") %><br/>
-      <p><%= @home.name %></p> 
+      <div class="fatality"><%= random_fatality %></div>
+      <p class="wrestler_name"><%= @home.name %></p> 
     </div>
 
     <div class="matchup_wrestler right" id="wrestler-<%= @away.id %>">
-      <div class="fatality"><%= random_fatality %></div>
       <div class="avatars right">
         <% @away_bets.each do |bet| %>
-          <%= user_avatar(bet.user, "150x150") %>
+          <div class="bet">
+            <%= user_avatar(bet.user, "150x150") %>
+            <div class="payout"></div>
+          </div>
         <% end %>
       </div>
+      <div class="fatality"><%= random_fatality %></div>
       <%= image_tag(@away.image_name, size: "600x800", class: "wrestler_avatar") %>
-      <p><%= @away.name %></p>
+      <p class="wrestler_name"><%= @away.name %></p>
     </div>
+
   </body>
 </html>

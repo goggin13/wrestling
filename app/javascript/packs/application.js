@@ -65,7 +65,7 @@ function updateCurrentMatch () {
     .done(function (tournament) {
       if (tournament.current_match_id != matchId) {
         console.log("fadeOut");
-        $("img:visible, p:visible").fadeOut(5000, function () { 
+        $("img:visible, p:visible, div:visible").fadeOut(5000, function () { 
           console.log("reload");
           window.location.reload(true);
         });
@@ -81,6 +81,7 @@ function resetVictoryCheck () {
 };
 
 window.displayResults = function (match) {
+  console.log(match);
   winner_id = match.winner_id
   if (match.home_wrestler_id === match.winner_id) {
     loser_id = match.away_wrestler_id;
@@ -91,9 +92,19 @@ window.displayResults = function (match) {
   $winner = $("#wrestler-" + winner_id);
   $loser = $("#wrestler-" + loser_id);
 
-  $loser.children(".avatars").fadeOut(2500);
+  $loser.children(".wrestler_name").fadeOut(2500);
   $loser.children(".wrestler_avatar").fadeOut(2500, function () {
     $loser.children(".fatality").fadeIn(5000);
+    $.each(match.payouts, function (user_id, payout) {
+      console.log(user_id, " , ", payout);
+      $bet = $(".matchup_wrestler .user_" + user_id).parent(".bet")
+      $bet.children(".payout").html("$" + (payout / 100.0).toFixed(2));
+      if (payout == 0) {
+        $bet.addClass("lost");
+      } else {
+        $bet.addClass("won");
+      }
+    });
   });
 };
 

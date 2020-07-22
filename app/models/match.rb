@@ -20,4 +20,22 @@ class Match < ApplicationRecord
   def open?
     !closed? && !winner_id.present?
   end
+
+  def payouts
+    return {} unless winner.present?
+
+    winning_bet = winner_id == home_wrestler_id ? "home" : "away"
+    losing_bet = winner_id == home_wrestler_id ? "away" : "home"
+
+    number_of_winners = bets.where(wager: winning_bet).count
+    amount_per_loser = number_of_winners > 0 ? 0 : 100
+    amount_in_pot = bets.count * Bet::PER_MATCH
+    amount_per_winner = amount_in_pot / number_of_winners.to_f
+
+    bets.inject({}) do |acc, bet|
+      acc[bet.user_id] = bet.won? ? amount_per_winner : amount_per_loser
+
+      acc
+    end
+  end
 end

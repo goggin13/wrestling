@@ -1,4 +1,5 @@
 class Bet < ApplicationRecord
+  PER_MATCH = 100
   belongs_to :user
   belongs_to :match
   validates_presence_of :match
@@ -14,5 +15,10 @@ class Bet < ApplicationRecord
     if match.present? && match.winner_id.present?
       errors.add(:match, "Match already has a winner")
     end
+  end
+
+  def won?
+    (wager == "home" && match.winner_id == match.home_wrestler_id) ||
+      (wager == "away" && match.winner_id == match.away_wrestler_id)
   end
 end

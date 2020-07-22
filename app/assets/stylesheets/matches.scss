@@ -11,11 +11,9 @@
 }
 
 .matchup_wrestler .left .avatar {
-  float: left;
 }
 
 .matchup_wrestler .right .avatar {
-  float: right;
 }
 
 .matchup_wrestler .avatars {
@@ -51,4 +49,49 @@ body.display {
   color: white;
   font-weight: bold;
   padding-top: 50px;
+}
+
+.fatality {
+  display: none;
+}
+
+.bet {
+  position: relative;
+  text-align: center;
+  font-size: 50px;
+}
+
+.bet.won {
+  color: lightgreen;
+}
+
+.bet.lost {
+  color: maroon;
+}
+
+.bet.won img, .bet.lost img {
+  opacity: 75%;
+}
+
+.bet.lost {
+  color: red;
+}
+
+.payout {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#leaderboard-buffer {
+  clear: both;
+}
+
+#leaderboard .position {
+  border: thin solid white;
+  float: left;
+  margin-right: 20px;
+  padding: 5px;
+  background: black;
 }
