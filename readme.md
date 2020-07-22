@@ -58,13 +58,17 @@ rails generate scaffold Wrestler name:string college:string college_year:integer
 rails generate scaffold Match weight:integer home_wrestler_id:integer away_wrestler_id:integer winner_id:integer tournament:references
 rails generate scaffold Bet name:string user_id:integer references:match wager:string
 
-ToDo
+ToDo - before saturday
+- Solve $.onReady with turbolinks.
+- configurable bet amount in tests
+
+ToDo - before another tournament
+- switch bet from string wager to wager on wrestling (better support brackets later)
+- interface for managing user and wrestler avatars
+- organize images directory
+
 X prevent many bet requests
 X prevent betting on closed matches (not just ones with winner)
 X page for showing current match up
 X admin page to trigger current match up refresh
 X admin page to close match
-- configurable bet amount in tests
-- switch bet from string wager to wager on wrestling (better support brackets later)
-- interface for managing user and wrestler avatars
-- organize images directory
