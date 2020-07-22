@@ -32,10 +32,14 @@ $(document).ready(function () {
     match_id = parent.attr("data-match-id");
     wager = $(this).hasClass("home") ? "home" : "away";
 
-    $.post("/bets.json", {bet: {match_id: match_id, wager: wager}}).done(function (data) {
-      console.log(data);
-      $this.addClass("selected");
-      parent.removeClass("loading")
-    });
+    $.post("/bets.json", {bet: {match_id: match_id, wager: wager}})
+      .done(function (data) {
+        console.log(data);
+        $this.addClass("selected");
+        parent.removeClass("loading")
+      }).fail(function (data) {
+        console.log("Failed to create");
+        console.log(data);
+      });
   });
 });

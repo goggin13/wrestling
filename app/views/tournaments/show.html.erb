@@ -2,40 +2,42 @@
   <%= @tournament.name %>
 </h1>
 
-<p>
+<p id="place_your_bets">
   Click a wrestler to place your bets
 </p>
 
-<ul class="tournament-match-ups">
-  <% @tournament.matches.each do |match| %>
-    <% home, away = [match.home_wrestler, match.away_wrestler] %>
+<div id="center-match-ups">
+  <ul class="tournament-match-ups">
+    <% @tournament.matches.each do |match| %>
+      <% home, away = [match.home_wrestler, match.away_wrestler] %>
 
-    <li class="tournament-match-up <%= match.winner_id.present? ? "closed" : "open" %>" data-match-id="<%= match.id %>">
+      <li class="tournament-match-up <%= match.winner_id.present? ? "closed" : "open" %>" data-match-id="<%= match.id %>">
 
-      <% bet = Bet.where(user: current_user, match: match).first %>
+        <% bet = Bet.where(user: current_user, match: match).first %>
 
-      <div class="home <%= bet.present? && bet.wager == "home" ? " selected" : "" %>">
-        <%= render partial: "wrestler", locals: {wrestler: home} %>
-      </div>
-
-      <div class="marquee">
-        <div class="wrestlers">
-          <%= home.name %><br/>vs.<br/><%= away.name %>
+        <div class="home <%= bet.present? && bet.wager == "home" ? " selected" : "" %>">
+          <%= render partial: "wrestler", locals: {wrestler: home} %>
         </div>
-        <div class="loading">Saving your bet...</div>
-      </div>
 
-      <div class="away <%= bet.present? && bet.wager == "away" ? " selected" : "" %>">
-        <%= render partial: "wrestler", locals: {wrestler: away} %>
-      </div>
+        <div class="marquee">
+          <div class="wrestlers">
+            <p><%= home.name %><br/>vs.<br/><%= away.name %></p>
+          </div>
+          <div class="loading">Saving your bet...</div>
+        </div>
 
-    </li>
+        <div class="away <%= bet.present? && bet.wager == "away" ? " selected" : "" %>">
+          <%= render partial: "wrestler", locals: {wrestler: away} %>
+        </div>
 
+      </li>
+
+    <% end %>
+  </ul>
+
+  <% if current_user.admin? %>
+    <hr/>
+    <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
+    <%= link_to 'Back', tournaments_path %>
   <% end %>
-</ul>
-
-<% if current_user.admin? %>
-  <hr/>
-  <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
-  <%= link_to 'Back', tournaments_path %>
-<% end %>
+</div>

@@ -59,5 +59,20 @@ RSpec.describe "Bet", type: :request do
       expect(bet.match_id).to eq(@match.id)
       expect(bet.wager).to eq("home")
     end
+
+    it "accepts a second bet by the same user" do
+      other_match = FactoryBot.create(:match, tournament: @tournament, winner_id: nil)
+      FactoryBot.create(:bet, user_id: @user.id, match: other_match)
+
+      expect do
+        post "/bets.json", params: {bet: {match_id: @match.id, wager: "home"}}
+        expect(response.status).to eq(201)
+      end.to change(Bet, :count).by(1)
+
+      bet = Bet.last!
+      expect(bet.user_id).to eq(@user.id)
+      expect(bet.match_id).to eq(@match.id)
+      expect(bet.wager).to eq("home")
+    end
   end
 end

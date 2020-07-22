@@ -20,6 +20,7 @@
   float: left;
   text-align: center;
   border: thick solid white;
+  padding-top: 25px;
 }
 
 .marquee {
@@ -55,4 +56,34 @@ body {
 
 .tournament-match-up.loading .marquee .loading {
   display: block;
+}
+
+#place_your_bets {
+  font-size: 28px;
+  text-align: center;
+}
+
+.tournament-match-up p {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+h1 {
+  text-align: center;
+  padding: 30px;
+  background: black;
+  color: white;
+}
+
+#center-match-ups { 
+  text-align: center;
+}
+
+.tournament-match-ups {
+  display: inline-block;
+}
+
+.marquee p {
+  font-size: 25px;
+  line-height: 44px;
 }

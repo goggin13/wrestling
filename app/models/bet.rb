@@ -2,8 +2,9 @@ class Bet < ApplicationRecord
   belongs_to :user
   belongs_to :match
   validates_presence_of :match
+  validates_presence_of :user
   validate :match_must_be_open
-  validates_uniqueness_of :user_id, :match_id
+  validates :user_id, uniqueness: { scope: :match_id }
 
   def match_must_be_open
     if match.present? && match.closed?

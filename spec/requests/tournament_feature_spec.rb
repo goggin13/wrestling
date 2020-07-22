@@ -64,7 +64,8 @@ RSpec.describe "Tournament", type: :feature do
     it "shows the current match" do
       @tournament.update(current_match_id: @match.id)
       visit tournament_display_path(@tournament)
-      expect(page).to have_content("Kyle Dake vs. Frank Chamizo")
+      expect(page).to have_content("Kyle Dake")
+      expect(page).to have_content("Frank Chamizo")
     end
 
     it "shows no current match" do
