@@ -59,7 +59,6 @@ rails generate scaffold Match weight:integer home_wrestler_id:integer away_wrest
 rails generate scaffold Bet name:string user_id:integer references:match wager:string
 
 ToDo - before saturday
-- configurable bet amount in tests
 
 ToDo - before another tournament
 - switch bet from string wager to wager on wrestling (better support brackets later)
@@ -71,3 +70,4 @@ X prevent betting on closed matches (not just ones with winner)
 X page for showing current match up
 X admin page to trigger current match up refresh
 X admin page to close match
+X configurable bet amount in tests

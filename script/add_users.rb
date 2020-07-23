@@ -1,4 +1,3 @@
-User.create!({:email => "goggin13@gmail.com", :password => "111111", :password_confirmation => "111111" })
 [
   "patsqueglia@gmail.com",
   "rudolphocisneros@gmail.com",
@@ -9,5 +8,10 @@ User.create!({:email => "goggin13@gmail.com", :password => "111111", :password_c
   "meganbfallon@gmail.com",
 
 ].each do |email|
-  User.create!({:email => email, :password => "111111", :password_confirmation => "111111" })
+  password = SecureRandom.hex(8)
+  User.create!(
+		:email => email,
+    :password => password,
+    :password_confirmation => password
+  )
 end
