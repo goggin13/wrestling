@@ -34,7 +34,7 @@ wrestlers = [
   {
     name: "Roman Bravo Young",
     college: "Penn State University",
-    college_year: 2021,
+    college_year: 2022,
     bio: "NCAA all american as a true freshman\n5 seed @ cancelled 2020 NCAAs",
   },
   {
