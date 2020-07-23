@@ -28,7 +28,7 @@ class Match < ApplicationRecord
     losing_bet = winner_id == home_wrestler_id ? "away" : "home"
 
     number_of_winners = bets.where(wager: winning_bet).count
-    amount_per_loser = number_of_winners > 0 ? 0 : 100
+    amount_per_loser = number_of_winners > 0 ? 0 : Bet::PER_MATCH
     amount_in_pot = bets.count * Bet::PER_MATCH
     amount_per_winner = amount_in_pot / number_of_winners.to_f
 

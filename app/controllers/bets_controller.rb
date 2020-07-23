@@ -6,7 +6,7 @@ class BetsController < ApplicationController
   # GET /bets
   # GET /bets.json
   def index
-    @bets = Bet.all
+    @bets = Bet.all.order(:match_id)
   end
 
   # GET /bets/1

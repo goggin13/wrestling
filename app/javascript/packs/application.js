@@ -18,7 +18,7 @@ require('jquery')
 // const imagePath = (name) => images(name, true)
 //
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function () {
   $(".tournament-match-up.open .home, .tournament-match-up.open .away").click(function () {
     $this = $(this);
     $parent = $this.parent(".tournament-match-up")
@@ -50,7 +50,7 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function () {
   if (window.location.pathname.includes("display")) {
     resetVictoryCheck();
     setInterval(updateCurrentMatch, 5000);

@@ -27,7 +27,7 @@ RSpec.describe "Match", type: :model do
 
       @match.update!(winner: @home_wrestler)
       expect(@match.payouts).to eq(
-        @user.id => 200,
+        @user.id => Bet::PER_MATCH * 2,
         @other_user.id => 0
       )
     end
@@ -38,8 +38,8 @@ RSpec.describe "Match", type: :model do
 
       @match.update!(winner: @home_wrestler)
       expect(@match.payouts).to eq(
-        @user.id => 100,
-        @other_user.id => 100
+        @user.id => Bet::PER_MATCH,
+        @other_user.id => Bet::PER_MATCH,
       )
     end
 
@@ -49,8 +49,8 @@ RSpec.describe "Match", type: :model do
 
       @match.update!(winner: @home_wrestler)
       expect(@match.payouts).to eq(
-        @user.id => 100,
-        @other_user.id => 100
+        @user.id => Bet::PER_MATCH,
+        @other_user.id => Bet::PER_MATCH,
       )
     end
   end

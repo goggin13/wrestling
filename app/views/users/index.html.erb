@@ -1,0 +1,21 @@
+<h1>Tournaments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user_avatar(user) %></td>
+        <td><%= user.email %></td>
+        <td><%= user_tournament_link(user, @tournament) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</ul>

@@ -59,7 +59,6 @@ rails generate scaffold Match weight:integer home_wrestler_id:integer away_wrest
 rails generate scaffold Bet name:string user_id:integer references:match wager:string
 
 ToDo - before saturday
-- Solve $.onReady with turbolinks.
 - configurable bet amount in tests
 
 ToDo - before another tournament

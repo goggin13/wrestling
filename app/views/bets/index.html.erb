@@ -16,9 +16,8 @@
   <tbody>
     <% @bets.each do |bet| %>
       <tr>
-        <td><%= bet.name %></td>
-        <td><%= bet.user_id %></td>
-        <td><%= bet.references %></td>
+        <td><%= user_avatar(bet.user) %></td>
+        <td><%= bet.match.title %></td>
         <td><%= bet.wager %></td>
         <td><%= link_to 'Show', bet %></td>
         <td><%= link_to 'Edit', edit_bet_path(bet) %></td>

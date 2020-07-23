@@ -20,7 +20,7 @@ RSpec.describe "Leaderboard", type: :model do
       @match_one.update!(winner: @match_one.home_wrestler)
       @match_two.update!(winner: @match_two.home_wrestler)
       expect(Leaderboard.new(@tournament).results).to eq(
-        1 => [[@user, 400]],
+        1 => [[@user, Bet::PER_MATCH * 4]],
         2 => [[@other_user, 0]]
       )
     end
@@ -34,7 +34,7 @@ RSpec.describe "Leaderboard", type: :model do
       @match_one.update!(winner: @match_one.home_wrestler)
       @match_two.update!(winner: @match_two.home_wrestler)
       expect(Leaderboard.new(@tournament).results).to eq(
-        1 => [[@other_user, 200], [@user, 200]],
+        1 => [[@other_user, Bet::PER_MATCH * 2], [@user, Bet::PER_MATCH * 2]],
       )
     end
   end

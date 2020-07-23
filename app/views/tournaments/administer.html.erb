@@ -15,15 +15,18 @@
   <tbody>
     <% @tournament.matches.each do |match| %>
       <tr>
-      <td>
-        <%= match.title %>
-      </td>
-      <td>
-        <%= render partial: "match_status_form", locals: {match: match} %>
-      </td>
-      <td>
-        <%= render partial: "match_winner_form", locals: {match: match} %>
-      </td>
+				<td>
+					<%= match.title %>
+				</td>
+				<td>
+					<%= render partial: "match_status_form", locals: {match: match} %>
+				</td>
+				<td>
+					<%= render partial: "match_winner_form", locals: {match: match} %>
+				</td>
+				<td>
+					<%= match.bets.count %> bets placed
+				</td>
       </tr>
     <% end %>
   </tbody>

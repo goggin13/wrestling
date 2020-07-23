@@ -37,7 +37,7 @@ RSpec.describe "Match", type: :request do
       json = JSON.parse(response.body)
 
       expect(json["payouts"]).to eq(
-        @user.id.to_s => 200,
+        @user.id.to_s => Bet::PER_MATCH * 2,
         @other_user.id.to_s => 0
       )
     end
