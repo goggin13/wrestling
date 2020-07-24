@@ -63,7 +63,9 @@ function updateCurrentMatch () {
 
   $.getJSON("/tournaments/" + tournamentId + ".json")
     .done(function (tournament) {
-      if (tournament.current_match_id != matchId) {
+      if (tournament.current_match_id == null && matchId == -1) {
+        return false;
+      } else if (tournament.current_match_id != matchId) {
         console.log("fadeOut");
         $("img:visible, p:visible, div:visible").fadeOut(5000, function () { 
           console.log("reload");
@@ -110,6 +112,9 @@ window.displayResults = function (match) {
 
 function checkForVictory () {
   matchId = $("body").attr("data-match-id");
+  if (matchId == -1) {
+    return false;
+  }
 
   $.getJSON("/matches/" + matchId + ".json")
     .done(function (match) {

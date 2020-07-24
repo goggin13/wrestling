@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def random_fatality
-    id = (1..20).to_a.shuffle.first
+    id = (1..28).to_a.shuffle.first
     image_tag("fatalaties/#{id}.gif")
   end
 end

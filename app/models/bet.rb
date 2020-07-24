@@ -1,5 +1,5 @@
 class Bet < ApplicationRecord
-  PER_MATCH = 10
+  PER_MATCH = 100
   belongs_to :user
   belongs_to :match
   validates_presence_of :match

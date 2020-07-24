@@ -1,3 +1,30 @@
-<h1>
-  <%= @tournament.name %> is not in session
-</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wrestling</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="display" data-tournament-id="<%= @tournament.id %>">
+
+    <div id="leaderboard">
+      <% Leaderboard.new(@tournament).results.each do |rank, users| %>
+        <div class="position">
+          <span "position label"><%= rank.ordinalize %> : <%= number_to_currency(users.first[1] / 100.0) %> </span>
+          <div class="users">
+            <% users.each do |user, payout| %>
+              <%= user_avatar(user, "50x50") %> 
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div id="leaderboard-buffer"></div>
+
+
+  </body>
+</html>

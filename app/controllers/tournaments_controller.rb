@@ -1,7 +1,7 @@
 class TournamentsController < ApplicationController
   before_action :require_admin!
   before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet, :display, :not_in_session, :administer]
-  skip_before_action :authenticate_user!, only: [:bet, :display, :not_in_session]
+  skip_before_action :authenticate_user!, only: [:bet, :show, :display, :not_in_session]
   skip_before_action :require_admin!, only: [:bet, :show, :display, :not_in_session]
 
   def bet
@@ -13,16 +13,14 @@ class TournamentsController < ApplicationController
 
   def display
     @match = @tournament.current_match
-    if @match.nil?
-      redirect_to tournament_not_in_session_path(@tournament)
-    else
+    if @match.present?
       @home = @match.home_wrestler
       @home_bets = @match.home_bets
       @away = @match.away_wrestler
       @away_bets = @match.away_bets
-
-      render layout: false
     end
+
+    render layout: false
   end
 
   def not_in_session

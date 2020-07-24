@@ -9,7 +9,14 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="display" data-tournament-id="<%= @tournament.id %>" data-match-id="<%= @match.id %>">
+  <body 
+    class="display" 
+    data-tournament-id="<%= @tournament.id %>" 
+    data-match-id="<%= @match.present? ? @match.id : -1 %>">
+
+    <% if !@match.present? %>
+      <h1><%= @tournament.name %> is not in session</h1>
+    <% end %>
 
     <div id="leaderboard">
       <% Leaderboard.new(@tournament).results.each do |rank, users| %>
@@ -25,33 +32,35 @@
     </div>
     <div id="leaderboard-buffer"></div>
 
-    <div class="matchup_wrestler left" id="wrestler-<%= @home.id %>">
-      <div class="avatars left">
-        <% @home_bets.each do |bet| %>
-          <div class="bet">
-            <%= user_avatar(bet.user, "150x150") %>
-            <div class="payout"></div>
-          </div>
-        <% end %>
+    <% if @match.present? %>
+      <div class="matchup_wrestler left" id="wrestler-<%= @home.id %>">
+        <div class="avatars left">
+          <% @home_bets.each do |bet| %>
+            <div class="bet">
+              <%= user_avatar(bet.user, "150x150") %>
+              <div class="payout"></div>
+            </div>
+          <% end %>
+        </div>
+        <%= image_tag(@home.image_name, size: "600x800", class: "wrestler_avatar") %><br/>
+        <div class="fatality"><%= random_fatality %></div>
+        <p class="wrestler_name"><%= @home.name %></p> 
       </div>
-      <%= image_tag(@home.image_name, size: "600x800", class: "wrestler_avatar") %><br/>
-      <div class="fatality"><%= random_fatality %></div>
-      <p class="wrestler_name"><%= @home.name %></p> 
-    </div>
 
-    <div class="matchup_wrestler right" id="wrestler-<%= @away.id %>">
-      <div class="avatars right">
-        <% @away_bets.each do |bet| %>
-          <div class="bet">
-            <%= user_avatar(bet.user, "150x150") %>
-            <div class="payout"></div>
-          </div>
-        <% end %>
+      <div class="matchup_wrestler right" id="wrestler-<%= @away.id %>">
+        <div class="avatars right">
+          <% @away_bets.each do |bet| %>
+            <div class="bet">
+              <%= user_avatar(bet.user, "150x150") %>
+              <div class="payout"></div>
+            </div>
+          <% end %>
+        </div>
+        <div class="fatality"><%= random_fatality %></div>
+        <%= image_tag(@away.image_name, size: "600x800", class: "wrestler_avatar") %>
+        <p class="wrestler_name"><%= @away.name %></p>
       </div>
-      <div class="fatality"><%= random_fatality %></div>
-      <%= image_tag(@away.image_name, size: "600x800", class: "wrestler_avatar") %>
-      <p class="wrestler_name"><%= @away.name %></p>
-    </div>
+    <% end %>
 
   </body>
 </html>
