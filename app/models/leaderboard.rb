@@ -18,6 +18,13 @@ class Leaderboard
       last_payout = payout
     end
 
+    if @tournament.complete?
+      per_user_tournament_bonus = Bet::TOURNAMENT_BONUS / results[1].length.to_f
+      results[1].map! do |user_id, payout|
+        [user_id, payout + per_user_tournament_bonus]
+      end
+    end
+
     results
   end
 

@@ -27,6 +27,7 @@ class TournamentsController < ApplicationController
   end
 
   def administer
+    @users = User.all
   end
 
   # GET /tournaments

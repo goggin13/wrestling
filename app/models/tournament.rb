@@ -6,4 +6,8 @@ class Tournament < ApplicationRecord
       Match.find(current_match_id)
     end
   end
+
+  def complete?
+    matches.where("winner_id is not null").count == matches.count
+  end
 end

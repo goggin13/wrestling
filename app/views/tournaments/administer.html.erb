@@ -8,7 +8,10 @@
   <thead>
     <tr>
       <th>Match</th>
-      <th colspan="3"></th>
+      <th>Betting</th>
+      <th>Winner</th>
+      <th>Placed Bets</th>
+      <th>Awaiting Bets</th>
     </tr>
   </thead>
 
@@ -25,7 +28,17 @@
 					<%= render partial: "match_winner_form", locals: {match: match} %>
 				</td>
 				<td>
-					<%= match.bets.count %> bets placed
+          <% match.bets.each do |bet| %>
+            <%= user_avatar(bet.user,  "25x25") %>
+          <% end %>
+				</td>
+				<td>
+          <% bet_user_ids = match.bets.map(&:user_id) %>
+          <% @users.each do |user| %>
+            <% unless bet_user_ids.include?(user.id) %>
+              <%= user_avatar(user,  "25x25") %>
+            <% end %>
+          <% end %>
 				</td>
       </tr>
     <% end %>
