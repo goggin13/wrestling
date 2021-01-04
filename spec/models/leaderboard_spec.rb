@@ -71,8 +71,8 @@ RSpec.describe "Leaderboard", type: :model do
 
       expect(Leaderboard.new(@tournament).results).to eq(
         1 => [
-          [@other_user, (Bet::PER_MATCH * 3) + (Bet::TOURNAMENT_BONUS / 2)],
-          [@user, (Bet::PER_MATCH * 3) + (Bet::TOURNAMENT_BONUS / 2)],
+          [@other_user, (Bet::PER_MATCH * 3) + (Bet::TOURNAMENT_BONUS / 2.0)],
+          [@user, (Bet::PER_MATCH * 3) + (Bet::TOURNAMENT_BONUS / 2.0)],
         ]
       )
     end
