@@ -1,4 +1,4 @@
-<%= image_tag(wrestler.image_name, class: "wrestler_matchup") %>
+<%= avatar(wrestler, size: "150x200") %>
 <p>
   <% if wrestler.college_year %>
     <%= image_tag(wrestler.college_image_name, class: "college_logo") %> '<%= (wrestler.college_year - 2000).to_s.rjust(2, "0") %>

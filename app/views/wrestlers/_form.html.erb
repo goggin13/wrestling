@@ -1,4 +1,4 @@
-<%= form_with(model: wrestler, local: true) do |form| %>
+<%= form_with(model: wrestler, local: true, multipart: true) do |form| %>
   <% if wrestler.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(wrestler.errors.count, "error") %> prohibited this wrestler from being saved:</h2>
@@ -14,6 +14,12 @@
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= avatar(wrestler) %>
+    <%= form.label :avatar %>
+    <%= form.file_field :avatar %>
   </div>
 
   <div class="field">

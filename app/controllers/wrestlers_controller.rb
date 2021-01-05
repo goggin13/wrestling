@@ -70,6 +70,6 @@ class WrestlersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def wrestler_params
-      params.require(:wrestler).permit(:name, :college, :college_year, :bio)
+      params.require(:wrestler).permit(:name, :college, :college_year, :bio, :avatar)
     end
 end

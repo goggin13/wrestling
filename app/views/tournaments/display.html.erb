@@ -42,7 +42,7 @@
             </div>
           <% end %>
         </div>
-        <%= image_tag(@home.image_name, size: "600x800", class: "wrestler_avatar") %><br/>
+        <%= avatar(@home, size: "600x800", class: "wrestler_avatar") %><br/>
         <div class="fatality"><%= random_fatality %></div>
         <p class="wrestler_name"><%= @home.name %></p> 
       </div>
@@ -57,7 +57,7 @@
           <% end %>
         </div>
         <div class="fatality"><%= random_fatality %></div>
-        <%= image_tag(@away.image_name, size: "600x800", class: "wrestler_avatar") %>
+        <%= avatar(@away, size: "600x800", class: "wrestler_avatar") %><br/>
         <p class="wrestler_name"><%= @away.name %></p>
       </div>
     <% end %>

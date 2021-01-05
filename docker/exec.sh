@@ -6,6 +6,7 @@ else
 	docker run \
 		-it \
     -e RAILS_ENV=test \
+    --env-file .aws \
     -p 3000:3000 \
 		--name wrestling-console \
 		-v $HOME/Documents/projects/wrestling:/var/www/wrestling \

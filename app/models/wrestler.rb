@@ -1,8 +1,5 @@
 class Wrestler < ApplicationRecord
-
-  def image_name
-    name.downcase.gsub(" ", "_") + ".png"
-  end
+  has_one_attached :avatar
 
   def college_image_name
     college.downcase.gsub(" ", "_") + ".png"

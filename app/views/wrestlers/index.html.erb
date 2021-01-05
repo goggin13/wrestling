@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
+      <th colspan="2">Name</th>
       <th>College</th>
       <th>College year</th>
       <th>Bio</th>
@@ -17,6 +17,7 @@
     <% @wrestlers.each do |wrestler| %>
       <tr>
         <td><%= wrestler.name %></td>
+        <td><%= avatar(wrestler) %></td>
         <td><%= wrestler.college %></td>
         <td><%= wrestler.college_year %></td>
         <td><%= wrestler.bio %></td>

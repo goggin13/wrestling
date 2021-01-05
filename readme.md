@@ -1,9 +1,10 @@
 Wrestling Gambling App
 
 ToDo - before another tournament
+- interface for managing wrestlers and wrestler avatars
+  https://devcenter.heroku.com/articles/paperclip-s3
 - switch bet from string wager to wager on wrestling (better support brackets later)
 - interface for managing users and user avatars
-- interface for managing wrestlers and wrestler avatars
 - organize images directory
 
 # Setting up development
