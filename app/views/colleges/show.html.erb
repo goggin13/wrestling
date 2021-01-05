@@ -1,0 +1,12 @@
+<h1>
+  <%= @college.name %>
+</h1>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= college_logo(@college) %>
+</p>
+
+<%= link_to 'Edit', edit_college_path(@college) %> |
+<%= link_to 'Back', colleges_path %>

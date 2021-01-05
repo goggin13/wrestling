@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :colleges
   devise_for :users
   resources :users, only: [:index]
   resources :bets

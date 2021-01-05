@@ -6,15 +6,13 @@
   <%= avatar(@wrestler) %>
 </p>
 
-<p>
-  <strong>College:</strong>
-  <%= @wrestler.college %>
-</p>
-
-<p>
-  <strong>College year:</strong>
-  <%= @wrestler.college_year %>
-</p>
+<% if @wrestler.college.present? %>
+  <p>
+    <%= @wrestler.college_year %>
+    <%= college_logo(@wrestler.college) %>
+    <%= @wrestler.college.name %>
+  </p>
+<% end %>
 
 <p>
   <strong>Bio:</strong>

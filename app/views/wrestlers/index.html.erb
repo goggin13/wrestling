@@ -1,6 +1,5 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Wrestlers</h1>
+<p id="notice"><%= notice %></p>
 
 <%= link_to 'New Wrestler', new_wrestler_path %>
 <br>
@@ -21,7 +20,7 @@
       <tr>
         <td><%= wrestler.name %></td>
         <td><%= avatar(wrestler) %></td>
-        <td><%= wrestler.college %></td>
+        <td><%= college_logo(wrestler.college) %></td>
         <td><%= wrestler.college_year %></td>
         <td><%= wrestler.bio %></td>
         <td><%= link_to 'Show', wrestler %></td>
