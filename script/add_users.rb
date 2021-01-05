@@ -1,3 +1,13 @@
+exit unless Rails.env.development?
+
+User.destroy_all
+
+User.create!(
+  :email => "goggin13@gmail.com",
+  :password => "password",
+  :password_confirmation => "password",
+)
+
 [
   "patsqueglia@gmail.com",
   "rudolphocisneros@gmail.com",
@@ -15,3 +25,5 @@
     :password_confirmation => password
   )
 end
+
+puts "Added #{User.count} users"

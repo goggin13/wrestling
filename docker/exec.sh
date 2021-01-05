@@ -5,6 +5,7 @@ elif docker ps | grep -o wrestling-console ; then
 else
 	docker run \
 		-it \
+    -e RAILS_ENV=test \
     -p 3000:3000 \
 		--name wrestling-console \
 		-v $HOME/Documents/projects/wrestling:/var/www/wrestling \
