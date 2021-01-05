@@ -7,7 +7,7 @@ module WrestlersHelper
     if wrestler.avatar.attached?
       image_tag wrestler.avatar.variant(resize_to_limit: [width, height]), options
     else
-      image_tag "default_wrestler_avatar.png", options.merge(size: size)
+      image_tag "default_wrestler_avatar.png", options
     end
   end
 end
