@@ -1,6 +1,7 @@
 class MatchesController < ApplicationController
   before_action :require_admin!
   before_action :set_match, only: [:show, :edit, :update, :destroy, :close, :open, :winner]
+  before_action :set_form_variables, only: [:edit, :new]
   skip_before_action :require_admin!, only: [:show]
   skip_before_action :authenticate_user!, only: [:show]
 
@@ -100,5 +101,10 @@ class MatchesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def match_params
       params.require(:match).permit(:weight, :home_wrestler_id, :away_wrestler_id, :winner_id, :tournament_id)
+    end
+
+    def set_form_variables
+      @tournaments = Tournament.order("created_at DESC").all
+      @wrestlers = Wrestler.order("name").all
     end
 end
