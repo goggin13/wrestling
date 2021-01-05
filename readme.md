@@ -4,7 +4,6 @@ ToDo - before another tournament
 - interface for managing users and user avatars
 - make fatalaties an associated object w/avatar
 - switch bet from string wager to wager on wrestling (better support brackets later)
-- organize images directory
 
 - make colleges an associated object w/avatar
     https://www.sportslogos.net/teams/list_by_league/85/National_Collegiate_Athletic_Assoc/NCAA/logos/
