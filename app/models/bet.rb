@@ -1,6 +1,7 @@
 class Bet < ApplicationRecord
   PER_MATCH = 175
-  TOURNAMENT_BONUS = 125 * 7
+  NUM_BETTORS = 7
+  TOURNAMENT_BONUS = 125 * NUM_BETTORS
   belongs_to :user
   belongs_to :match
   validates_presence_of :match
