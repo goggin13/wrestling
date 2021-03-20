@@ -16,7 +16,7 @@
   </thead>
 
   <tbody>
-    <% @tournament.matches.each do |match| %>
+    <% @tournament.matches.order("weight ASC").each do |match| %>
       <tr>
 				<td>
 					<%= match.title %>

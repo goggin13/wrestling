@@ -8,7 +8,7 @@
 
 <div id="center-match-ups">
   <ul class="tournament-match-ups">
-    <% @tournament.matches.each do |match| %>
+    <% @tournament.matches.order("weight ASC").each do |match| %>
       <% home, away = [match.home_wrestler, match.away_wrestler] %>
 
       <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
