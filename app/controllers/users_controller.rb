@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
-		@tournament = Tournament.first!
+		@tournament = Tournament.last!
   end
 end
