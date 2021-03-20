@@ -29,9 +29,9 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
 # Finish establishing our Ruby enviornment
-RUN bundle install
+# RUN bundle install
 
 # Copy the Rails application into place
-COPY . .
+# COPY . .
 
-CMD bundle && bundle exec rails s -b 0.0.0.0
+# CMD bundle && bundle exec rails s -b 0.0.0.0
