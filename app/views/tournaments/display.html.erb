@@ -37,7 +37,7 @@
         <div class="avatars left">
           <% @home_bets.each do |bet| %>
             <div class="bet">
-              <%= user_avatar(bet.user, "150x150") %>
+              <%= user_avatar(bet.user, "100x100") %>
               <div class="payout"></div>
             </div>
           <% end %>
@@ -51,7 +51,7 @@
         <div class="avatars right">
           <% @away_bets.each do |bet| %>
             <div class="bet">
-              <%= user_avatar(bet.user, "150x150") %>
+              <%= user_avatar(bet.user, "100x100") %>
               <div class="payout"></div>
             </div>
           <% end %>
