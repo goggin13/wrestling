@@ -1,7 +1,7 @@
 <%= form_with(url: tournament_path(tournament), method: "put") do %>
 
   <%= select_tag "tournament[current_match_id]", options_from_collection_for_select(
-    tournament.matches,
+    tournament.matches.order("weight ASC"),
     "id",
     "title",
     tournament.current_match_id,
