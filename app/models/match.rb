@@ -3,7 +3,7 @@ class Match < ApplicationRecord
   belongs_to :home_wrestler, class_name: "Wrestler"
   belongs_to :away_wrestler, class_name: "Wrestler"
   belongs_to :winner, class_name: "Wrestler", optional: true
-  has_many :bets
+  has_many :bets, dependent: :destroy
 
   def home_bets
     bets.where(wager: "home")
@@ -27,13 +27,8 @@ class Match < ApplicationRecord
     winning_bet = winner_id == home_wrestler_id ? "home" : "away"
     losing_bet = winner_id == home_wrestler_id ? "away" : "home"
 
-    number_of_winners = bets.where(wager: winning_bet).count
-    amount_per_loser = number_of_winners > 0 ? 0 : Bet::PER_MATCH
-    amount_in_pot = bets.count * Bet::PER_MATCH
-    amount_per_winner = amount_in_pot / number_of_winners.to_f
-
     bets.inject({}) do |acc, bet|
-      acc[bet.user_id] = bet.won? ? amount_per_winner : amount_per_loser
+      acc[bet.user_id] = bet.won? ? Bet::PER_MATCH : 0
 
       acc
     end

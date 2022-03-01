@@ -21,7 +21,7 @@
     <div id="leaderboard">
       <% Leaderboard.new(@tournament).results.each do |rank, users| %>
         <div class="position">
-          <span "position label"><%= rank.ordinalize %> : <%= number_to_currency(users.first[1] / 100.0) %> </span>
+          <span "position label"><%= rank.ordinalize %> : <%= users.first[1] %> </span>
           <div class="users">
             <% users.each do |user, payout| %>
               <%= user_avatar(user, "50x50") %> 

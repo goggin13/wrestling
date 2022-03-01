@@ -27,23 +27,23 @@ RSpec.describe "Match", type: :model do
 
       @match.update!(winner: @home_wrestler)
       expect(@match.payouts).to eq(
-        @user.id => Bet::PER_MATCH * 2,
+        @user.id => Bet::PER_MATCH,
         @other_user.id => 0
       )
     end
 
-    it "returns 100 for everyone if no one picks the winner" do
+    it "returns 0 for everyone if no one picks the winner" do
       FactoryBot.create(:bet, match: @match, wager: "away", user: @user)
       FactoryBot.create(:bet, match: @match, wager: "away", user: @other_user)
 
       @match.update!(winner: @home_wrestler)
       expect(@match.payouts).to eq(
-        @user.id => Bet::PER_MATCH,
-        @other_user.id => Bet::PER_MATCH,
+        @user.id => 0,
+        @other_user.id => 0,
       )
     end
 
-    it "splits evenly if everyone wins" do
+    it "awards everyone a point if everyone wins" do
       FactoryBot.create(:bet, match: @match, wager: "home", user: @user)
       FactoryBot.create(:bet, match: @match, wager: "home", user: @other_user)
 

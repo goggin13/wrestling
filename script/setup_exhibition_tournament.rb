@@ -1,5 +1,5 @@
 tournament = Tournament.find_or_create_by(name: "Dake vs. Chamizo")
-"https://www.flowrestling.org/articles/6751151-kyle-dake-vs-frank-chamizo-headline-epic-july-25th-card"
+# "https://www.flowrestling.org/articles/6751151-kyle-dake-vs-frank-chamizo-headline-epic-july-25th-card"
 
 # Wrestler.destroy_all
 wrestlers = [

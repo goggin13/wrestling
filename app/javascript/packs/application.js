@@ -100,7 +100,7 @@ window.displayResults = function (match) {
     $.each(match.payouts, function (user_id, payout) {
       console.log(user_id, " , ", payout);
       $bet = $(".matchup_wrestler .user_" + user_id).parent(".bet")
-      $bet.children(".payout").html("$" + (payout / 100.0).toFixed(2));
+      $bet.children(".payout").html("+" + payout);
       if (payout == 0) {
         $bet.addClass("lost");
       } else {

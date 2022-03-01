@@ -1,5 +1,5 @@
 class Tournament < ApplicationRecord
-  has_many :matches
+  has_many :matches, dependent: :destroy
 
   def current_match
     if current_match_id.present?
