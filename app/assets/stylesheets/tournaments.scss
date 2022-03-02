@@ -5,6 +5,7 @@
 .tournament-match-up {
   clear: both;
   padding: 10px;
+  border-bottom: thin solid black;
 }
 
 .tournament-match-up.open .voting_closed {
@@ -85,5 +86,21 @@ h1 {
 .marquee p {
   font-size: 25px;
   line-height: 44px;
+}
+
+.over-under {
+  text-align:center;
+  clear: both;
+}
+
+.over-under button {
+  border-radius: 9px;
+  padding: 10px;
+  font-size: 2em;
+}
+
+.over-under-selected {
+  background-color: green;
+  color: white;
 }
 

@@ -19,7 +19,7 @@ RSpec.describe "Bet", type: :request do
   describe "POST /bets" do
     it "creates a bet" do
       expect do
-        post "/bets.json", params: {bet: {match_id: @match.id, wager: "home"}}
+        post "/bets.json", params: {bet: {match_id: @match.id, wager: "home", over_under: Bet::OVER}}
         expect(response.status).to eq(201)
       end.to change(Bet, :count).by(1)
 
@@ -27,6 +27,7 @@ RSpec.describe "Bet", type: :request do
       expect(bet.user_id).to eq(@user.id)
       expect(bet.match_id).to eq(@match.id)
       expect(bet.wager).to eq("home")
+      expect(bet.over_under).to eq(Bet::OVER)
     end
 
     it "fails if the match is closed" do

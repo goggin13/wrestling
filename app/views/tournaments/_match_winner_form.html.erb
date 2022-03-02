@@ -1,14 +1,17 @@
 <%= form_with(url: match_winner_path(match), method: "post") do %>
 
+  <%= select_tag "match[total_score]",
+    options_for_select(0..15, selected: match.total_score),
+    id: "match-#{match.id}-select-winner" %>
+
   <%= select_tag "match[winner_id]", options_from_collection_for_select(
     [match.home_wrestler, match.away_wrestler],
     "id",
     "name",
     match.winner_id,
-  ), 
+  ),
   include_blank: true,
-  id: "match-#{match.id}-select",
-  onchange: "this.form.submit();" %>
+  id: "match-#{match.id}-select" %>
 
   <%= submit_tag("Set winner") %>
 <% end %>

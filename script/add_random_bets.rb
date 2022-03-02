@@ -7,7 +7,7 @@ Tournament.last.matches.each do |match|
     else
       wager = "away"
     end
-    Bet.create!(user: user, match: match, wager: wager)
+    Bet.create!(user: user, match: match, wager: wager, over_under: Bet::OVER)
     puts "#{user.email} betting #{wager} for #{match.title}"
   end
 end

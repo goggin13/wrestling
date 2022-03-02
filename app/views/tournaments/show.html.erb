@@ -43,6 +43,14 @@
           <%= render partial: "wrestler", locals: {wrestler: away} %>
         </div>
 
+        <div class="over-under">
+          Total Score will be <br/>
+          <button class="over <%= bet.present? && bet.over_under == Bet::OVER ? "over-under-selected" : "" %>">Over</button>
+          |
+          <button class="under <%= bet.present? && bet.over_under == Bet::UNDER ? "over-under-selected" : "" %>">Under</button>
+          <br/>10 points
+        </div>
+
       </li>
 
     <% end %>

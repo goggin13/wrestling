@@ -1,5 +1,8 @@
 class Bet < ApplicationRecord
   PER_MATCH = 1
+  PER_OVER_UNDER = 0.5
+  UNDER = "under"
+  OVER = "over"
 
   belongs_to :user
   belongs_to :match
@@ -21,5 +24,10 @@ class Bet < ApplicationRecord
   def won?
     (wager == "home" && match.winner_id == match.home_wrestler_id) ||
       (wager == "away" && match.winner_id == match.away_wrestler_id)
+  end
+
+  def over_under_won?
+    (over_under == Bet::OVER && match.total_score > match.over_under) ||
+      (over_under == Bet::UNDER && match.total_score < match.over_under)
   end
 end

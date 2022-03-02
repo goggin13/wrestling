@@ -12,6 +12,7 @@ RSpec.describe "Match", type: :model do
       tournament: tournament,
       home_wrestler: @home_wrestler,
       away_wrestler: @away_wrestler,
+      over_under: 10,
       winner_id: nil,
     )
   end
@@ -52,6 +53,34 @@ RSpec.describe "Match", type: :model do
         @user.id => Bet::PER_MATCH,
         @other_user.id => Bet::PER_MATCH,
       )
+    end
+
+    it "awards points for correct over under on an over bet" do
+      FactoryBot.create(:bet, match: @match, wager: "home", user: @user, over_under: Bet::OVER)
+
+      @match.update!(winner: @away_wrestler, total_score: 11)
+      expect(@match.payouts).to eq(@user.id => Bet::PER_OVER_UNDER)
+    end
+
+    it "awards points for correct over under on an under bet" do
+      FactoryBot.create(:bet, match: @match, wager: "home", user: @user, over_under: Bet::UNDER)
+
+      @match.update!(winner: @away_wrestler, total_score: 7)
+      expect(@match.payouts).to eq(@user.id => Bet::PER_OVER_UNDER)
+    end
+
+    it "awards no points for over under = total_points" do
+      FactoryBot.create(:bet, match: @match, wager: "home", user: @user, over_under: Bet::OVER)
+
+      @match.update!(winner: @away_wrestler, total_score: 10)
+      expect(@match.payouts).to eq(@user.id => 0)
+    end
+
+    it "awards points for correct over under added to a win" do
+      FactoryBot.create(:bet, match: @match, wager: "home", user: @user, over_under: Bet::UNDER)
+
+      @match.update!(winner: @home_wrestler, total_score: 7)
+      expect(@match.payouts).to eq(@user.id => Bet::PER_MATCH + Bet::PER_OVER_UNDER)
     end
   end
 end

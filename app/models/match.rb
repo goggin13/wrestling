@@ -29,6 +29,7 @@ class Match < ApplicationRecord
 
     bets.inject({}) do |acc, bet|
       acc[bet.user_id] = bet.won? ? Bet::PER_MATCH : 0
+      acc[bet.user_id] += Bet::PER_OVER_UNDER if bet.over_under_won?
 
       acc
     end

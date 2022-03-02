@@ -12,6 +12,16 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :weight %>
+    <%= form.text_field(:weight) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :over_under %>
+    <%= form.text_field(:over_under) %>
+  </div>
+
+  <div class="field">
     <%= form.label :tournament %>
     <%= form.collection_select(:tournament_id, @tournaments, :id, :name) %>
   </div>
