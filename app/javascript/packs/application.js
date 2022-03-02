@@ -47,6 +47,11 @@ $(document).on('turbolinks:load', function () {
         }
       });
   });
+
+  $(".tournament-match-up.open .over-under button").click(function () {
+    $(".tournament-match-up.open .over-under button").removeClass("over-under-selected");
+    $(this).addClass("over-under-selected");
+  });
 });
 
 

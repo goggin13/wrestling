@@ -157,6 +157,18 @@ RSpec.describe "Tournament", type: :feature do
         @match.reload
         expect(@match).to be_closed
       end
+
+      it "allows you to set the total_score as well as winner" do
+        expect(@match).to_not be_closed
+        visit tournament_administer_path(@tournament)
+        select("Kyle Dake", from: "match-#{@match.id}-select")
+        select(10, from: "match-#{@match.id}-select-winner")
+
+        click_button("Set winner")
+
+        @match.reload
+        expect(@match.total_score).to eq(10)
+      end
     end
 
     describe "Setting the current match" do

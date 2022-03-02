@@ -22,7 +22,11 @@ class MatchesController < ApplicationController
   end
 
   def winner
-    @match.update!(winner_id: match_params[:winner_id], closed: true)
+    @match.update!(
+      winner_id: match_params[:winner_id],
+      total_score: match_params[:total_score],
+      closed: true
+    )
     winner = @match.winner.nil? ? "None" : @match.winner.name
     flash[:notice] = "#{@match.title} winner set to #{winner}"
     redirect_to tournament_administer_path(@match.tournament)
@@ -100,7 +104,7 @@ class MatchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def match_params
-      params.require(:match).permit(:weight, :home_wrestler_id, :away_wrestler_id, :winner_id, :tournament_id)
+      params.require(:match).permit(:weight, :home_wrestler_id, :away_wrestler_id, :winner_id, :tournament_id, :total_score)
     end
 
     def set_form_variables
