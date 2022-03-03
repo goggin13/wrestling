@@ -9,7 +9,7 @@ RSpec.describe "Links", type: :feature do
   describe "header" do
     it "redirects to a login page" do
       visit root_path
-      expect(page).to have_content("Sign up")
+      expect(page).to have_content("You need to sign in or sign up")
     end
 
     it "shows the logged in user" do

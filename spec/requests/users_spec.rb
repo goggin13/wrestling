@@ -16,12 +16,18 @@ RSpec.describe "/users", type: :request do
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {email: "test@test.com", password: "password", password_confirmation: "password"}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {email: "not-a-valid-email"}
   }
+
+  before do
+    FactoryBot.create(:tournament)
+    @admin = FactoryBot.create(:user, email: "goggin13@gmail.com")
+    sign_in(@admin)
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -85,14 +91,14 @@ RSpec.describe "/users", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {email: "new_email@test.com"}
       }
 
       it "updates the requested user" do
         user = User.create! valid_attributes
         patch user_url(user), params: { user: new_attributes }
         user.reload
-        skip("Add assertions for updated state")
+        expect(user.email).to eq("new_email@test.com")
       end
 
       it "redirects to the user" do
