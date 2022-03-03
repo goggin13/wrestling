@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :colleges
   devise_for :users
-  resources :users, only: [:index]
+  resources :users
   resources :bets
   resources :matches do
     post "open" => "matches#open"

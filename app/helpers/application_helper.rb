@@ -4,8 +4,7 @@ module ApplicationHelper
   end
 
   def user_avatar(user, size="50x50")
-    file = user.email.split("@")[0]
-    image_tag("#{file}.jpg", size: size, alt: user.email, class: "avatar user_#{user.id}")
+    avatar(user, size: size)
   end
 
   def random_fatality
