@@ -3,22 +3,28 @@
 <h1>Bets</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>User</th>
-      <th>References</th>
-      <th>Wager</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @bets.each do |bet| %>
+      <% bet_on_wrestler = (bet.wager == "home" ? bet.match.home_wrestler.name : bet.match.away_wrestler.name) %>
       <tr>
         <td><%= user_avatar(bet.user) %></td>
         <td><%= bet.match.title %></td>
-        <td><%= bet.wager %></td>
+        <td>
+          <% if bet.wager.present? %>
+            <%= bet_on_wrestler %>
+            <% if bet.won? %>
+              +<%= Bet::PER_MATCH %>
+            <% end %>
+          <% end %>
+        </td>
+        <td>
+          <% if bet.over_under.present? %>
+            <%= bet.over_under %> <%= bet.match.over_under %>
+            <% if bet.over_under_won? %>
+              +<%= Bet::PER_OVER_UNDER %>
+            <% end %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', bet %></td>
         <td><%= link_to 'Edit', edit_bet_path(bet) %></td>
         <td><%= link_to 'Destroy', bet, method: :delete, data: { confirm: 'Are you sure?' } %></td>

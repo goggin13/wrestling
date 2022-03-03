@@ -6,7 +6,12 @@ class BetsController < ApplicationController
   # GET /bets
   # GET /bets.json
   def index
-    @bets = Bet.all.order(:match_id)
+    @bets = Bet.order(:match_id)
+    if params[:user_id].present?
+      @bets = @bets.where(user_id: params[:user_id])
+    end
+
+    @bets = @bets.all
   end
 
   # GET /bets/1
