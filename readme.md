@@ -1,6 +1,7 @@
 Wrestling Gambling App
 
 ToDo - before another tournament
+- debug live site; blow away old data?
 X Add score onto match and set it when winner is set
 - Add over/under onto current bet
   X hook up over/under on bet page to back end
@@ -8,9 +9,9 @@ X Add score onto match and set it when winner is set
   X include over/under in payout calculation
 - update betting interface to indicate a bet has been saved
 
-- debug deploy
+X debug deploy
 - interface for making and administering prop bets
-- interface for managing users and user avatars
+X interface for managing users and user avatars
 - intersperse leaderboard between rounds
 - make fatalaties an associated object w/avatar
 - upgrade rails
