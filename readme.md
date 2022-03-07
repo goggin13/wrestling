@@ -1,34 +1,63 @@
 Wrestling Gambling App
 
-ToDo - before another tournament
-- debug live site; blow away old data?
-X Add score onto match and set it when winner is set
-- Add over/under onto current bet
-  X hook up over/under on bet page to back end
-  X when creating/editing a match, set weight and over/under value
-  X include over/under in payout calculation
-- update betting interface to indicate a bet has been saved
+# Betting Improvement Revamp
+* install E2E testing framework
+* set up staging site
+- update Match model
+  - add home_score, away_score, spread
+    - make payout a method for now, TBD on how to set
+  - remove total_score
+  - update match form to handle these
+  - update admin screen to input these nicely
+- add balance to user model
+  - display on user index page
+- create abstract bets table
+  - {match_id, user_id, type, amount, wager, payout, open}
+  - when createing a bet, validate user has money in their balance
+    - transactionally subtract from user balance
+  - create subclass MoneyLineBet
+    - wager = home|away
+  - create subclass OverUnderBet
+    - wager = over|under
+- create tournament betting page
+  - show matches
+  - show form to make MoneyLineBet
+  - show form to make OverUnderBet
+  - bet form should
+    - allow you to adjust wager up to current balance
+    - tell you how much money you will win
+    - display cases for winning and losing
+      - you will win if "dake wins by more than 7"
+      - you will tie if "dake wins by 7"
+      - you will lose if "dake loses, or wins by 6 or less"
+- when the admin updates the scores for a match
+  - update all bets for the match
+    - set open to false
+    - if won, set payout
+    - add payout to user balance
+- create subclass SpreadBet
+  - wager = home|away
+  - subclass of MoneyLineBet?
+  - add to betting page
+- create tournament leaderboard view
+  - list of users with balance
+  - live update as balances change 
+  - display current match
+  - once current match is closed
+    - display user avatars alongside current match
+- create ledger of bets per user
+  - Ledger (user_id, bet_id, change, balance, description)
+  - create ledger entry every time user balance is changed
+- blow away old data on live site
+- deploy and test
 
-X debug deploy
-- interface for making and administering prop bets
-X interface for managing users and user avatars
-- intersperse leaderboard between rounds
+# Further AddOns
 - make fatalaties an associated object w/avatar
 - upgrade rails
-- leaderboard always present, ready to update from prop bets
-
-- facilitate buy in and payout configuration by tournament
-- handle flow of users betting on some tournaments and not others
-- when a match is closed choose a random bet for anyone who hasn't bet yet
-- switch bet from string wager to wager on wrestling (better support brackets later)
-- show current pot on tournament display screen
-
-X award each user 1 point per won bet
+- prop bets
 
 # College logos
 https://www.sportslogos.net/teams/list_by_league/85/National_Collegiate_Athletic_Assoc/NCAA/logos/
-
-https://www.flowrestling.org/articles/6852595-burroughs-taylor-complete-card-preview
 
 # Setting up development
 ```
