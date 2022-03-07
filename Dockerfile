@@ -1,5 +1,5 @@
 # Base our image on an official, minimal image of our preferred Ruby
-FROM ruby:2.6.5-slim
+FROM ruby:2.7.3-slim
 
 # Install essential Linux packages
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
