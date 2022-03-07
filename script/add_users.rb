@@ -1,5 +1,3 @@
-exit unless Rails.env.development?
-
 User.destroy_all
 
 User.create!(
@@ -15,7 +13,6 @@ User.create!(
   "klynch425@gmail.com",
   "danstipanuk@gmail.com",
   "lucaslemanski2@gmail.com",
-  "meganbfallon@gmail.com",
 
 ].each do |email|
   password = SecureRandom.hex(8)
