@@ -12,7 +12,7 @@ RUN apt update && apt install -y --no-install-recommends yarn
 RUN gem install rails -v 6.0.2
 
 # Prevent bundler warnings; ensure that the bundler version executed is >= that which created Gemfile.lock
-RUN gem install bundler -v 2.1.2
+RUN gem install bundler -v 2.3.7
 
 # Define where our application will live inside the image
 ENV RAILS_ROOT /var/www/wrestling
