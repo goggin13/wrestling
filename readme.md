@@ -10,9 +10,9 @@ X update Match model
   X update match form to handle these
   X update admin screen to input these nicely
 - stop being lazy and TDD these changes
-- add balance to user model
-  - display on user index page
-  - display in banner
+X add balance to user model
+  X display on user index page
+  X display in banner
 - create abstract bets table
   - {match_id, user_id, type, amount, wager, payout, open}
   - make payout a method for now, TBD on how to set
@@ -35,7 +35,6 @@ X update Match model
       - you will lose if "dake loses, or wins by 6 or less"
 - when the admin updates the scores for a match
   - update all bets for the match
-    - set open to false
     - if won, set payout
     - add payout to user balance
 - create subclass SpreadBet
