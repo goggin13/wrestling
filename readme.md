@@ -3,7 +3,7 @@ Wrestling Gambling App
 # Betting Improvement Revamp
 X upgrade bundler
 X install E2E testing framework
-* set up staging site
+X set up staging site
 - update Match model
   - add home_score, away_score, spread
   - remove total_score
