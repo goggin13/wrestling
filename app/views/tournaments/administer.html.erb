@@ -7,40 +7,35 @@
 <table>
   <thead>
     <tr>
-      <th>Match</th>
-      <th>Betting</th>
-      <th>Winner</th>
-      <th>Placed Bets</th>
-      <th>Awaiting Bets</th>
+      <th></th>
+      <th>Weight</th>
+      <th>Open?</th>
+      <th>Away wrestler</th>
+      <th>Home wrestler</th>
+      <th>Over/Under</th>
+      <th>Score</th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @tournament.matches.order("weight ASC").each do |match| %>
+    <% @tournament.matches.each do |match| %>
       <tr>
-				<td>
-					<%= match.title %>
-				</td>
-				<td>
-					<%= render partial: "match_status_form", locals: {match: match} %>
-				</td>
-				<td>
-					<%= render partial: "match_winner_form", locals: {match: match} %>
-				</td>
-				<td>
-          <% match.bets.each do |bet| %>
-            <%= user_avatar(bet.user,  "25x25") %>
+        <td>
+          <% if match.id == @tournament.current_match_id %>
+            Live
           <% end %>
-				</td>
-				<td>
-          <% bet_user_ids = match.bets.map(&:user_id) %>
-          <% @users.each do |user| %>
-            <% unless bet_user_ids.include?(user.id) %>
-              <%= user_avatar(user,  "25x25") %>
-            <% end %>
-          <% end %>
-				</td>
+        </td>
+        <td><%= match.weight %></td>
+        <td><%= match.open? %></td>
+        <td><%= match.away_wrestler.name %> (<%= away_spread(match) %>)</td>
+        <td><%= match.home_wrestler.name %> (<%= home_spread(match) %>)</td>
+        <td><%= match.over_under %></td>
+        <td><%= match.away_score %>-<%= match.home_score %></td>
+        <td><%= link_to 'Edit', edit_match_path(match) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to 'New Match', new_match_path %>

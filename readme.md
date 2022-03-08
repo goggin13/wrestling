@@ -4,11 +4,11 @@ Wrestling Gambling App
 X upgrade bundler
 X install E2E testing framework
 X set up staging site
-- update Match model
-  - add home_score, away_score, spread
-  - remove total_score
-  - update match form to handle these
-  - update admin screen to input these nicely
+X update Match model
+  X add home_score, away_score, spread
+  X remove total_score
+  X update match form to handle these
+  X update admin screen to input these nicely
 - add balance to user model
   - display on user index page
 - create abstract bets table

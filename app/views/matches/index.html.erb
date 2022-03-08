@@ -11,7 +11,7 @@
       <th>Home wrestler</th>
       <th>Away wrestler</th>
       <th>Over/Under</th>
-      <th>Tournament</th>
+      <th>Spread</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,7 +23,7 @@
         <td><%= match.home_wrestler.name %></td>
         <td><%= match.away_wrestler.name %></td>
         <td><%= match.over_under %></td>
-        <td><%= match.tournament_id %></td>
+        <td><%= match.spread %></td>
         <td><%= link_to 'Show', match %></td>
         <td><%= link_to 'Edit', edit_match_path(match) %></td>
         <td><%= link_to 'Destroy', match, method: :delete, data: { confirm: 'Are you sure?' } %></td>

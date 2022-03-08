@@ -2,7 +2,6 @@ class Match < ApplicationRecord
   belongs_to :tournament
   belongs_to :home_wrestler, class_name: "Wrestler"
   belongs_to :away_wrestler, class_name: "Wrestler"
-  belongs_to :winner, class_name: "Wrestler", optional: true
   has_many :bets, dependent: :destroy
 
   def home_bets
@@ -14,11 +13,28 @@ class Match < ApplicationRecord
   end
 
   def title
-    home_wrestler.name + " vs. " + away_wrestler.name
+    away_wrestler.name + " vs. " + home_wrestler.name
   end
 
   def open?
     !closed? && !winner_id.present?
+  end
+
+  def winner
+    return @_winner if defined?(@_winner)
+    return unless winner_id.present?
+
+    @_winner = Wrestler.find(winner_id)
+  end
+
+  def winner_id
+    return nil unless home_score.present? && away_score.present?
+
+    if home_score > away_score
+      home_wrestler.id
+    else
+      away_wrestler.id
+    end
   end
 
   def payouts
@@ -29,7 +45,6 @@ class Match < ApplicationRecord
 
     bets.inject({}) do |acc, bet|
       acc[bet.user_id] = bet.won? ? Bet::PER_MATCH : 0
-      acc[bet.user_id] += Bet::PER_OVER_UNDER if bet.over_under_won?
 
       acc
     end

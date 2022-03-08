@@ -11,7 +11,6 @@ RSpec.describe "Bet", type: :request do
       tournament: @tournament,
       home_wrestler: home_wrestler,
       away_wrestler: away_wrestler,
-      winner_id: nil,
     )
     sign_in(@user)
   end
@@ -40,7 +39,7 @@ RSpec.describe "Bet", type: :request do
     end
 
     it "fails if the match has a winner" do
-      @match.update!(:winner_id => 1)
+      @match.update!(home_score: 1, away_score: 2)
       expect do
         post "/bets.json", params: {bet: {match_id: @match.id, wager: "home"}}
         expect(response.status).to eq(422)
@@ -62,7 +61,7 @@ RSpec.describe "Bet", type: :request do
     end
 
     it "accepts a second bet by the same user" do
-      other_match = FactoryBot.create(:match, tournament: @tournament, winner_id: nil)
+      other_match = FactoryBot.create(:match, tournament: @tournament)
       FactoryBot.create(:bet, user_id: @user.id, match: other_match)
 
       expect do

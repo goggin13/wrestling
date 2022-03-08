@@ -22,8 +22,23 @@
   </div>
 
   <div class="field">
+    <%= form.label :spread %>
+    <%= form.text_field(:spread) %>
+  </div>
+
+  <div class="field">
     <%= form.label :tournament %>
     <%= form.collection_select(:tournament_id, @tournaments, :id, :name) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :away_wrestler%>
+    <%= form.collection_select(:away_wrestler_id, @wrestlers, :id, :name) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :away_score%>
+    <%= form.text_field :away_score %>
   </div>
 
   <div class="field">
@@ -32,8 +47,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :away_wrestler%>
-    <%= form.collection_select(:away_wrestler_id, @wrestlers, :id, :name) %>
+    <%= form.label :home_score%>
+    <%= form.text_field :home_score %>
   </div>
 
   <div class="actions">

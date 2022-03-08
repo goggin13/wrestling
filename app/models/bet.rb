@@ -25,9 +25,4 @@ class Bet < ApplicationRecord
     (wager == "home" && match.winner_id == match.home_wrestler_id) ||
       (wager == "away" && match.winner_id == match.away_wrestler_id)
   end
-
-  def over_under_won?
-    (over_under == Bet::OVER && match.total_score > match.over_under) ||
-      (over_under == Bet::UNDER && match.total_score < match.over_under)
-  end
 end

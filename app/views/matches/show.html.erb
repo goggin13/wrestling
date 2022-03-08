@@ -9,23 +9,22 @@
 </p>
 
 <p>
-  Over/Under: <%= @match.over_under %>
-</p>
-
-<p>
-  Home: <%= avatar(@match.home_wrestler) %>
-</p>
-
-<p>
-  Away: <%= avatar(@match.away_wrestler) %>
+  <%= avatar(@match.away_wrestler) %>
+  <%= avatar(@match.home_wrestler) %>
+  <br/><%= @match.away_wrestler.name %> at <%= @match.home_wrestler.name %>
 </p>
 
 <% if @match.winner.present? %>
   <p>
-    Winner: <%= avatar(@match.winner) %>
+    Winner: <%= @match.winner.name %>
+    <br/><%= @match.away_score %>-<%= @match.home_score %>
   </p>
 <% end %>
 
+<p>
+  Over/Under: <%= @match.over_under %>
+  <br/>Spread: <%= @match.spread %>
+</p>
 <%= link_to 'Edit', edit_match_path(@match) %> |
 <%= link_to 'Back', matches_path %>
 <%= link_to 'New Match', new_match_path %>

@@ -3,4 +3,5 @@
 <%= render 'form', match: @match %>
 
 <%= link_to 'Show', @match %> |
+<%= link_to 'Destroy', @match, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', matches_path %>

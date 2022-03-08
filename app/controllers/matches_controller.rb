@@ -21,17 +21,6 @@ class MatchesController < ApplicationController
     redirect_to tournament_administer_path(@match.tournament)
   end
 
-  def winner
-    @match.update!(
-      winner_id: match_params[:winner_id],
-      total_score: match_params[:total_score],
-      closed: true
-    )
-    winner = @match.winner.nil? ? "None" : @match.winner.name
-    flash[:notice] = "#{@match.title} winner set to #{winner}"
-    redirect_to tournament_administer_path(@match.tournament)
-  end
-
   # GET /matches
   # GET /matches.json
   def index
@@ -77,7 +66,9 @@ class MatchesController < ApplicationController
   def update
     respond_to do |format|
       if @match.update(match_params)
-        format.html { redirect_to @match, notice: 'Match was successfully updated.' }
+        format.html {
+          redirect_to tournament_administer_path(@match.tournament), notice: 'Match was successfully updated.'
+        }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit }
@@ -104,7 +95,16 @@ class MatchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def match_params
-      params.require(:match).permit(:weight, :home_wrestler_id, :away_wrestler_id, :winner_id, :tournament_id, :total_score, :over_under)
+      params.require(:match).permit(
+        :weight,
+        :home_wrestler_id,
+        :away_wrestler_id,
+        :tournament_id,
+        :over_under,
+        :home_score,
+        :away_score,
+        :spread,
+      )
     end
 
     def set_form_variables

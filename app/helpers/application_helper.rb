@@ -11,4 +11,22 @@ module ApplicationHelper
     id = (1..28).to_a.shuffle.first
     image_tag("fatalaties/#{id}.gif")
   end
+
+  def home_spread(match)
+    return "" unless match.spread.present?
+    if match.spread > 0
+      "+#{match.spread}"
+    else
+      match.spread
+    end
+  end
+
+  def away_spread(match)
+    return "" unless match.spread.present?
+    if match.spread > 0
+      match.spread * -1
+    else
+      "+#{match.spread * -1}"
+    end
+  end
 end

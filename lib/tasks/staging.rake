@@ -117,6 +117,8 @@ namespace :staging do
     ]
 
     tournament.matches.destroy_all
+    weights = [125, 133, 141, 149, 157, 165, 174]
+    i = 0
     matches.each do |home, away|
       home_wrestler = Wrestler.where(name: home).first!
       away_wrestler = Wrestler.where(name: away).first!
@@ -124,7 +126,13 @@ namespace :staging do
         tournament: tournament,
         home_wrestler: home_wrestler,
         away_wrestler: away_wrestler,
+        weight: weights[i],
+        spread: (-10..10).to_a.shuffle.first,
+        over_under: (5..30).to_a.shuffle.first
       )
+      i += 1
     end
+
+    tournament.update!(current_match_id: nil)
   end
 end

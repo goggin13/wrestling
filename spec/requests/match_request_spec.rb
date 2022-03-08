@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Match", type: :request do
   before do
     @user = FactoryBot.create(:user)
-    @other_user = FactoryBot.create(:user, email: "goggin13@gmail.com")
+    @admin_user = FactoryBot.create(:user, email: "goggin13@gmail.com")
     @tournament = FactoryBot.create(:tournament)
     @home_wrestler = FactoryBot.create(:wrestler)
     @away_wrestler = FactoryBot.create(:wrestler)
@@ -12,34 +12,28 @@ RSpec.describe "Match", type: :request do
       tournament: @tournament,
       home_wrestler: @home_wrestler,
       away_wrestler: @away_wrestler,
-      winner_id: nil,
     )
-
-    FactoryBot.create(:bet, match: @match, wager: "home", user: @user)
-    FactoryBot.create(:bet, match: @match, wager: "away", user: @other_user)
-
-    sign_in(@user)
   end
 
-  describe "GET /matches/id.json" do
-    it "returns an empty set for payouts if there is no winner" do
-      get "/matches/#{@match.id}.json"
-      expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
-
-      expect(json["payouts"]).to eq({})
+  describe "PUT /matches/id.json" do
+    before do
+      sign_in(@admin_user)
     end
 
-    it "returns a set of payouts if there is a winner" do
-      @match.update!(winner: @home_wrestler)
-      get "/matches/#{@match.id}.json"
+    it "sets home_score, away_score, and spread" do
+      put "/matches/#{@match.id}.json", params: {
+        match: {
+          home_score: 1,
+          away_score: 2,
+          spread: 3,
+        }
+      }
       expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
 
-      expect(json["payouts"]).to eq(
-        @user.id.to_s => Bet::PER_MATCH,
-        @other_user.id.to_s => 0
-      )
+      @match.reload
+      expect(@match.home_score).to eq(1)
+      expect(@match.away_score).to eq(2)
+      expect(@match.spread).to eq(3)
     end
   end
 end

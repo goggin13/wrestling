@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_225556) do
+ActiveRecord::Schema.define(version: 2022_03_08_023121) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,13 +52,14 @@ ActiveRecord::Schema.define(version: 2022_03_02_225556) do
     t.integer "weight"
     t.integer "home_wrestler_id"
     t.integer "away_wrestler_id"
-    t.integer "winner_id"
     t.integer "tournament_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "closed", default: false
-    t.integer "total_score"
     t.integer "over_under"
+    t.integer "home_score"
+    t.integer "away_score"
+    t.float "spread"
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
 
