@@ -1,11 +1,11 @@
 Wrestling Gambling App
 
 # Betting Improvement Revamp
-* install E2E testing framework
+X upgrade bundler
+X install E2E testing framework
 * set up staging site
 - update Match model
   - add home_score, away_score, spread
-    - make payout a method for now, TBD on how to set
   - remove total_score
   - update match form to handle these
   - update admin screen to input these nicely
@@ -13,6 +13,7 @@ Wrestling Gambling App
   - display on user index page
 - create abstract bets table
   - {match_id, user_id, type, amount, wager, payout, open}
+  - make payout a method for now, TBD on how to set
   - when createing a bet, validate user has money in their balance
     - transactionally subtract from user balance
   - create subclass MoneyLineBet

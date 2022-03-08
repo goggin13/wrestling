@@ -100,10 +100,10 @@ namespace :staging do
     ]
 
     wrestlers.each do |w|
-      puts w
-      puts w[:name]
-      puts Wrestler.where(name: w[:name]).count
       if Wrestler.where(name: w[:name]).count == 0
+        if w.has_key?(:college)
+          w[:college] = College.find_or_create_by!(name: w[:college])
+        end
         Wrestler.create!(w)
       end
     end
@@ -118,7 +118,6 @@ namespace :staging do
 
     tournament.matches.destroy_all
     matches.each do |home, away|
-      puts home, away
       home_wrestler = Wrestler.where(name: home).first!
       away_wrestler = Wrestler.where(name: away).first!
       Match.create!(
