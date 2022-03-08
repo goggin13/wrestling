@@ -17,14 +17,16 @@ namespace :staging do
       "klynch425@gmail.com",
       "danstipanuk@gmail.com",
       "lucaslemanski2@gmail.com",
-
+      "choy.ash831@gmail.com",
+      "cookediana@gmail.com",
+      "erinumhoefer@gmail.com"
     ].each do |email|
       password = SecureRandom.hex(8)
       User.create!(
         :email => email,
         :password => password,
         :password_confirmation => password,
-        :balance => 10000
+        :balance => 1000
       )
     end
 
@@ -35,7 +37,7 @@ namespace :staging do
   task bets: :environment do
   end
 
-  desc "TODO"
+  desc "Setup Tournament"
   task tournament: :environment do
     tournament = Tournament.find_or_create_by(name: "Dake vs. Chamizo")
 
