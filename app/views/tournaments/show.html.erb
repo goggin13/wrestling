@@ -1,5 +1,6 @@
 <h1>
-  <%= @tournament.name %>
+  Remaining Balance:
+  <span id="user_balance"><%= number_to_currency(current_user.balance) %></span>
 </h1>
 
 <p id="place_your_bets">

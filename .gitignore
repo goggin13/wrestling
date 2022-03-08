@@ -43,4 +43,5 @@ yarn-debug.log*
 *.icloud
 .aws
 SavedAvatars
-cypress/videos/login.spec.js.mp4
+cypress/videos/*
+cypress/screenshots/*

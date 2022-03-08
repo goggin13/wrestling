@@ -57,6 +57,13 @@ RSpec.describe "Tournament", type: :feature do
       expect(page).to have_css(".away.selected")
       expect(page).to_not have_css(".home.selected")
     end
+
+    it "displays a users balance" do
+      @user.update!(balance: 100)
+
+      visit tournament_path(@tournament)
+      expect(page).to have_content("$100.00")
+    end
   end
 
   describe "display" do

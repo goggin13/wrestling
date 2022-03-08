@@ -23,7 +23,8 @@ namespace :staging do
       User.create!(
         :email => email,
         :password => password,
-        :password_confirmation => password
+        :password_confirmation => password,
+        :balance => 10000
       )
     end
 

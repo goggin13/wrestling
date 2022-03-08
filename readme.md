@@ -9,8 +9,10 @@ X update Match model
   X remove total_score
   X update match form to handle these
   X update admin screen to input these nicely
+- stop being lazy and TDD these changes
 - add balance to user model
   - display on user index page
+  - display in banner
 - create abstract bets table
   - {match_id, user_id, type, amount, wager, payout, open}
   - make payout a method for now, TBD on how to set

@@ -17,5 +17,11 @@ RSpec.describe "Links", type: :feature do
       login(@user)
       expect(page).to have_content(@user.email)
     end
+
+    it "shows the balance for the logged in user" do
+      visit root_path
+      login(@user)
+      expect(page).to have_content(@user.email)
+    end
   end
 end

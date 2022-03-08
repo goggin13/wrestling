@@ -1,4 +1,5 @@
-var ROOT = 'http://localhost:3000'
+// var ROOT = 'http://localhost:3000'
+var ROOT = 'http://wrastling-staging.herokuapp.com'
 
 describe('Logging in', () => {
   it('successfully logs in', () => {
