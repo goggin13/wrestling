@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   resources :bets
+  resources :money_line_bets, :controller => 'bets'
   resources :matches do
     post "open" => "matches#open"
     post "close" => "matches#close"

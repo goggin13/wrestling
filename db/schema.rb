@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_08_035205) do
+ActiveRecord::Schema.define(version: 2022_03_08_151709) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -34,12 +34,16 @@ ActiveRecord::Schema.define(version: 2022_03_08_035205) do
   end
 
   create_table "bets", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "match_id"
+    t.integer "user_id", null: false
+    t.integer "match_id", null: false
+    t.string "type"
+    t.float "amount"
     t.string "wager"
+    t.float "payout"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "over_under"
+    t.index ["match_id"], name: "index_bets_on_match_id"
+    t.index ["user_id"], name: "index_bets_on_user_id"
   end
 
   create_table "colleges", force: :cascade do |t|
@@ -98,5 +102,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_035205) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bets", "matches"
+  add_foreign_key "bets", "users"
   add_foreign_key "matches", "tournaments"
 end

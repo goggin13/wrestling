@@ -4,53 +4,47 @@
 </h1>
 
 <p id="place_your_bets">
-  Welcome <%= current_user.email %><br/><br/>Click a wrestler to place your bets
+  Welcome <%= current_user.email %>
 </p>
 
 <div id="center-match-ups">
   <ul class="tournament-match-ups">
     <% @tournament.matches.order("weight ASC").each do |match| %>
-      <% home, away = [match.home_wrestler, match.away_wrestler] %>
-
+      <% away, home = [match.away_wrestler, match.home_wrestler] %>
       <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
-
-        <% bet = Bet.where(user: current_user, match: match).first %>
 
         <h2><%= match.weight %> lbs</h2>
 
-        <div class="home <%= bet.present? && bet.wager == "home" ? " selected" : "" %>">
-          <%= render partial: "wrestler", locals: {wrestler: home} %>
-        </div>
+        <table>
+          <tr>
+            <th></th>
+            <th>Spread</th>
+            <th>Moneyline</th>
+            <th>Total</th>
+          </tr>
 
-        <div class="marquee">
-          <div class="voting_closed">
-            voting closed
-            <p>
-              <%= image_tag("lock.png", size: "50x50") %><br/>
-            </p>
-          </div>
-          <div class="wrestlers">
-            <p><%= home.name %><br/>vs.<br/><%= away.name %></p>
-          </div>
-          <div class="voting_closed">
-            <p>
-              <%= image_tag("lock.png", size: "50x50") %><br/>
-            </p>
-          </div>
-          <div class="loading">Saving your bet...</div>
-        </div>
+          <tr>
+            <th><%= away.name %></th>
+            <td class="place_bet">
+              <%= away_spread(match) %>
+            </td>
+            <td class="away_money_line">
+              <% bet = MoneyLineBet.new(match: match, wager: "away") %>
+              <%= render partial: "bet_form", locals: {bet: bet} %>
+            </td>
 
-        <div class="away <%= bet.present? && bet.wager == "away" ? " selected" : "" %>">
-          <%= render partial: "wrestler", locals: {wrestler: away} %>
-        </div>
-
-        <div class="over-under">
-          Total Score will be <br/>
-          <button class="over <%= bet.present? && bet.over_under == Bet::OVER ? "over-under-selected" : "" %>">Over</button>
-          |
-          <button class="under <%= bet.present? && bet.over_under == Bet::UNDER ? "over-under-selected" : "" %>">Under</button>
-          <br/>10 points
-        </div>
+            <td>Over <%= match.over_under %></td>
+          </tr>
+          <tr>
+            <th><%= home.name %></th>
+            <td><%= home_spread(match) %> </td>
+            <td>
+              <% bet = MoneyLineBet.new(match: match, wager: "home") %>
+              <%= render partial: "bet_form", locals: {bet: bet} %>
+            </td>
+            <td>Under <%= match.over_under %></td>
+          </tr>
+        </table>
 
       </li>
 

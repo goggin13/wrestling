@@ -1,0 +1,21 @@
+<% if existing_bet = Bet.where(user: current_user, match: bet.match, type: bet.type, wager: bet.wager).first %>
+  <%= link_to existing_bet.remove_message,
+    existing_bet, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<% else %>
+
+  <%= form_with(model: bet.becomes(Bet), local: true) do |form| %>
+    <%= form.hidden_field :match_id %>
+    <%= form.hidden_field :type %>
+    <%= form.hidden_field :wager %>
+
+    <div class="field">
+      $<%= form.number_field :amount %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit value: bet.submit_label %>
+    </div>
+  <% end %>
+
+<% end %>

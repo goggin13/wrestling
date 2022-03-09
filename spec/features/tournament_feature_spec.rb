@@ -11,6 +11,7 @@ RSpec.describe "Tournament", type: :feature do
       tournament: @tournament,
       home_wrestler: @home_wrestler,
       away_wrestler: @away_wrestler,
+      weight: 125,
     )
   end
 
@@ -21,42 +22,44 @@ RSpec.describe "Tournament", type: :feature do
 
     it "shows the two wrestlers for the match" do
       visit tournament_path(@tournament)
-      expect(page).to have_css(".home")
-      expect(page).to have_css(".away")
-
-      expect(page).to_not have_css(".home.selected")
-      expect(page).to_not have_css(".away.selected")
+      expect(page).to have_content("125 lbs")
+      expect(page).to have_content("Kyle Dake")
+      expect(page).to have_content("Frank Chamizo")
     end
 
-    it "assigns the open class if the match doesn't have a winner" do
+    it "places a MoneyLineBet for the away wrestler" do
       visit tournament_path(@tournament)
-      expect(page).to have_css(".tournament-match-up.open")
+
+      fill_in "bet[amount]", with: 10, match: :first
+      expect do
+        click_button "FC M/L"
+      end.to change(Bet, :count).by(1)
+
+      bet = Bet.last
+      expect(bet.class).to eq(MoneyLineBet)
+      expect(bet.user.id).to eq(@user.id)
+      expect(bet.match.id).to eq(@match.id)
+      expect(bet.amount).to eq(10)
+      expect(bet.wager).to eq("away")
+
+      expect(page).to have_content("Wagered $10.00 FC M/L")
     end
 
-    it "assigns the closed class if the match has a winner" do
-      @match.update!(home_score: 1, away_score: 2)
+    it "shows a delete button if a bet exists" do
+      bet_id = MoneyLineBet.create!(match: @match, wager: "away", user: @user, amount: 10).id
       visit tournament_path(@tournament)
-      expect(page).to have_css(".tournament-match-up.closed")
+
+      expect do
+        click_link "Retract $10.00 FC M/L Bet"
+      end.to change(Bet, :count).by(-1)
+
+      expect(Bet.where(id: bet_id).count).to eq(0)
+
+      expect(page).to have_content("Removed $10.00 FC M/L Bet")
     end
 
-    it "highlights the home wrestler if a bet has been made on home" do
-      FactoryBot.create(:bet, user: @user, match: @match, wager: "home")
-
-      visit tournament_path(@tournament)
-      expect(page).to have_css(".away")
-
-      expect(page).to have_css(".home.selected")
-      expect(page).to_not have_css(".away.selected")
-    end
-
-    it "highlights the away wrestler if a bet has been made on away" do
-      FactoryBot.create(:bet, user: @user, match: @match, wager: "away")
-      visit tournament_path(@tournament)
-      expect(page).to have_css(".home")
-
-      expect(page).to have_css(".away.selected")
-      expect(page).to_not have_css(".home.selected")
-    end
+    it "shows locked bets on a closed match"
+    it "displays errors from placing a bet and redirects to the tournament show page"
 
     it "displays a users balance" do
       @user.update!(balance: 100)

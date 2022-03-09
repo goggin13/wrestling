@@ -6,13 +6,28 @@
 </p>
 
 <p>
-  <strong>Match:</strong>
+  <strong>Matches:</strong>
   <%= @bet.match_id %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @bet.type %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @bet.amount %>
 </p>
 
 <p>
   <strong>Wager:</strong>
   <%= @bet.wager %>
+</p>
+
+<p>
+  <strong>Payout:</strong>
+  <%= @bet.payout %>
 </p>
 
 <%= link_to 'Edit', edit_bet_path(@bet) %> |
