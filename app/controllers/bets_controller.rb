@@ -1,6 +1,7 @@
 class BetsController < ApplicationController
   before_action :set_bet, only: %i[ show edit update destroy ]
   before_action :validate_current_user_owns_bet, only: :destroy
+  before_action :validate_bet_match_is_open, only: :destroy
 
   # GET /bets or /bets.json
   def index
@@ -60,6 +61,12 @@ class BetsController < ApplicationController
 
     def validate_current_user_owns_bet
       unless @bet.user == current_user
+        redirect_to tournament_url(@bet.tournament), alert: "You do not own that bet"
+      end
+    end
+
+    def validate_bet_match_is_open
+      unless @bet.match.open?
         redirect_to tournament_url(@bet.tournament), alert: "You do not own that bet"
       end
     end

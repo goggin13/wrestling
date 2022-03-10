@@ -47,19 +47,45 @@ RSpec.describe "Tournament", type: :feature do
       expect(@user.balance).to eq(10)
     end
 
-    it "shows a delete button if a bet exists" do
-      bet_id = MoneyLineBet.create!(match: @match, wager: "away", user: @user, amount: 10).id
+    it "rejects a bet on a closed match" do
       visit tournament_path(@tournament)
+      @match.update!(closed: true)
 
+      fill_in "bet[amount]", with: 10, match: :first
       expect do
-        click_link "Retract $10.00 FC M/L Bet"
-      end.to change(Bet, :count).by(-1)
+        click_button "FC M/L"
+      end.to change(Bet, :count).by(0)
 
-      expect(Bet.where(id: bet_id).count).to eq(0)
+      expect(page).to have_content("Failed to create bet")
+    end
 
-      expect(page).to have_content("Removed $10.00 FC M/L Bet")
-      @user.reload
-      expect(@user.balance).to eq(30)
+    describe "deleting a bet" do
+      it "shows a delete button if a bet exists" do
+        bet_id = MoneyLineBet.create!(match: @match, wager: "away", user: @user, amount: 10).id
+        visit tournament_path(@tournament)
+
+        expect do
+          click_link "Retract $10.00 FC M/L Bet"
+        end.to change(Bet, :count).by(-1)
+
+        expect(Bet.where(id: bet_id).count).to eq(0)
+
+        expect(page).to have_content("Removed $10.00 FC M/L Bet")
+        @user.reload
+        expect(@user.balance).to eq(30)
+      end
+
+      it "fails if the match has been closed" do
+        bet_id = MoneyLineBet.create!(match: @match, wager: "away", user: @user, amount: 10).id
+        visit tournament_path(@tournament)
+        @match.update!(closed: true)
+
+        expect do
+          click_link "Retract $10.00 FC M/L Bet"
+        end.to change(Bet, :count).by(0)
+
+        expect(page).to have_content("Betting on that match has closed")
+      end
     end
 
     it "shows locked bets on a closed match"

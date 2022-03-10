@@ -20,13 +20,10 @@ X add balance to user model
     X transactionally subtract from user balance
   X when deleting a bet, give the user money back
   X create subclass MoneyLineBet
-    - wager = home|away
-  - create subclass OverUnderBet
-    - wager = over|under
+- prevent deleting a bet from a closed match
 - create tournament betting page
-  - show matches
-  - show form to make MoneyLineBet
-  - show form to make OverUnderBet
+  X show matches
+  X show form to make MoneyLineBet
   - bet form should
     - allow you to adjust wager up to current balance
     - tell you how much money you will win
@@ -42,6 +39,8 @@ X add balance to user model
   - wager = home|away
   - subclass of MoneyLineBet?
   - add to betting page
+- create subclass OverUnderBet
+  - wager = over|under
 - create tournament leaderboard view
   - list of users with balance
   - live update as balances change 
@@ -55,6 +54,7 @@ X add balance to user model
 - deploy and test
 
 # Further AddOns
+- animation to tournament show page when you receive more funds
 - make fatalaties an associated object w/avatar
 - upgrade rails
 - prop bets
