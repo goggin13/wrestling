@@ -1,6 +1,6 @@
 set -e
 
-git push origin abstract_bets
+git push
 git push heroku-staging abstract_bets:master
 
 heroku run rake db:migrate -a wrastling-staging

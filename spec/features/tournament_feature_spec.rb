@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Tournament", type: :feature do
   before do
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, balance: 20)
     @tournament = FactoryBot.create(:tournament)
     @home_wrestler = FactoryBot.create(:wrestler, name: "Kyle Dake")
     @away_wrestler = FactoryBot.create(:wrestler, name: "Frank Chamizo")
@@ -43,6 +43,8 @@ RSpec.describe "Tournament", type: :feature do
       expect(bet.wager).to eq("away")
 
       expect(page).to have_content("Wagered $10.00 FC M/L")
+      @user.reload
+      expect(@user.balance).to eq(10)
     end
 
     it "shows a delete button if a bet exists" do
@@ -56,10 +58,22 @@ RSpec.describe "Tournament", type: :feature do
       expect(Bet.where(id: bet_id).count).to eq(0)
 
       expect(page).to have_content("Removed $10.00 FC M/L Bet")
+      @user.reload
+      expect(@user.balance).to eq(30)
     end
 
     it "shows locked bets on a closed match"
-    it "displays errors from placing a bet and redirects to the tournament show page"
+
+    it "displays an error if the user doesn't have enough funds" do
+      visit tournament_path(@tournament)
+
+      fill_in "bet[amount]", with: 21, match: :first
+      expect do
+        click_button "FC M/L"
+      end.to change(Bet, :count).by(0)
+
+      expect(page).to have_content("Failed to create bet")
+    end
 
     it "displays a users balance" do
       @user.update!(balance: 100)

@@ -1,5 +1,6 @@
 class BetsController < ApplicationController
   before_action :set_bet, only: %i[ show edit update destroy ]
+  before_action :validate_current_user_owns_bet, only: :destroy
 
   # GET /bets or /bets.json
   def index
@@ -20,7 +21,12 @@ class BetsController < ApplicationController
         }
         format.json { render :show, status: :created, location: @bet }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        @bet.errors.each do |field, message|
+          Rails.logger.info("Failed to save bet: #{field}-#{message}")
+        end
+        format.html {
+          redirect_to tournament_url(@bet.match.tournament), alert: "Failed to create bet"
+        }
         format.json { render json: @bet.errors, status: :unprocessable_entity }
       end
     end
@@ -28,7 +34,7 @@ class BetsController < ApplicationController
 
   # DELETE /bets/1 or /bets/1.json
   def destroy
-    @bet.destroy
+    Bet.delete_and_refund_user(@bet)
 
     respond_to do |format|
       format.html {
@@ -50,5 +56,11 @@ class BetsController < ApplicationController
         .require(:bet)
         .permit(:match_id, :type, :amount, :wager, :payout)
         .merge(:user_id => current_user.id)
+    end
+
+    def validate_current_user_owns_bet
+      unless @bet.user == current_user
+        redirect_to tournament_url(@bet.tournament), alert: "You do not own that bet"
+      end
     end
 end

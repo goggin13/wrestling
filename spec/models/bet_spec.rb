@@ -49,6 +49,21 @@ RSpec.describe Bet, type: :model do
     end
   end
 
+  describe ".delete_and_refund_user" do
+    before do
+      @user = FactoryBot.create(:user, balance: 20)
+      @bet = FactoryBot.create(:bet, user: @user, amount: 10)
+    end
+
+    it "deletes the bet and refunds the balance to the user" do
+      expect do
+        Bet.delete_and_refund_user(@bet)
+      end.to change(Bet, :count).by(-1)
+      @user.reload
+      expect(@user.balance).to eq(30)
+    end
+  end
+
   describe "amount" do
     before do
       @user = FactoryBot.create(:user, balance: 20)

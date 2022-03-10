@@ -16,8 +16,9 @@ X add balance to user model
 - create abstract bets table
   X {match_id, user_id, type, amount, wager, payout, open}
   - make payout a method for now, TBD on how to set
-  - when createing a bet, validate user has money in their balance
-    - transactionally subtract from user balance
+  X when createing a bet, validate user has money in their balance
+    X transactionally subtract from user balance
+  X when deleting a bet, give the user money back
   X create subclass MoneyLineBet
     - wager = home|away
   - create subclass OverUnderBet

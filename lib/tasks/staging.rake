@@ -26,7 +26,7 @@ namespace :staging do
         :email => email,
         :password => password,
         :password_confirmation => password,
-        :balance => 1000
+        :balance => 100
       )
     end
 

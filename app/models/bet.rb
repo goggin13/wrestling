@@ -24,6 +24,16 @@ class Bet < ApplicationRecord
     end
   end
 
+  def self.delete_and_refund_user(bet)
+    Bet.transaction do
+      bet.user.balance += bet.amount
+      bet.destroy
+      bet.user.save!
+
+      bet
+    end
+  end
+
   def user_has_balance
     if user.present? && amount.present? && user.balance < amount
       errors.add(:amount, "must be less than user balance")
