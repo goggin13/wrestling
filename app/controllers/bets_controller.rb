@@ -10,15 +10,6 @@ class BetsController < ApplicationController
   def show
   end
 
-  # GET /bets/new
-  def new
-    @bet = Bet.new
-  end
-
-  # GET /bets/1/edit
-  def edit
-  end
-
   # POST /bets or /bets.json
   def create
     respond_to do |format|

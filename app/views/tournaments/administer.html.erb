@@ -1,6 +1,6 @@
-<h1>
+<% content_for :header do %>
   <%= @tournament.name %>
-</h1>
+<% end %>
 
 <%= render partial: "tournament_current_match", locals: {tournament: @tournament} %>
 

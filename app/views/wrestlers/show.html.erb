@@ -1,6 +1,6 @@
-<h1><%= @wrestler.name %></h1>
-
-<p id="notice"><%= notice %></p>
+<% content_for :header do %>
+  <%= @wrestler.name %>
+<% end %>
 
 <p>
   <%= avatar(@wrestler) %>

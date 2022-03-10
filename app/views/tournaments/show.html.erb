@@ -1,13 +1,12 @@
-<h1>
-  Remaining Balance:
-  <span id="user_balance"><%= number_to_currency(current_user.balance) %></span>
-</h1>
-
-<p id="place_your_bets">
-  Welcome <%= current_user.email %>
-</p>
+<% content_for :header do %>
+  <%= current_user.email %>'s Betslip
+<% end %>
 
 <div id="center-match-ups">
+  <p>
+    <span id="user_balance"><%= number_to_currency(current_user.balance) %></span>
+  </p>
+
   <ul class="tournament-match-ups">
     <% @tournament.matches.order("weight ASC").each do |match| %>
       <% away, home = [match.away_wrestler, match.home_wrestler] %>

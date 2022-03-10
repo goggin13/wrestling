@@ -19,6 +19,8 @@
       <%= link_to('Logout', destroy_user_session_path, method: :delete) %> 
     <% end %>
 
+    <h1><%= yield(:header) %></h1>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
