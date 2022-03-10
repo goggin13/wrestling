@@ -1,4 +1,6 @@
-<h1>Email: <%= @user.email %></h1>
+<% content_for :header do %>
+  <%= @user.email %>
+<% end %>
 
 <p id="notice"><%= notice %></p>
 
