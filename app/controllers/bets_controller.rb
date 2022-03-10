@@ -21,29 +21,15 @@ class BetsController < ApplicationController
 
   # POST /bets or /bets.json
   def create
-    @bet = Bet.new(bet_params)
-
     respond_to do |format|
-      if @bet.save
+      @bet = Bet.save_and_charge_user(Bet.new(bet_params))
+      if @bet.valid?
         format.html {
           redirect_to tournament_url(@bet.match.tournament), notice: @bet.success_message
         }
         format.json { render :show, status: :created, location: @bet }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bet.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /bets/1 or /bets/1.json
-  def update
-    respond_to do |format|
-      if @bet.update(bet_params)
-        format.html { redirect_to bet_url(@bet), notice: "Bet was successfully updated." }
-        format.json { render :show, status: :ok, location: @bet }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @bet.errors, status: :unprocessable_entity }
       end
     end

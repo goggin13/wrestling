@@ -57,6 +57,16 @@ RSpec.describe "Bet", type: :request do
       end.to change(Bet, :count).by(0)
     end
 
+    it "fails if the user doesn't have enough money in their account" do
+      @user.update!(balance: 9)
+      expect do
+        post "/bets.json", params: @params
+        expect(response.status).to eq(422)
+      end.to change(Bet, :count).by(0)
+
+      expect(JSON.parse(response.body)["amount"][0]).to eq("must be less than user balance")
+    end
+
     it "accepts a second bet by the same user" do
       FactoryBot.create(:bet, user_id: @user.id, type: "MoneyLineBet", match: @match, wager: "home")
 
@@ -116,14 +126,6 @@ RSpec.describe "Bet", type: :request do
       end
     end
 
-    describe "GET /edit" do
-      it "renders a successful response" do
-        bet = Bet.create! valid_attributes
-        get edit_bet_url(bet)
-        expect(response).to be_successful
-      end
-    end
-
     describe "POST /create" do
       context "with valid parameters" do
         it "creates a new Bet" do
@@ -144,34 +146,6 @@ RSpec.describe "Bet", type: :request do
           expect {
             post bets_url, params: { bet: invalid_attributes }
           }.to change(Bet, :count).by(0)
-        end
-      end
-    end
-
-    describe "PATCH /update" do
-      context "with valid parameters" do
-        let(:new_attributes) {
-          {
-            user_id: @user.id,
-            match_id: @match.id,
-            type: "MoneyLineBet",
-            amount: 10.0,
-            wager: "away",
-          }
-        }
-
-        it "updates the requested bet" do
-          bet = Bet.create! valid_attributes
-          patch bet_url(bet), params: { bet: new_attributes }
-          bet.reload
-          expect(bet.wager).to eq("away")
-        end
-
-        it "redirects to the bet" do
-          bet = Bet.create! valid_attributes
-          patch bet_url(bet), params: { bet: new_attributes }
-          bet.reload
-          expect(response).to redirect_to(bet_url(bet))
         end
       end
     end
