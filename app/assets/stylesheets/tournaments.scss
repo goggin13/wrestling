@@ -82,7 +82,7 @@ h1 {
 
 #bet_pop_up {
   width: 90%;
-  height: 50%;
+  height: 70%;
   background: lightgray;
   margin: auto;
   position: fixed;
@@ -106,6 +106,7 @@ h1 {
 
 .wager_field input {
   font-size: 40px;
+  width: 100px;
 }
 
 
@@ -135,4 +136,15 @@ h1 {
   line-height: 1.5em;
   margin: 30px;
   text-align: left;
+}
+
+#center-match-ups .notice,
+#center-match-ups .alert {
+  font-size: 40px;
+}
+#center-match-ups .notice {
+  color: blue;
+}
+#center-match-ups .alert {
+  color: salmon;
 }

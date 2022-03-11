@@ -21,8 +21,12 @@
 
     <h1><%= yield(:header) %></h1>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if content_for?(:notices) %>
+      <%= yield(:notices) %>
+    <% else %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    <% end %>
 
     <%= yield %>
   </body>
