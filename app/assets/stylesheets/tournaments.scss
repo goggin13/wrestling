@@ -64,8 +64,6 @@ body {
 }
 
 .tournament-match-up p {
-  font-size: 16px;
-  line-height: 22px;
 }
 
 h1 {
@@ -117,8 +115,8 @@ h1 {
  height: 100px;
  border: thin solid black;
  border-radius: 3px;
+ cursor: pointer;
 }
-
 
 #center-match-ups th {
  width: 100px;
@@ -128,3 +126,64 @@ h1 {
 #center-match-ups input {
   width: 75px;
 }
+
+.hidden_bet_form {
+  display: none;
+}
+
+.payout_ratio {
+  color: darkblue;
+  font-size: 0.8em;
+}
+
+#bet_pop_up {
+  width: 500px;
+  height: 30%;
+  background: lightgray;
+  margin: auto;
+  position: fixed;
+  top: 100%;
+  transform: translate(0, -100%);
+  border: 5px solid black;
+  padding: 10px;
+  color: black;
+  display: none;
+}
+
+#bet_pop_up .bet_title {
+  font-weight: bold;
+  text-align: left;
+}
+
+.wager_field { 
+  float: left;
+}
+.to_win_field {
+  float: right;
+}
+.wager_field,
+.to_win_field {
+  width: 200px;
+  height: 20px;
+  border: thin solid black;
+  padding: 5px;
+}
+
+.hidden { display: none; }
+
+#bet_pop_up_buttons {
+  text-align:center;
+}
+#bet_pop_up_buttons button {
+}
+
+#submit_pop_up_form {
+  background-color: green;
+  color: white;
+}
+
+#close_bet_pop_up {
+  background-color: red;
+}
+
+.bet_explanation { clear: both }

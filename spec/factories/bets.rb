@@ -6,5 +6,7 @@ FactoryBot.define do
     amount { 1.5 }
     wager { "home" }
     payout { 1.5 }
+
+    initialize_with { type.present? ? type.constantize.new : MoneyLineBet.new }
   end
 end

@@ -34,6 +34,14 @@ class Bet < ApplicationRecord
     end
   end
 
+  def self.calculate_payout(wager, payout_ratio)
+    if payout_ratio < 0
+      (wager * 100.0 / (payout_ratio * -1)).round(2)
+    else
+      (wager * payout_ratio / 100.0).round(2)
+    end
+  end
+
   def user_has_balance
     if user.present? && amount.present? && user.balance < amount
       errors.add(:amount, "must be less than user balance")

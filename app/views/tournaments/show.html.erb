@@ -4,11 +4,22 @@
 
 <div id="center-match-ups">
   <p>
-    Available Funds:
-    <span id="user_balance"><%= number_to_currency(current_user.balance) %></span>
+    Available Funds: 
+    <span id="user_balance"><%= number_to_currency(current_user.balance) %></span> 
   </p>
 
   <ul class="tournament-match-ups">
+
+    <div id="bet_pop_up">
+      <div id="bet_pop_up_content">
+      </div>
+
+      <div id="bet_pop_up_buttons">
+        <button id="submit_pop_up_form">Wager!</button>
+        <button id="close_bet_pop_up">Never mind</button>
+      </div>
+    </div>
+
     <% @tournament.matches.order("weight ASC").each do |match| %>
       <% away, home = [match.away_wrestler, match.home_wrestler] %>
       <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
@@ -25,24 +36,42 @@
 
           <tr>
             <th><%= away.name %></th>
-            <td class="place_bet">
+            <td>
               <%= away_spread(match) %>
+              <p class="payout_ratio">
+                -100
+              </p>
             </td>
-            <td class="away_money_line">
-              <% bet = MoneyLineBet.new(match: match, wager: "away") %>
+            <td>
+              <% bet = MoneyLineBet.new(amount: 5.0, match: match, wager: "away") %>
               <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
 
-            <td>Over <%= match.over_under %></td>
+            <td>
+              Over <%= match.over_under %>
+              <p class="payout_ratio">
+                -150
+              </p>
+            </td>
           </tr>
           <tr>
             <th><%= home.name %></th>
-            <td><%= home_spread(match) %> </td>
             <td>
-              <% bet = MoneyLineBet.new(match: match, wager: "home") %>
+              <%= home_spread(match) %>
+              <p class="payout_ratio">
+                -100
+              </p>
+            </td>
+            <td>
+              <% bet = MoneyLineBet.new(amount: 5.0, match: match, wager: "home") %>
               <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
-            <td>Under <%= match.over_under %></td>
+            <td>
+              Under <%= match.over_under %>
+              <p class="payout_ratio">
+                -150
+              </p>
+            </td>
           </tr>
         </table>
 

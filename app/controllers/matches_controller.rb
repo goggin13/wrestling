@@ -104,6 +104,7 @@ class MatchesController < ApplicationController
         :home_score,
         :away_score,
         :spread,
+        :closed,
       )
     end
 

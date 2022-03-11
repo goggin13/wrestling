@@ -142,4 +142,14 @@ RSpec.describe Bet, type: :model do
       expect(bet.valid?).to eq(true)
     end
   end
+
+  describe "calculate_payout" do
+    it "returns the correct payout for a negative payout ratio" do
+      expect(Bet.calculate_payout(5.0, -150)).to eq(3.33)
+    end
+
+    it "returns the correct payout for a positive payout ratio" do
+      expect(Bet.calculate_payout(5.0, 150)).to eq(7.5)
+    end
+  end
 end

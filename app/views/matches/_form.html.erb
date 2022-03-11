@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :closed %>
+    <%= form.check_box(:closed) %>
+  </div>
+
+  <div class="field">
     <%= form.label :weight %>
     <%= form.text_field(:weight) %>
   </div>
@@ -47,8 +52,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :home_score%>
-    <%= form.text_field :home_score %>
+    <%= form.label :away_score%>
+    <%= form.text_field :away_score %>
   </div>
 
   <div class="actions">

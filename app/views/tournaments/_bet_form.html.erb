@@ -4,18 +4,47 @@
 
 <% else %>
 
-  <%= form_with(model: bet.becomes(Bet), local: true) do |form| %>
-    <%= form.hidden_field :match_id %>
-    <%= form.hidden_field :type %>
-    <%= form.hidden_field :wager %>
+  <p class="payout_ratio">
+    <%= bet.payout_ratio %>
+  </p>
 
-    <div class="field">
-      $<%= form.number_field :amount %>
-    </div>
+  <div class="hidden_bet_form">
 
-    <div class="actions">
-      <%= form.submit value: bet.submit_label %>
+    <p class="bet_title">
+      <%= bet.title %>
+      <span class="payout_ratio">
+        (<%= bet.payout_ratio %>)
+      </span>
+    </p>
+
+    <%= form_with(model: bet.becomes(Bet), local: true) do |form| %>
+      <%= form.hidden_field :match_id %>
+      <%= form.hidden_field :type %>
+      <%= form.hidden_field :wager %>
+
+      <div class="wager_field">
+        <span class="payout_ratio hidden">
+          <%= bet.payout_ratio %>
+        </span>
+        Wager: $<%= form.number_field :amount, min: 1, max: current_user.balance %>
+      </div>
+
+      <div class="to_win_field">
+        To Win: $<span class="to_win_amount"><%= Bet.calculate_payout(5.0, bet.payout_ratio) %></span>
+      </div>
+
+      <div class="actions hidden">
+        <%= form.submit value: bet.submit_label %>
+      </div>
+    <% end %>
+
+    <div class='bet_explanation'>
+      You win if <%= bet.win_scenario %>
+      <% if bet.moneyback_scenario.present? %>
+        <br/>Money back if <%= bet.moneyback_scenario %>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 
 <% end %>
+

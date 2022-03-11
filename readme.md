@@ -20,16 +20,17 @@ X add balance to user model
     X transactionally subtract from user balance
   X when deleting a bet, give the user money back
   X create subclass MoneyLineBet
-- prevent deleting a bet from a closed match
+X prevent deleting a bet from a closed match
 - create tournament betting page
   X show matches
   X show form to make MoneyLineBet
-  - bet form should
+  - BET FORM SHOULD
+    - popup and then delegate back to regular form to submit
     - allow you to adjust wager up to current balance
     - tell you how much money you will win
     - display cases for winning and losing
       - you will win if "dake wins by more than 7"
-      - you will tie if "dake wins by 7"
+      - moneyback if "dake wins by 7"
       - you will lose if "dake loses, or wins by 6 or less"
 - when the admin updates the scores for a match
   - update all bets for the match
