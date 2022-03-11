@@ -2,35 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.tournament-match-up {
-  clear: both;
-  padding: 10px;
-  border-bottom: thin solid black;
-}
-
-.tournament-match-up.open .voting_closed {
-  display: none;
-}
-
-.tournament-match-up .marquee,
-.tournament-match-up .away,
-.tournament-match-up .home {
-  width: 200px;
-  float: left;
-  text-align: center;
-  border: thick solid white;
-  padding-top: 25px;
-}
-
-.marquee {
-  text-align: center;
-}
-
-.tournament-match-up.open .away,
-.tournament-match-up.open .home {
-  cursor: pointer;
-}
-
 .tournament-match-ups {
   list-style: none;
 }
@@ -44,28 +15,6 @@ body {
   margin: 0px;
 }
 
-.tournament-match-up.closed .selected,
-.tournament-match-up.open .selected {
-  border: thick dotted black;
-}
-
-.tournament-match-up .marquee .loading,
-.tournament-match-up.loading .marquee .wrestlers {
-  display: none;
-}
-
-.tournament-match-up.loading .marquee .loading {
-  display: block;
-}
-
-#place_your_bets {
-  font-size: 28px;
-  text-align: center;
-}
-
-.tournament-match-up p {
-}
-
 h1 {
   text-align: center;
   padding: 30px;
@@ -75,69 +24,64 @@ h1 {
 
 #center-match-ups {
   text-align: center;
-}
-
-.tournament-match-ups {
-  display: inline-block;
-}
-
-.marquee p {
-  font-size: 25px;
-  line-height: 44px;
-}
-
-.over-under {
-  text-align:center;
-  clear: both;
-}
-
-.over-under button {
-  border-radius: 9px;
-  padding: 10px;
   font-size: 2em;
 }
 
-.over-under-selected {
-  background-color: green;
-  color: white;
+#center-match-ups body, 
+#center-match-ups p, 
+#center-match-ups ol, 
+#center-match-ups ul {
 }
 
-// OLD STUFF ^^
-// NEW STUFF FOLLOWS
+#center-match-ups p, h2 {
+  font-size: 40px;
+}
 
+#center-match-ups td,
+#center-match-ups th {
+  font-size: 40px;
+  width: 200px;
+  height: 200px;
+  line-height: 1.5em;
+}
+
+#center-match-ups .first_row th {
+  height: 100px;
+}
+
+.hidden { display: none; }
+
+
+// .tournament-match-ups {
+//   display: inline-block;
+// }
+//
+// // NEW STUFF FOLLOWS
+//
 #user_balance {
   color: darkgreen;
-  font-size: 2em;
 }
 
 #center-match-ups td {
- width: 100px;
- height: 100px;
  border: thin solid black;
  border-radius: 3px;
  cursor: pointer;
 }
-
-#center-match-ups th {
- width: 100px;
- height: 15px;
-}
-
-#center-match-ups input {
-  width: 75px;
-}
-
+//
+// #center-match-ups input {
+//   width: 75px;
+// }
+//
 .hidden_bet_form {
   display: none;
 }
 
 .payout_ratio {
   color: darkblue;
-  font-size: 0.8em;
 }
 
 #bet_pop_up {
-  width: 500px;
+  width: 90%;
   height: 30%;
   background: lightgray;
   margin: auto;
@@ -153,6 +97,7 @@ h1 {
 #bet_pop_up .bet_title {
   font-weight: bold;
   text-align: left;
+  line-height: 2em;
 }
 
 .wager_field { 
@@ -163,18 +108,22 @@ h1 {
 }
 .wager_field,
 .to_win_field {
-  width: 200px;
-  height: 20px;
-  border: thin solid black;
-  padding: 5px;
+  width: 350px;
+  padding: 20px;
+  font-size: 40px;
 }
 
-.hidden { display: none; }
+.wager_field input {
+  font-size: 40px;
+}
+
 
 #bet_pop_up_buttons {
   text-align:center;
 }
+
 #bet_pop_up_buttons button {
+  font-size: 60px;
 }
 
 #submit_pop_up_form {
@@ -183,7 +132,13 @@ h1 {
 }
 
 #close_bet_pop_up {
-  background-color: red;
+  background-color: salmon;
 }
 
-.bet_explanation { clear: both }
+.bet_explanation { 
+  clear: both;
+  font-size: 40px;
+  line-height: 1em;
+  margin: 30px;
+  text-align: left;
+}

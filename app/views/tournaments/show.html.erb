@@ -16,6 +16,7 @@
 
       <div id="bet_pop_up_buttons">
         <button id="submit_pop_up_form">Wager!</button>
+        <br/>
         <button id="close_bet_pop_up">Never mind</button>
       </div>
     </div>
@@ -24,11 +25,9 @@
       <% away, home = [match.away_wrestler, match.home_wrestler] %>
       <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
 
-        <h2><%= match.weight %> lbs</h2>
-
         <table>
-          <tr>
-            <th></th>
+          <tr class="first_row">
+            <th><%= match.weight %> lbs</th>
             <th>Spread</th>
             <th>Moneyline</th>
             <th>Total</th>
