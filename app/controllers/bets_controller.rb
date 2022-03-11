@@ -16,7 +16,7 @@ class BetsController < ApplicationController
   def create
     respond_to do |format|
       @bet = Bet.save_and_charge_user(Bet.new(bet_params))
-      if @bet.valid?
+      if @bet.id.present?
         format.html {
           redirect_to tournament_url(@bet.match.tournament), notice: @bet.success_message
         }
