@@ -107,6 +107,20 @@ RSpec.describe Bet, type: :model do
       expect(bet.errors[:wager].length).to eq(0)
     end
 
+    describe "OverUnderBet" do
+      it "is valid if it is over" do
+        bet = OverUnderBet.new(wager: "over")
+        bet.save
+        expect(bet.errors[:wager].length).to eq(0)
+      end
+
+      it "is valid if it is under" do
+        bet = OverUnderBet.new(wager: "under")
+        bet.save
+        expect(bet.errors[:wager].length).to eq(0)
+      end
+    end
+
     it "is invalid if it is not home|away" do
       bet = Bet.new(wager: "neither")
       bet.save

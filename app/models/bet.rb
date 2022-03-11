@@ -58,6 +58,14 @@ class Bet < ApplicationRecord
     number_to_currency(amount)
   end
 
+  def formatted_payout_ratio
+    if payout_ratio > 0
+      "+#{payout_ratio}"
+    else
+      payout_ratio.to_s
+    end
+  end
+
   def wrestler
     if wager == "home"
       match.home_wrestler

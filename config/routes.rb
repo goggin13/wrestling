@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :users
   resources :bets
   resources :money_line_bets, :controller => 'bets'
+  resources :spread_bets, :controller => 'bets'
+  resources :over_under_bets, :controller => 'bets'
   resources :matches do
     post "open" => "matches#open"
     post "close" => "matches#close"

@@ -44,40 +44,31 @@
           <tr>
             <th><%= away.name %></th>
             <td>
-              <%= away_spread(match) %>
-              <p class="payout_ratio">
-                -100
-              </p>
+              <% bet = SpreadBet.new(amount: 5.0, match: match, wager: "away") %>
+              <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
             <td>
               <% bet = MoneyLineBet.new(amount: 5.0, match: match, wager: "away") %>
               <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
-
             <td>
-              Over <%= match.over_under %>
-              <p class="payout_ratio">
-                -150
-              </p>
+              <% bet = OverUnderBet.new(amount: 5.0, match: match, wager: "over") %>
+              <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
           </tr>
           <tr>
             <th><%= home.name %></th>
             <td>
-              <%= home_spread(match) %>
-              <p class="payout_ratio">
-                -100
-              </p>
+              <% bet = SpreadBet.new(amount: 5.0, match: match, wager: "home") %>
+              <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
             <td>
               <% bet = MoneyLineBet.new(amount: 5.0, match: match, wager: "home") %>
               <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
             <td>
-              Under <%= match.over_under %>
-              <p class="payout_ratio">
-                -150
-              </p>
+              <% bet = OverUnderBet.new(amount: 5.0, match: match, wager: "under") %>
+              <%= render partial: "bet_form", locals: {bet: bet} %>
             </td>
           </tr>
         </table>

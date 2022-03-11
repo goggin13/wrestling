@@ -4,8 +4,16 @@
 
 <% else %>
 
+  <% if bet.is_a?(SpreadBet) %>
+    <%= bet.my_spread %>
+  <% end %>
+
+  <% if bet.is_a?(OverUnderBet) %>
+    <%= bet.label %>
+  <% end %>
+
   <p class="payout_ratio">
-    <%= bet.payout_ratio %>
+    <%= bet.formatted_payout_ratio %>
   </p>
 
   <div class="hidden_bet_form">
@@ -13,7 +21,7 @@
     <p class="bet_title">
       <%= bet.title %>
       <span class="payout_ratio">
-        <br/>(<%= bet.payout_ratio %>)
+        <br/>(<%= bet.formatted_payout_ratio %>)
       </span>
     </p>
 
@@ -42,7 +50,7 @@
 
     <div class='bet_explanation'>
       You win if <%= bet.win_scenario %>
-      <% if bet.moneyback_scenario.present? %>
+      <% if bet.respond_to?(:moneyback_scenario) %>
         <br/>Money back if <%= bet.moneyback_scenario %>
       <% end %>
     </div>
