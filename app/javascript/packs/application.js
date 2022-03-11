@@ -14,13 +14,13 @@ var calculatePayout = function (wager, payout_ratio) {
 
 var initializeWagerField = function () {
   $(".wager_field input").change(function () {
-    $parent = $(this).parent();
+    $parent = $(this).closest(".wager_field");
 
     var wager = parseFloat($(this).val());
     var payoutRatio = parseFloat($parent.children(".payout_ratio").first().html());
     var payout = calculatePayout(wager, payoutRatio);
 
-    $parent.next(".to_win_field").children(".to_win_amount").html(payout);
+    $parent.find(".to_win_amount").html(payout);
   });
 }
 

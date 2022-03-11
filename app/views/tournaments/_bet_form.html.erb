@@ -26,12 +26,14 @@
         <span class="payout_ratio hidden">
           <%= bet.payout_ratio %>
         </span>
-        Wager: $<%= form.number_field :amount, min: 1, max: current_user.balance %>
+        <p>
+          Wager: $<%= form.number_field :amount %>
+        </p>
+        <p>
+          To Win: $<span class="to_win_amount"><%= Bet.calculate_payout(5.0, bet.payout_ratio) %></span>
+        </p>
       </div>
 
-      <div class="to_win_field">
-        To Win: $<span class="to_win_amount"><%= Bet.calculate_payout(5.0, bet.payout_ratio) %></span>
-      </div>
 
       <div class="actions hidden">
         <%= form.submit value: bet.submit_label %>

@@ -52,9 +52,9 @@ h1 {
 .hidden { display: none; }
 
 
-// .tournament-match-ups {
-//   display: inline-block;
-// }
+.tournament-match-up {
+  margin-bottom: 100px;
+}
 //
 // // NEW STUFF FOLLOWS
 //
@@ -82,12 +82,12 @@ h1 {
 
 #bet_pop_up {
   width: 90%;
-  height: 30%;
+  height: 50%;
   background: lightgray;
   margin: auto;
   position: fixed;
-  top: 100%;
-  transform: translate(0, -100%);
+  top: 50%;
+  transform: translate(0, -50%);
   border: 5px solid black;
   padding: 10px;
   color: black;
@@ -100,16 +100,7 @@ h1 {
   line-height: 2em;
 }
 
-.wager_field { 
-  float: left;
-}
-.to_win_field {
-  float: right;
-}
-.wager_field,
-.to_win_field {
-  width: 350px;
-  padding: 20px;
+.wager_field {
   font-size: 40px;
 }
 
@@ -124,6 +115,9 @@ h1 {
 
 #bet_pop_up_buttons button {
   font-size: 60px;
+  margin: 15px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 #submit_pop_up_form {
@@ -138,7 +132,7 @@ h1 {
 .bet_explanation { 
   clear: both;
   font-size: 40px;
-  line-height: 1em;
+  line-height: 1.5em;
   margin: 30px;
   text-align: left;
 }
