@@ -25,23 +25,21 @@ X prevent deleting a bet from a closed match
   X show matches
   X show form to make MoneyLineBet
   - BET FORM SHOULD
-    - popup and then delegate back to regular form to submit
-    - allow you to adjust wager up to current balance
-    - tell you how much money you will win
-    - display cases for winning and losing
-      - you will win if "dake wins by more than 7"
-      - moneyback if "dake wins by 7"
-      - you will lose if "dake loses, or wins by 6 or less"
+    X popup and then delegate back to regular form to submit
+    X allow you to adjust wager up to current balance
+    X tell you how much money you will win
+    X display cases for winning and losing
+
+- fix overunder wager hack
+- !!!Testing party!!!
+
+- handle closed matches in the UI
 - when the admin updates the scores for a match
   - update all bets for the match
     - if won, set payout
     - add payout to user balance
-- create subclass SpreadBet
-  - wager = home|away
-  - subclass of MoneyLineBet?
-  - add to betting page
-- create subclass OverUnderBet
-  - wager = over|under
+X create subclass SpreadBet
+X create subclass OverUnderBet
 - create tournament leaderboard view
   - list of users with balance
   - live update as balances change 
@@ -56,6 +54,7 @@ X prevent deleting a bet from a closed match
 
 # Further AddOns
 - animation to tournament show page when you receive more funds
+- slider to adjust amount to bet
 - make fatalaties an associated object w/avatar
 - upgrade rails
 - prop bets

@@ -11,7 +11,7 @@ class MoneyLineBet < Bet
     elsif (wager == "home" && match.spread < 0) || (wager == "away" && match.spread > 0)
       (100 + (match.spread.abs * 20)) * -1
     else
-      raise "win_scenario case fall through"
+      raise "payout_ratio case fall through"
     end
   end
 

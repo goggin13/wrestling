@@ -1,6 +1,4 @@
 class OverUnderBet < Bet
-  validates :wager, inclusion: { in: ["over", "under"] }
-
   def title
     "#{wager.titlecase} bet on #{match.title}"
   end

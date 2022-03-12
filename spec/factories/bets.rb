@@ -8,5 +8,12 @@ FactoryBot.define do
     payout { 1.5 }
 
     initialize_with { type.present? ? type.constantize.new : MoneyLineBet.new }
+
+    trait :spread do
+      type { "SpreadBet" }
+    end
+    trait :over_under do
+      type { "OverUnderBet" }
+    end
   end
 end

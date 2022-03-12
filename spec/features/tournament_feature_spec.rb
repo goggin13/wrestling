@@ -12,6 +12,8 @@ RSpec.describe "Tournament", type: :feature do
       home_wrestler: @home_wrestler,
       away_wrestler: @away_wrestler,
       weight: 125,
+      spread: -3,
+      over_under: 10,
     )
   end
 
@@ -27,31 +29,42 @@ RSpec.describe "Tournament", type: :feature do
       expect(page).to have_content("Frank Chamizo")
     end
 
-    it "places a MoneyLineBet for the away wrestler" do
-      visit tournament_path(@tournament)
+    [
+      [MoneyLineBet, ["home", "away"]],
+      [SpreadBet, ["home", "away"]],
+      [OverUnderBet, ["over", "under"]],
+    ].each do |klass, wagers|
+      wagers.each do |wager|
+        it "places a #{klass} on #{wager}" do
+          bet_to_test = klass.new(match: @match, wager: wager, amount: 10)
+          visit tournament_path(@tournament)
 
-      fill_in "bet[amount]", with: 10, match: :first
-      expect do
-        click_button "FC M/L"
-      end.to change(Bet, :count).by(1)
+          find(:css, ".#{klass.name.underscore}_#{wager} input[type=number]").set(10)
+          expect do
+            click_button bet_to_test.submit_label
+          end.to change(Bet, :count).by(1)
 
-      bet = Bet.last
-      expect(bet.class).to eq(MoneyLineBet)
-      expect(bet.user.id).to eq(@user.id)
-      expect(bet.match.id).to eq(@match.id)
-      expect(bet.amount).to eq(10)
-      expect(bet.wager).to eq("away")
+          bet = Bet.last
+          expect(bet.class).to eq(klass)
+          expect(bet.user.id).to eq(@user.id)
+          expect(bet.match.id).to eq(@match.id)
+          expect(bet.amount).to eq(10)
+          expect(bet.wager).to eq(wager)
+          expect(bet.type).to eq(klass.name)
 
-      expect(page).to have_content("Wagered $10.00 FC M/L")
-      @user.reload
-      expect(@user.balance).to eq(10)
+          @user.reload
+          expect(@user.balance).to eq(10)
+
+          expect(page).to have_content(bet_to_test.success_message)
+        end
+      end
     end
 
     it "rejects a bet on a closed match" do
       visit tournament_path(@tournament)
       @match.update!(closed: true)
 
-      fill_in "bet[amount]", with: 10, match: :first
+      find(:css, ".money_line_bet_away input[type=number]").set(10)
       expect do
         click_button "FC M/L"
       end.to change(Bet, :count).by(0)
@@ -93,7 +106,7 @@ RSpec.describe "Tournament", type: :feature do
     it "displays an error if the user doesn't have enough funds" do
       visit tournament_path(@tournament)
 
-      fill_in "bet[amount]", with: 21, match: :first
+      find(:css, ".money_line_bet_away input[type=number]").set(21)
       expect do
         click_button "FC M/L"
       end.to change(Bet, :count).by(0)

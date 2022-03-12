@@ -32,8 +32,7 @@
       </div>
     </div>
 
-    <% @tournament.matches.order("weight ASC").each do |match| %>
-      <% away, home = [match.away_wrestler, match.home_wrestler] %>
+    <% @tournament_presenter.matches.order("weight ASC").each do |match| %>
       <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
 
         <table>
@@ -45,34 +44,20 @@
           </tr>
 
           <tr>
-            <th><%= away.name %></th>
-            <td>
-              <% bet = SpreadBet.new(amount: 5.0, match: match, wager: "away") %>
-              <%= render partial: "bet_form", locals: {bet: bet} %>
-            </td>
-            <td>
-              <% bet = MoneyLineBet.new(amount: 5.0, match: match, wager: "away") %>
-              <%= render partial: "bet_form", locals: {bet: bet} %>
-            </td>
-            <td>
-              <% bet = OverUnderBet.new(amount: 5.0, match: match, wager: "over") %>
-              <%= render partial: "bet_form", locals: {bet: bet} %>
-            </td>
+            <th><%= match.away_wrestler.name %></th>
+            <% @tournament_presenter.bets_for_match(match, 0).each do |bet| %>
+              <td class="<%= bet.class.name.underscore %>_<%= bet.wager %>">
+                <%= render partial: "bet_form", locals: {bet: bet} %>
+              </td>
+            <% end %>
           </tr>
           <tr>
-            <th><%= home.name %></th>
-            <td>
-              <% bet = SpreadBet.new(amount: 5.0, match: match, wager: "home") %>
-              <%= render partial: "bet_form", locals: {bet: bet} %>
-            </td>
-            <td>
-              <% bet = MoneyLineBet.new(amount: 5.0, match: match, wager: "home") %>
-              <%= render partial: "bet_form", locals: {bet: bet} %>
-            </td>
-            <td>
-              <% bet = OverUnderBet.new(amount: 5.0, match: match, wager: "under") %>
-              <%= render partial: "bet_form", locals: {bet: bet} %>
-            </td>
+            <th><%= match.home_wrestler.name %></th>
+            <% @tournament_presenter.bets_for_match(match, 1).each do |bet| %>
+              <td class="<%= bet.class.name.underscore %>_<%= bet.wager %>">
+                <%= render partial: "bet_form", locals: {bet: bet} %>
+              </td>
+            <% end %>
           </tr>
         </table>
 

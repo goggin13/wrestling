@@ -39,6 +39,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1
   # GET /tournaments/1.json
   def show
+    @tournament_presenter = TournamentPresenter.new(@tournament)
   end
 
   # GET /tournaments/new
