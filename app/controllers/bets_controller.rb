@@ -63,13 +63,13 @@ class BetsController < ApplicationController
 
     def validate_current_user_owns_bet
       unless @bet.user == current_user
-        redirect_to tournament_url(@bet.tournament), alert: "You do not own that bet"
+        redirect_to tournament_url(@bet.match.tournament), alert: "You do not own that bet"
       end
     end
 
     def validate_bet_match_is_open
       unless @bet.match.open?
-        redirect_to tournament_url(@bet.tournament), alert: "You do not own that bet"
+        redirect_to tournament_url(@bet.match.tournament), alert: "That match is closed for betting"
       end
     end
 end

@@ -30,10 +30,9 @@ X prevent deleting a bet from a closed match
     X tell you how much money you will win
     X display cases for winning and losing
 
-- fix overunder wager hack
-- !!!Testing party!!!
+X !!!Testing party!!!
 
-- handle closed matches in the UI
+X handle closed matches in the UI
 - when the admin updates the scores for a match
   - update all bets for the match
     - if won, set payout
@@ -58,6 +57,7 @@ X create subclass OverUnderBet
 - make fatalaties an associated object w/avatar
 - upgrade rails
 - prop bets
+- fix overunder wager hack
 
 # College logos
 https://www.sportslogos.net/teams/list_by_league/85/National_Collegiate_Athletic_Assoc/NCAA/logos/

@@ -1,6 +1,20 @@
-<% if existing_bet = Bet.where(user: current_user, match: bet.match, type: bet.type, wager: bet.wager).first %>
-  <%= link_to existing_bet.remove_message,
-    existing_bet, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% existing_bet = Bet.where(user: current_user, match: bet.match, type: bet.type, wager: bet.wager).first %>
+
+<% if bet.match.closed? %>
+
+  <% if existing_bet.present? %>
+    <div class="locked_bet_text">
+      <%= existing_bet.formatted_amount %>
+      <br/>
+      <span class="payout_ratio">(<%= existing_bet.formatted_payout_ratio %>)</span>
+    </div>
+  <% else %>
+    <%= image_tag("lock.png", class:"lock_image") %>
+  <% end %>
+
+<% elsif existing_bet.present? %>
+
+  <%= link_to existing_bet.remove_message, existing_bet, method: :delete %>
 
 <% else %>
 

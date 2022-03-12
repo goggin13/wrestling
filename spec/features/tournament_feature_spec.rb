@@ -97,11 +97,27 @@ RSpec.describe "Tournament", type: :feature do
           click_link "Retract $10.00 FC M/L Bet"
         end.to change(Bet, :count).by(0)
 
-        expect(page).to have_content("Betting on that match has closed")
+        expect(page).to have_content("That match is closed for betting")
       end
     end
 
-    it "shows locked bets on a closed match"
+    context "closed match" do
+      it "shows a lock if a bet has not been placed" do
+        @match.update!(closed: true)
+        visit tournament_path(@tournament)
+        expect(page).to have_css(".lock_image")
+      end
+
+      it "shows the wager and payout ratio if a bet has been placed" do
+        FactoryBot.create(:bet, :spread, user: @user, match: @match, amount: 15)
+        @match.update!(closed: true)
+        visit tournament_path(@tournament)
+        expect(Bet.count).to eq(1)
+        expect(Bet.last.amount).to eq(15)
+        expect(page).to have_content("$15.00")
+        expect(page).to have_content("(-100)")
+      end
+    end
 
     it "displays an error if the user doesn't have enough funds" do
       visit tournament_path(@tournament)

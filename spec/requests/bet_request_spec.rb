@@ -144,11 +144,12 @@ RSpec.describe "Bet", type: :request do
     end
 
     describe "DELETE /destroy" do
-      it "destroys the requested bet" do
+      it "destroys the requested bet and redirects" do
         bet = Bet.create! valid_attributes
         expect {
           delete bet_url(bet)
         }.to change(Bet, :count).by(-1)
+        expect(response).to redirect_to(tournament_url(@match.tournament))
       end
 
       it "refunds the user" do
@@ -158,12 +159,22 @@ RSpec.describe "Bet", type: :request do
         expect(@user.balance).to eq(30)
       end
 
-      it "fails if the logged in user doesn't own the bet" do
+      it "fails and redirects if the logged in user doesn't own the bet" do
         sign_in(FactoryBot.create(:user))
         bet = Bet.create! valid_attributes
         expect {
           delete bet_url(bet)
         }.to change(Bet, :count).by(0)
+        expect(response).to redirect_to(tournament_url(@match.tournament))
+      end
+
+      it "fails and redirects if the match is closed" do
+        bet = Bet.create! valid_attributes
+        bet.match.update!(closed: true)
+        expect {
+          delete bet_url(bet)
+        }.to change(Bet, :count).by(0)
+        expect(response).to redirect_to(tournament_url(@match.tournament))
       end
 
       it "redirects to the bets list" do
