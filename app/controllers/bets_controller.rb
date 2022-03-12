@@ -15,7 +15,9 @@ class BetsController < ApplicationController
   # POST /bets or /bets.json
   def create
     respond_to do |format|
-      @bet = Bet.save_and_charge_user(Bet.new(bet_params))
+      bet = Bet.new(bet_params)
+      bet = bet.becomes(bet.type.constantize)
+      @bet = Bet.save_and_charge_user(bet)
       if @bet.id.present?
         format.html {
           redirect_to tournament_url(@bet.match.tournament), notice: @bet.success_message

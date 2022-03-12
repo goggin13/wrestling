@@ -7,7 +7,7 @@ class Bet < ApplicationRecord
   validate :user_has_balance
 
   validates_uniqueness_of :match, scope: [:user, :wager, :type]
-  validates :wager, inclusion: { in: ["home", "away"] }
+  validates :wager, inclusion: { in: ["home", "away", "over", "under"] }
   validates_presence_of :amount
   validates :amount, numericality: { greater_than: 0 }
 
