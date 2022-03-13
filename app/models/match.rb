@@ -57,7 +57,10 @@ class Match < ApplicationRecord
   end
 
   def validate_scores
-    if (home_score.present? && away_score.nil?) ||
+    if !closed?
+      errors.add(:home_score, "match is not closed")
+      errors.add(:away_score, "match is not closed")
+    elsif (home_score.present? && away_score.nil?) ||
         (away_score.present? && home_score.nil?)
       errors.add(:home_score, "home_score and away_score are both required")
       errors.add(:away_score, "home_score and away_score are both required")

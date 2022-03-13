@@ -9,7 +9,7 @@
     <tr>
       <th></th>
       <th>Weight</th>
-      <th>Open?</th>
+      <th>Closed?</th>
       <th>Away wrestler</th>
       <th>Home wrestler</th>
       <th>Over/Under</th>
@@ -27,7 +27,7 @@
           <% end %>
         </td>
         <td><%= match.weight %></td>
-        <td><%= match.open? %></td>
+        <td><%= match.closed? %></td>
         <td><%= match.away_wrestler.name %> (<%= away_spread(match) %>)</td>
         <td><%= match.home_wrestler.name %> (<%= home_spread(match) %>)</td>
         <td><%= match.over_under %></td>

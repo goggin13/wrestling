@@ -35,6 +35,13 @@ RSpec.describe "Match", type: :model do
       expect(match.errors[:home_score].length).to eq(0)
     end
 
+    it "is invalid if the match is not closed" do
+      match = Match.new(closed: false, home_score: 1, away_score: 2)
+      match.save
+      expect(match.errors[:home_score][0]).to eq("match is not closed")
+      expect(match.errors[:away_score][0]).to eq("match is not closed")
+    end
+
     it "is valid if neither are set" do
       match = Match.new(home_score: nil, away_score: nil)
       match.save
