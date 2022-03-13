@@ -50,6 +50,7 @@ X create subclass OverUnderBet
   - create ledger entry every time user balance is changed
 - blow away old data on live site
 - deploy and test
+- more cypress tests
 
 # Further AddOns
 - animation to tournament show page when you receive more funds

@@ -3,11 +3,23 @@
 <% if bet.match.closed? %>
 
   <% if existing_bet.present? %>
-    <div class="locked_bet_text">
-      <%= existing_bet.formatted_amount %>
-      <br/>
-      <span class="payout_ratio">(<%= existing_bet.formatted_payout_ratio %>)</span>
-    </div>
+    <% if bet.match.complete? %>
+      <% if existing_bet.payout > 0 %>
+        <div class="bet_payout won">
+          +<%= number_to_currency(existing_bet.payout) %>
+        </div>
+      <% else %>
+        <div class="bet_payout lost">
+          -<%= number_to_currency(existing_bet.amount) %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="locked_bet_text">
+        <%= existing_bet.label %>
+        <br/>
+        <span class="payout_ratio">(<%= existing_bet.formatted_payout_ratio %>)</span>
+      </div>
+    <% end %>
   <% else %>
     <%= image_tag("lock.png", class:"lock_image") %>
   <% end %>
@@ -23,7 +35,7 @@
   <% end %>
 
   <% if bet.is_a?(OverUnderBet) %>
-    <%= bet.label %>
+    <%= bet.submit_label %>
   <% end %>
 
   <p class="payout_ratio">
@@ -49,7 +61,7 @@
           <%= bet.payout_ratio %>
         </span>
         <p>
-          Wager: $<%= form.number_field :amount %>
+          Wager: $<%= form.number_field :amount, step: "any" %>
         </p>
         <p>
           To Win: $<span class="to_win_amount"><%= Bet.calculate_payout(5.0, bet.payout_ratio) %></span>

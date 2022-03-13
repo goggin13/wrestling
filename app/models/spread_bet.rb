@@ -58,4 +58,28 @@ class SpreadBet < Bet
       "#{match.away_wrestler.name} wins by #{match.spread} points"
     end
   end
+
+  def won?
+    return false unless match.complete?
+
+    if wager == "home" && match.spread < 0 # favored
+      (match.home_score - match.away_score) > match.spread.abs
+    elsif wager == "away" && match.spread < 0 # underdog
+      (match.home_score - match.away_score) < match.spread.abs
+    elsif wager == "home" && match.spread > 0 # underdog
+      (match.away_score - match.home_score) < match.spread.abs
+    elsif wager == "away" && match.spread > 0 # favorite
+      (match.away_score - match.home_score) > match.spread.abs
+    else
+      raise "won? fall through"
+    end
+  end
+
+  def money_back?
+    if match.spread < 0
+      (match.home_score - match.away_score) == match.spread.abs
+    elsif match.spread > 0
+      (match.away_score - match.home_score) == match.spread.abs
+    end
+  end
 end

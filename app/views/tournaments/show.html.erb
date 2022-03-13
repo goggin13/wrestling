@@ -8,8 +8,8 @@
 
 <div id="center-match-ups">
   <p>
-    Available Funds: 
-    <span id="user_balance"><%= number_to_currency(current_user.balance) %></span> 
+    Available Funds:
+    <span id="user_balance"><%= number_to_currency(current_user.balance) %></span>
   </p>
 
   <p class="notice"><%= notice %></p>
@@ -34,6 +34,13 @@
 
     <% @tournament_presenter.matches.order("weight ASC").each do |match| %>
       <li class="tournament-match-up <%= match.open? ? "open" : "closed" %>" data-match-id="<%= match.id %>">
+
+        <% if match.complete? %>
+          <p>
+            <%= match.winner.name %> wins
+            <%= [match.home_score, match.away_score].max %>-<%= [match.home_score, match.away_score].min %>
+          </p>
+        <% end %>
 
         <table>
           <tr class="first_row">

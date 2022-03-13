@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
   before_action :require_admin!
   before_action :set_match, only: [:show, :edit, :update, :destroy, :close, :open, :winner]
-  before_action :set_form_variables, only: [:edit, :new]
+  before_action :set_form_variables, only: [:edit, :new, :update, :create]
   skip_before_action :require_admin!, only: [:show]
   skip_before_action :authenticate_user!, only: [:show]
 

@@ -73,4 +73,20 @@ class Bet < ApplicationRecord
       match.away_wrestler
     end
   end
+
+  def set_payout!
+    if won?
+      self.payout = amount + Bet.calculate_payout(amount, payout_ratio)
+    elsif money_back?
+      self.payout = amount
+    else
+      self.payout = 0
+    end
+
+    self.save!(validate: false)
+  end
+
+  def lost?
+    complete? && !win? && !moneyback?
+  end
 end

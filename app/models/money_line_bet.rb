@@ -34,4 +34,15 @@ class MoneyLineBet < Bet
   def win_scenario
     "#{wrestler.name} wins"
   end
+
+  def won?
+    return false unless match.complete?
+
+    (wager == "home" && match.home_score > match.away_score) ||
+      (wager == "away" && match.away_score > match.home_score)
+  end
+
+  def money_back?
+    false
+  end
 end

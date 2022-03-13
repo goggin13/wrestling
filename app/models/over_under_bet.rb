@@ -12,7 +12,7 @@ class OverUnderBet < Bet
   end
 
   def label
-    submit_label
+    "#{formatted_amount} #{wager} #{match.over_under}"
   end
 
   def success_message
@@ -35,5 +35,19 @@ class OverUnderBet < Bet
 
   def moneyback_scenario
     "the combined score is equal to #{match.over_under}"
+  end
+
+  def won?
+    return false unless match.complete?
+
+    if wager == "over"
+      (match.home_score + match.away_score) > match.over_under
+    else
+      (match.home_score + match.away_score) < match.over_under
+    end
+  end
+
+  def money_back?
+    (match.home_score + match.away_score) == match.over_under
   end
 end

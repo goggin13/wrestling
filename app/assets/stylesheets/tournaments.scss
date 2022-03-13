@@ -148,3 +148,9 @@ h1 {
 #center-match-ups td img {
   width: 100px;
 }
+.bet_payout.won {
+  color: green;
+}
+.bet_payout.lost {
+  color: salmon;
+}
