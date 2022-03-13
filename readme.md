@@ -33,10 +33,10 @@ X prevent deleting a bet from a closed match
 X !!!Testing party!!!
 
 X handle closed matches in the UI
-- when the admin updates the scores for a match
-  - update all bets for the match
-    - if won, set payout
-    - add payout to user balance
+X when the admin updates the scores for a match
+  X update all bets for the match
+    X if won, set payout
+    X add payout to user balance
 X create subclass SpreadBet
 X create subclass OverUnderBet
 - create tournament leaderboard view

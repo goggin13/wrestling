@@ -61,7 +61,8 @@
           <%= bet.payout_ratio %>
         </span>
         <p>
-          Wager: $<%= form.number_field :amount, step: "any" %>
+          Available: $<%= current_user.balance %>
+          <br/>Wager: $<%= form.number_field :amount, step: "any" %>
         </p>
         <p>
           To Win: $<span class="to_win_amount"><%= Bet.calculate_payout(5.0, bet.payout_ratio) %></span>

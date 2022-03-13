@@ -9,6 +9,7 @@ RSpec.describe "Match", type: :request do
     @away_wrestler = FactoryBot.create(:wrestler)
     @match = FactoryBot.create(
       :match,
+      closed: true,
       tournament: @tournament,
       home_wrestler: @home_wrestler,
       away_wrestler: @away_wrestler,

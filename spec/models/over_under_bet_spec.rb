@@ -18,19 +18,19 @@ RSpec.describe OverUnderBet, type: :model do
   describe "won?" do
     describe "when over is wagered" do
       it "is true if the total is greater than the over" do
-        match = FactoryBot.create(:match, over_under: 10, home_score: 5, away_score: 10)
+        match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 5, away_score: 10)
         bet = FactoryBot.build(:bet, :over_under, match: match, wager: "over")
         expect(bet.won?).to eq(true)
       end
 
       it "is false if the total equals the over" do
-        match = FactoryBot.create(:match, over_under: 10, home_score: 4, away_score: 6)
+        match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 4, away_score: 6)
         bet = FactoryBot.build(:bet, :over_under, match: match, wager: "over")
         expect(bet.won?).to eq(false)
       end
 
       it "is false if the total is under the over" do
-        match = FactoryBot.create(:match, over_under: 10, home_score: 4, away_score: 3)
+        match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 4, away_score: 3)
         bet = FactoryBot.build(:bet, :over_under, match: match, wager: "over")
         expect(bet.won?).to eq(false)
       end
@@ -38,19 +38,19 @@ RSpec.describe OverUnderBet, type: :model do
 
     describe "when under is wagered" do
       it "is true if the total is less than the over_under" do
-        match = FactoryBot.create(:match, over_under: 10, home_score: 5, away_score: 4)
+        match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 5, away_score: 4)
         bet = FactoryBot.build(:bet, :over_under, match: match, wager: "under")
         expect(bet.won?).to eq(true)
       end
 
       it "is false if the total equals the over_under" do
-        match = FactoryBot.create(:match, over_under: 10, home_score: 4, away_score: 6)
+        match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 4, away_score: 6)
         bet = FactoryBot.build(:bet, :over_under, match: match, wager: "under")
         expect(bet.won?).to eq(false)
       end
 
       it "is false if the total is over the over_under" do
-        match = FactoryBot.create(:match, over_under: 10, home_score: 14, away_score: 3)
+        match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 14, away_score: 3)
         bet = FactoryBot.build(:bet, :over_under, match: match, wager: "under")
         expect(bet.won?).to eq(false)
       end
@@ -59,13 +59,13 @@ RSpec.describe OverUnderBet, type: :model do
 
   describe "money_back?" do
     it "is true if the score equals the over under" do
-      match = FactoryBot.create(:match, over_under: 10, home_score: 7, away_score: 3)
+      match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 7, away_score: 3)
       bet = FactoryBot.build(:bet, :over_under, match: match)
       expect(bet.money_back?).to eq(true)
     end
 
     it "is false if the score does not equal the over under" do
-      match = FactoryBot.create(:match, over_under: 10, home_score: 5, away_score: 3)
+      match = FactoryBot.create(:match, :closed, over_under: 10, home_score: 5, away_score: 3)
       bet = FactoryBot.build(:bet, :over_under, match: match)
       expect(bet.money_back?).to eq(false)
     end

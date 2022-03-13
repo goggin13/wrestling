@@ -8,11 +8,11 @@ RSpec.describe "Match", type: :model do
 
     it "calls settle_bets_for_match when a match is updated with home and away score" do
       expect(BetService).to receive(:settle_bets_for_match).with(@match)
-      @match.update!(home_score: 1, away_score: 2)
+      @match.update!(closed: true, home_score: 1, away_score: 2)
     end
 
     it "does not call settle_bets_for_match when a match is updated with the same home and away score" do
-      @match.update!(home_score: 1, away_score: 2)
+      @match.update!(closed: true, home_score: 1, away_score: 2)
       expect(BetService).to_not receive(:settle_bets_for_match).with(@match)
       @match.update!(home_score: 1, away_score: 2)
     end
@@ -24,13 +24,13 @@ RSpec.describe "Match", type: :model do
 
     it "does not call settle_bets_for_match if the match update is invalid" do
       expect(BetService).to_not receive(:settle_bets_for_match).with(@match)
-      @match.update(home_score: 1, away_score: 1)
+      @match.update(closed: true, home_score: 1, away_score: 1)
     end
   end
 
   describe "home_score, away_score" do
     it "is valid if both are set" do
-      match = Match.new(home_score: 1, away_score: 2)
+      match = Match.new(closed: true, home_score: 1, away_score: 2)
       match.save
       expect(match.errors[:home_score].length).to eq(0)
     end
@@ -43,27 +43,27 @@ RSpec.describe "Match", type: :model do
     end
 
     it "is valid if neither are set" do
-      match = Match.new(home_score: nil, away_score: nil)
+      match = Match.new(closed: true, home_score: nil, away_score: nil)
       match.save
       expect(match.errors[:home_score].length).to eq(0)
     end
 
     it "is invalid if only home_score is set" do
-      match = Match.new(home_score: nil, away_score: 2)
+      match = Match.new(closed:true, home_score: nil, away_score: 2)
       match.save
       expect(match.errors[:home_score][0]).to eq("home_score and away_score are both required")
       expect(match.errors[:away_score][0]).to eq("home_score and away_score are both required")
     end
 
     it "is invalid if only away_score is set" do
-      match = Match.new(home_score: 2, away_score: nil)
+      match = Match.new(closed: true, home_score: 2, away_score: nil)
       match.save
       expect(match.errors[:home_score][0]).to eq("home_score and away_score are both required")
       expect(match.errors[:away_score][0]).to eq("home_score and away_score are both required")
     end
 
     it "is invalid if home_score == away_score" do
-      match = Match.new(home_score: 2, away_score: 2)
+      match = Match.new(closed: true, home_score: 2, away_score: 2)
       match.save
       expect(match.errors[:home_score][0]).to eq("home_score and away_score must be different")
       expect(match.errors[:away_score][0]).to eq("home_score and away_score must be different")
