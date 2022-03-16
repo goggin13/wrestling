@@ -38,7 +38,7 @@ class MatchesController < ApplicationController
 
   # GET /matches/new
   def new
-    @match = Match.new
+    @match = Match.new(over_under: 10, spread: -1)
   end
 
   # GET /matches/1/edit
