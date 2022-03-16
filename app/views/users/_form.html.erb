@@ -11,9 +11,16 @@
     </div>
   <% end %>
 
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.text_field :email %>
+    </div>
+  <% end %>
+
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.label :display_name, "Display Name (max 25 characters)" %>
+    <%= form.text_field :display_name %>
   </div>
 
   <div class="field">

@@ -7,13 +7,10 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
   has_many :bets, dependent: :destroy
+  validates :display_name, length: {minimum: 4, maximum: 25}, allow_blank: false
 
   def admin?
     email == "goggin13@gmail.com"
-  end
-
-  def display_name
-    email.split("@")[0]
   end
 
   def encoded_email

@@ -29,5 +29,15 @@
     <% end %>
 
     <%= yield %>
+
+    <div id="footer">
+      <hr/>
+      <% if current_user.present? %>
+        <%= link_to "Betslip", tournament_path(Tournament.last) %>
+        <br/>
+        <%= link_to "Edit my Profile", edit_user_path(current_user) %>
+        <br/>
+      <% end %>
+    </div>
   </body>
 </html>

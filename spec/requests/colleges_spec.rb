@@ -25,6 +25,7 @@ RSpec.describe "/colleges", type: :request do
 
   before do
     user = FactoryBot.create(:user, email: "goggin13@gmail.com")
+    FactoryBot.create(:tournament)
     sign_in(user)
   end
 
