@@ -19,7 +19,9 @@ namespace :staging do
       "lucaslemanski2@gmail.com",
       "choy.ash831@gmail.com",
       "cookediana@gmail.com",
-      "erinumhoefer@gmail.com"
+      "erinumhoefer@gmail.com",
+      "person1@gmail.com",
+      "person2@gmail.com"
     ].each do |email|
       password = SecureRandom.hex(8)
       User.create!(
@@ -33,8 +35,37 @@ namespace :staging do
     puts "Added #{User.count} users"
   end
 
-  desc "TODO"
+  desc "Add random bets"
   task bets: :environment do
+    Bet.destroy_all
+    User.update(balance: 100)
+    Tournament.first.matches.each do |match|
+      match.update_columns(closed: false, home_score: nil, away_score: nil)
+      User.all.each do |user|
+        wager = ["home", "away"].shuffle.first
+        amount = (1..10).to_a.shuffle.first
+        bet = nil
+        i = [0,1,2].shuffle.first
+        if i == 0
+          bet = MoneyLineBet.new(user: user, match: match, amount: amount, wager: wager)
+        elsif i == 1
+          bet = SpreadBet.new(user: user, match: match, amount: amount, wager: wager)
+        elsif i == 2
+          wager = wager == "away" ? "over" : "under"
+          bet = OverUnderBet.new(user: user, match: match, amount: amount, wager: wager)
+        end
+
+        bet = Bet.save_and_charge_user(bet)
+        if bet.id.present?
+          puts "Created #{bet.title} : #{user.reload.balance}"
+        else
+          bet.errors.each do |field, message|
+            puts("Failed to save bet: #{field}-#{message}")
+          end
+          raise "failed to save bet"
+        end
+      end
+    end
   end
 
   desc "Setup Tournament"

@@ -4,33 +4,44 @@ class Leaderboard
   end
 
   def results
-    ranked_overall_payouts = overall_payouts.sort_by{ |k,v| v }.reverse
+    ranked_users = user_balances.sort_by do |user_data|
+      user_data[:balance]
+    end.reverse
 
-    results = {}
-    current_rank = 0
-    last_payout = 999999
-    ranked_overall_payouts.each do |user_id, payout|
-      if payout < last_payout
-        current_rank += 1
+    results = []
+    previous_rank = 0
+    previous_balance = 999999
+    ranked_users.each_with_index do |user_data, index|
+      rank = if user_data[:balance] == previous_balance
+        previous_rank
+      else
+        index + 1
       end
-      results[current_rank] ||= []
-      results[current_rank] << [User.find(user_id), payout]
-      last_payout = payout
+
+      user_data[:rank] = rank
+      results << user_data
+
+      previous_balance = user_data[:balance]
+      previous_rank = user_data[:rank]
     end
 
     results
   end
 
-  def overall_payouts
-    return @_overall_payouts if defined?(@overall_payouts)
+  def user_balances
+    return @_user_balances if defined?(@_user_balances)
+    match_ids = @tournament.matches.map(&:id)
 
-    @overall_payouts = @tournament.matches.inject({}) do |overall_payouts, match|
-      match.payouts.each do |user_id, match_payout|
-        overall_payouts[user_id] ||= 0
-        overall_payouts[user_id] += match_payout
-      end
+    @_user_balances = User.all.map do |user|
+      next if user.bets.where(match_id: match_ids).count() == 0
 
-      overall_payouts
-    end
+      pending_bet_balance = user.bets
+        .where(payout: nil)
+        .where(match_id: match_ids)
+        .map(&:amount)
+        .sum
+
+      {user: user, balance: user.balance + pending_bet_balance}
+    end.compact
   end
 end

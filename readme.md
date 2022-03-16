@@ -39,15 +39,15 @@ X when the admin updates the scores for a match
     X add payout to user balance
 X create subclass SpreadBet
 X create subclass OverUnderBet
-- create tournament leaderboard view
-  - list of users with balance
-  - live update as balances change 
-  - display current match
-  - once current match is closed
-    - display user avatars alongside current match
-- create ledger of bets per user
-  - Ledger (user_id, bet_id, change, balance, description)
-  - create ledger entry every time user balance is changed
+X create tournament leaderboard view
+  X list of users with balance
+  X live update as balances change 
+  X display current match
+  X once current match is closed
+    X display user avatars alongside current match
+X create ledger of bets per user
+  X Ledger (user_id, bet_id, change, balance, description)
+  X create ledger entry every time user balance is changed
 - blow away old data on live site
 - deploy and test
 - more cypress tests

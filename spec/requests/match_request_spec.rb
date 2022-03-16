@@ -16,6 +16,20 @@ RSpec.describe "Match", type: :request do
     )
   end
 
+  describe "GET /matches/id.json" do
+    before do
+      sign_in(@user)
+    end
+
+    it "returns data about the match" do
+      get "/matches/#{@match.id}.json"
+      expect(response.status).to eq(200)
+      body = JSON.parse(response.body)
+
+      expect(body["id"]).to eq(@match.id)
+    end
+  end
+
   describe "PUT /matches/id.json" do
     before do
       sign_in(@admin_user)

@@ -5,9 +5,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one_attached :avatar
+  has_many :bets, dependent: :destroy
 
   def admin?
     email == "goggin13@gmail.com"
+  end
+
+  def display_name
+    email.split("@")[0]
   end
 
   def encoded_email

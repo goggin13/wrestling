@@ -43,19 +43,6 @@ class Match < ApplicationRecord
     end
   end
 
-  def payouts
-    return {} unless winner.present?
-
-    winning_bet = winner_id == home_wrestler_id ? "home" : "away"
-    losing_bet = winner_id == home_wrestler_id ? "away" : "home"
-
-    bets.inject({}) do |acc, bet|
-      acc[bet.user_id] = bet.won? ? Bet::PER_MATCH : 0
-
-      acc
-    end
-  end
-
   def validate_scores
     if home_score.present? && !closed?
       errors.add(:home_score, "match is not closed")

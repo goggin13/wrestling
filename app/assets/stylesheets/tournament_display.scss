@@ -1,0 +1,58 @@
+#leaderboard {
+  width: 500px;
+  margin: auto;
+  list-style: none;
+}
+
+.leaderboard_data {
+  display: none;
+}
+
+#leaderboard td {
+  font-size: 20px;
+  padding-top: 15px;
+  height: 51px;
+}
+
+body.display {
+  padding: 10px;
+  background-image: image-url("wrestling-background.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding-top: 50px;
+}
+
+#wrestler_away {
+  float: left;
+}
+
+#wrestler_home {
+  float: right;
+}
+
+#wrestler_away,
+#wrestler_home {
+  width: 500px;
+}
+
+.wrestler_name {
+  font-size: 40px;
+  text-align: center;
+}
+
+.fatality {
+  display: none;
+}
+#wrestler_home .fatality {
+  margin-left: -225px;
+}
+
+.user_bets li {
+  list-style: none;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}

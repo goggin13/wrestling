@@ -145,10 +145,5 @@ RSpec.describe "Tournament", type: :feature do
       expect(page).to have_content("Kyle Dake")
       expect(page).to have_content("Frank Chamizo")
     end
-
-    it "shows no current match" do
-      visit tournament_display_path(@tournament)
-      expect(page).to have_content("#{@tournament.name} is not in session")
-    end
   end
 end
