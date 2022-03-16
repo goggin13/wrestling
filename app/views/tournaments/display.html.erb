@@ -9,9 +9,9 @@
     <%= javascript_pack_tag 'display', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body 
-    class="display" 
-    data-tournament-id="<%= @tournament.id %>" 
+  <body
+    class="display"
+    data-tournament-id="<%= @tournament.id %>"
     data-match-id="<%= @match.present? ? @match.id : -1 %>">
 
 
@@ -22,7 +22,12 @@
 
         <div class="fatality"><%= random_fatality %></div>
 
-        <p class="wrestler_name"><%= @match.away_wrestler.name %></p> 
+        <p class="wrestler_name">
+          <%= @match.away_wrestler.name %>
+        </p>
+        <p class="wrestler_college_logo">
+          <%= college_logo(@match.away_wrestler.college) %>
+        </p>
 
         <ul class="user_bets"`>
           <% @away_bets.each do |bet| %>
@@ -38,7 +43,12 @@
       <div id="wrestler_home">
         <%= avatar(@match.home_wrestler, size: "500x500", class: "wrestler_avatar") %><br/>
         <div class="fatality"><%= random_fatality %></div>
-        <p class="wrestler_name"><%= @match.home_wrestler.name %></p> 
+        <p class="wrestler_name">
+          <%= @match.home_wrestler.name %>
+        </p>
+        <p class="wrestler_college_logo">
+          <%= college_logo(@match.home_wrestler.college) %>
+        </p>
         <ul class="user_bets"`>
           <% @home_bets.each do |bet| %>
             <li>
