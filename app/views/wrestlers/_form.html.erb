@@ -24,7 +24,7 @@
 
   <div class="field">
     <%= form.label :college %>
-    <%= form.collection_select(:college_id, College.all, :id, :name, :include_blank => true) %>
+    <%= form.collection_select(:college_id, College.order("name asc").all, :id, :name, :include_blank => true) %>
   </div>
 
   <div class="field">
