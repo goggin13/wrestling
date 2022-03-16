@@ -62,7 +62,9 @@
         </span>
         <p>
           Available: <span class="user_balance">$<%= current_user.balance %></span>
-          <br/>Wager: $<%= form.number_field :amount, step: "any" %>
+        </p>
+        <p>
+          Wager: $<%= form.number_field :amount, step: "any" %>
         </p>
         <p>
           To Win: $<span class="to_win_amount"><%= Bet.calculate_payout(5.0, bet.payout_ratio) %></span>
