@@ -43,6 +43,16 @@ RSpec.describe "/users", type: :request do
       get user_url(user)
       expect(response).to be_successful
     end
+
+    it "returns JSON with the users balance for any user" do
+      user = User.create! valid_attributes.merge(balance: 90)
+      sign_in(user)
+      get "#{user_url(user)}.json"
+      expect(response).to be_successful
+      json = JSON.parse(response.body)
+      expect(json["balance"]).to eq(90.00)
+      expect(json["formatted_balance"]).to eq("$90.00")
+    end
   end
 
   describe "GET /new" do

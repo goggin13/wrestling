@@ -39,7 +39,7 @@ namespace :staging do
   task bets: :environment do
     Bet.destroy_all
     User.update(balance: 100)
-    Tournament.first.matches.each do |match|
+    Tournament.last.matches.each do |match|
       match.update_columns(closed: false, home_score: nil, away_score: nil)
       User.all.each do |user|
         wager = ["home", "away"].shuffle.first

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
@@ -17,5 +18,9 @@ class User < ApplicationRecord
 
   def encoded_email
     Base64.encode64(email).chomp
+  end
+
+  def formatted_balance
+    number_to_currency(balance)
   end
 end

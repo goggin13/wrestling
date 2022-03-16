@@ -61,7 +61,7 @@
           <%= bet.payout_ratio %>
         </span>
         <p>
-          Available: $<%= current_user.balance %>
+          Available: <span class="user_balance">$<%= current_user.balance %></span>
           <br/>Wager: $<%= form.number_field :amount, step: "any" %>
         </p>
         <p>

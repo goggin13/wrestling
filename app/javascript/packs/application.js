@@ -49,6 +49,27 @@ $(document).on('turbolinks:load', function () {
     $(this).hide();
     $bet_pop_up_content.find(":submit").click();
   });
+
+  pollForBalanceChange();
 });
 
+var pollForBalanceChange = function () {
+  var userId = $("#user_id").html();
+  var currentBalance = $("#user_balance").html();
+  $.getJSON("/users/" + userId + ".json", function (user) {
+    console.log(user);
+    var formattedNewBalance = user.formatted_balance;
+    if (formattedNewBalance != currentBalance) {
+      displayNewBalance(formattedNewBalance);
+    }
+    setTimeout(pollForBalanceChange, 5000);
+  });
+}
 
+var displayNewBalance = function (newBalance) {
+  console.log("update balance");
+  $("#user_balance").fadeOut("slow", function () {
+    $(".user_balance").html(newBalance);
+    $("#user_balance").fadeIn("slow");
+  });
+}

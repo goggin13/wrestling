@@ -45,8 +45,8 @@ X create tournament leaderboard view
   X display current match
   X once current match is closed
     X display user avatars alongside current match
-- blow away old data on live site
-- deploy and test
+X blow away old data on live site
+X deploy and test
 - more cypress tests
 
 # Further AddOns
