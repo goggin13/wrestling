@@ -45,17 +45,15 @@ X create tournament leaderboard view
   X display current match
   X once current match is closed
     X display user avatars alongside current match
-X create ledger of bets per user
-  X Ledger (user_id, bet_id, change, balance, description)
-  X create ledger entry every time user balance is changed
 - blow away old data on live site
 - deploy and test
 - more cypress tests
 
 # Further AddOns
+- create ledger of changes to user balance
+- make fatalaties an associated object w/avatar
 - animation to tournament show page when you receive more funds
 - slider to adjust amount to bet
-- make fatalaties an associated object w/avatar
 - upgrade rails
 - prop bets
 - fix overunder wager hack
