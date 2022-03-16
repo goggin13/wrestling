@@ -33,10 +33,12 @@
     <div id="footer">
       <hr/>
       <% if current_user.present? %>
-        <%= link_to "Betslip", tournament_path(Tournament.last) %>
-        <br/>
-        <%= link_to "Edit my Profile", edit_user_path(current_user) %>
-        <br/>
+        <p>
+          <%= link_to "Betslip", tournament_path(Tournament.last) %>
+        </p>
+        <p>
+          <%= link_to "Edit my Profile", edit_user_path(current_user) %>
+        </p>
       <% end %>
     </div>
   </body>
