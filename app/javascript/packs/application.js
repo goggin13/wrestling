@@ -55,6 +55,10 @@ $(document).on('turbolinks:load', function () {
 
 var pollForBalanceChange = function () {
   var userId = $("#user_id").html();
+  if (userId == undefined) {
+    return;
+  }
+
   var currentBalance = $("#user_balance").html();
   $.getJSON("/users/" + userId + ".json", function (user) {
     console.log(user);
