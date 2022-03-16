@@ -20,12 +20,14 @@ namespace :staging do
       "choy.ash831@gmail.com",
       "cookediana@gmail.com",
       "erinumhoefer@gmail.com",
+      "emsitterley@gmail.com",
       "person1@gmail.com",
       "person2@gmail.com"
     ].each do |email|
       password = SecureRandom.hex(8)
       User.create!(
         :email => email,
+        :display_name => email.split("@")[0],
         :password => password,
         :password_confirmation => password,
         :balance => 100
