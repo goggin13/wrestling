@@ -1,5 +1,5 @@
 class Tournament < ApplicationRecord
-  has_many :matches, dependent: :destroy, order: "weight ASC"
+  has_many :matches, -> { order(weight: :asc) }, dependent: :destroy
   before_save :close_current_match
 
   def current_match
