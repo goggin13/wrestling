@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :bets, dependent: :destroy
   validates :display_name, length: {minimum: 4, maximum: 25}, allow_blank: false
 
+  INITIAL_BALANCE=100.0
+
   def admin?
     email == "goggin13@gmail.com"
   end

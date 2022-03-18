@@ -62,4 +62,17 @@ div.actions {
   list-style: square; }
 
 label {
-  display: block; }
+  display: block; 
+}
+
+tr.won {
+  background: lightgreen;
+}
+
+tr.lost {
+  background: salmon;
+}
+
+tr.pending {
+  background: lightgray;
+}

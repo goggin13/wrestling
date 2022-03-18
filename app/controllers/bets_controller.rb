@@ -5,7 +5,12 @@ class BetsController < ApplicationController
 
   # GET /bets or /bets.json
   def index
-    @bets = Bet.all
+    if params[:user_id].present?
+      @user = User.find(params[:user_id])
+      @bets = @user.bets.all
+    else
+      @bets = Bet.all
+    end
   end
 
   # GET /bets/1 or /bets/1.json

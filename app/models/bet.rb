@@ -90,7 +90,27 @@ class Bet < ApplicationRecord
     payout - amount
   end
 
+  def won_lost_pending
+    if payout.nil?
+      "pending"
+    elsif payout == 0
+      "lost"
+    else
+      "won"
+    end
+  end
+
   def lost?
     complete? && !win? && !moneyback?
+  end
+
+  def to_sum
+    if payout.nil?
+      amount
+    elsif payout == 0
+      amount * -1
+    else
+      net_payout
+    end
   end
 end

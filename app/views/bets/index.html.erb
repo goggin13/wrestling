@@ -1,34 +1,62 @@
 <% content_for :header do %>
+  <% if @user.present? %>
+    <%= @user.display_name %>
+  <% end %> 
   Bets
 <% end %>
 
 <table>
   <thead>
     <tr>
-      <th>User</th>
-      <th>Matches</th>
-      <th>Type</th>
-      <th>Amount</th>
-      <th>Wager</th>
-      <th>Payout</th>
       <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
+    <% winnings = 0 %>
+    <% pending_bets = 0 %>
     <% @bets.each do |bet| %>
-      <tr>
-        <td><%= bet.user_id %></td>
-        <td><%= bet.match_id %></td>
-        <td><%= bet.type %></td>
-        <td><%= bet.amount %></td>
-        <td><%= bet.wager %></td>
-        <td><%= bet.payout %></td>
-        <td><%= link_to 'Show', bet %></td>
-        <td><%= link_to 'Destroy', bet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr class="<%= bet.won_lost_pending %>">
+        <td><%= bet.user.display_name %></td>
+        <td><%= bet.match.title %></td>
+        <td>
+          <% if bet.payout.present? %>
+            <% winnings += bet.net_payout %>
+            <%= number_to_currency(bet.net_payout) %> <%= bet.type %>
+          <% else %>
+            <% pending_bets += bet.amount %>
+            <%= number_to_currency(bet.amount) %> <%= bet.type %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
+
+    <% if @user %>
+      <tr>
+        <td>Initial Balance</td><td><%= number_to_currency(User::INITIAL_BALANCE) %></td>
+      </tr>
+      <tr>
+        <td>Winnings</td><td><%= number_to_currency(winnings) %></td>
+      </tr>
+      <tr>
+        <td>Pending Bets</td><td><%= number_to_currency(pending_bets) %></td>
+      </tr>
+      <tr>
+        <td>Current Balance</td><td><%= @user.formatted_balance %></td>
+      </tr>
+      <tr>
+        <td>
+          Initial Balance + Winnings = Pending Bets + Current Balance
+          <br/>
+          <%= number_to_currency(User::INITIAL_BALANCE) %> + <%= number_to_currency(winnings) %> = <%= number_to_currency(pending_bets) %> + <%= @user.formatted_balance %>
+          <br/>
+          <%= number_to_currency(User::INITIAL_BALANCE + winnings) %> = <%= number_to_currency(pending_bets + @user.balance) %>
+        </td>
+      </tr>
+    <% end %>
+
   </tbody>
+
 </table>
 
 <br>
