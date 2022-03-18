@@ -86,6 +86,10 @@ class Bet < ApplicationRecord
     self.save!(validate: false)
   end
 
+  def net_payout
+    payout - amount
+  end
+
   def lost?
     complete? && !win? && !moneyback?
   end

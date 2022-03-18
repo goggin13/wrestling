@@ -16,6 +16,11 @@
     <%= form.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= form.label :in_session %>
+    <%= form.check_box(:in_session) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

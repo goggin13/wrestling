@@ -41,11 +41,12 @@ namespace :staging do
   task bets: :environment do
     Bet.destroy_all
     User.update(balance: 100)
-    Tournament.last.matches.each do |match|
+    Tournament.current.matches.each do |match|
       match.update_columns(closed: false, home_score: nil, away_score: nil)
       User.all.each do |user|
         wager = ["home", "away"].shuffle.first
         amount = (1..10).to_a.shuffle.first
+        amount = 10
         bet = nil
         i = [0,1,2].shuffle.first
         if i == 0
@@ -59,13 +60,51 @@ namespace :staging do
 
         bet = Bet.save_and_charge_user(bet)
         if bet.id.present?
-          puts "Created #{bet.title} : #{user.reload.balance}"
+          puts "#{user.display_name} - #{bet.title}"
         else
           bet.errors.each do |field, message|
             puts("Failed to save bet: #{field}-#{message}")
           end
           raise "failed to save bet"
         end
+      end
+    end
+  end
+
+  desc "roll users money to next bet"
+  task roll_forward: :environment do
+    match = Tournament.current.matches.where(closed: :false).order("weight ASC").first!
+    puts "Next Match: #{match.title}"
+    User.all.each do |user|
+      puts "#{user.display_name}: #{user.formatted_balance}"
+      next if user.balance == 0
+
+      wager = ["home", "away"].shuffle.first
+      amount = user.balance
+      bet = nil
+      i = [0,1,2].shuffle.first
+      if i == 0
+        bet = MoneyLineBet.new(user: user, match: match, amount: amount, wager: wager)
+      elsif i == 1
+        bet = SpreadBet.new(user: user, match: match, amount: amount, wager: wager)
+      elsif i == 2
+        wager = wager == "away" ? "over" : "under"
+        bet = OverUnderBet.new(user: user, match: match, amount: amount, wager: wager)
+      end
+
+      if (existing_bet = Bet.where(match: match, user: user, type: bet.class.name).first).present?
+        puts "\trm #{existing_bet.title}"
+        existing_bet.destroy
+      end
+
+      bet = Bet.save_and_charge_user(bet)
+      if bet.id.present?
+        puts "\t#{bet.title}"
+      else
+        bet.errors.each do |field, message|
+          puts("Failed to save bet: #{field}-#{message}")
+        end
+        raise "failed to save bet"
       end
     end
   end

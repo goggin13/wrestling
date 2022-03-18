@@ -34,7 +34,7 @@
       <hr/>
       <% if current_user.present? && current_user.admin? %>
         <p>
-          <%= link_to "Betslip", tournament_path(Tournament.last) %>
+          <%= link_to "Betslip", tournament_path(Tournament.current) %>
         </p>
         <p>
           <%= link_to "Edit my Profile", edit_user_path(current_user) %>

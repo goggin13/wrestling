@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-		@tournament = Tournament.last!
+		@tournament = Tournament.current
   end
 
   # GET /users/1

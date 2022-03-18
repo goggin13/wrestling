@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def require_admin!
     unless current_user && current_user.admin?
-      redirect_to tournament_path(Tournament.first!)
+      redirect_to tournament_path(Tournament.current)
     end
   end
 end

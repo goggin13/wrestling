@@ -6,7 +6,7 @@
     <% if bet.match.complete? %>
       <% if existing_bet.payout > 0 %>
         <div class="bet_payout won">
-          +<%= number_to_currency(existing_bet.payout) %>
+          +<%= number_to_currency(existing_bet.net_payout) %>
         </div>
       <% else %>
         <div class="bet_payout lost">
