@@ -13,10 +13,30 @@ RSpec.describe "Leaderboard", type: :model do
       FactoryBot.create(:bet, match: @match, user: @user, amount: 10, payout: nil)
       FactoryBot.create(:bet, match: @match, user: @other_user, amount: 10, payout: nil)
       results = Leaderboard.new(@tournament).results
-      expect(results).to eq([
-        {user: @other_user, rank: 1, balance: 160},
-        {user: @user, rank: 2, balance: 110}
-      ])
+
+      expect(results[0][:user]).to eq(@other_user)
+      expect(results[0][:rank]).to eq(1)
+      expect(results[0][:balance]).to eq(160)
+
+      expect(results[1][:user]).to eq(@user)
+      expect(results[1][:rank]).to eq(2)
+      expect(results[1][:balance]).to eq(110)
+    end
+
+    it "returns take_home payouts and percentages" do
+      FactoryBot.create(:bet, match: @match, user: @user, amount: 10, payout: nil)
+      FactoryBot.create(:bet, match: @match, user: @other_user, amount: 10, payout: nil)
+      results = Leaderboard.new(@tournament).results
+
+      user_1_pct = 160.0 / (160 + 110)
+      expect(results[0][:user]).to eq(@other_user)
+      expect(results[0][:percentage]).to eq(user_1_pct)
+      expect(results[0][:take_home]).to eq((user_1_pct * 20).floor + 1)
+
+      user_2_pct = 110.0 / (160 + 110)
+      expect(results[1][:user]).to eq(@user)
+      expect(results[1][:percentage]).to eq(user_2_pct)
+      expect(results[1][:take_home]).to eq((user_2_pct * 20).floor)
     end
 
     it "includes outstanding bet amounts" do
@@ -44,10 +64,11 @@ RSpec.describe "Leaderboard", type: :model do
       FactoryBot.create(:bet, match: @match, user: @other_user, amount: 10, payout: 0)
       FactoryBot.create(:bet, match: @match, user: third_place_user, amount: 10, payout: 0)
       results = Leaderboard.new(@tournament).results
+
       expect(results).to eq([
-        {user: @other_user, rank: 1, balance: 100},
-        {user: @user, rank: 1, balance: 100},
-        {user: third_place_user, rank: 3, balance: 40},
+        {user: @other_user, rank: 1, balance: 100, percentage: 100.0 / 240, take_home: 13.0},
+        {user: @user, rank: 1, balance: 100, percentage: 100.0 / 240, take_home: 12.0},
+        {user: third_place_user, rank: 3, balance: 40, percentage: 40.0 / 240, take_home: 5.0},
       ])
     end
   end

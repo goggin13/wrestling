@@ -2,6 +2,7 @@ class BetsController < ApplicationController
   before_action :set_bet, only: %i[ show edit update destroy ]
   before_action :validate_current_user_owns_bet, only: :destroy
   before_action :validate_bet_match_is_open, only: :destroy
+  before_action :reject_while_settling_bets, only: [:destroy, :create]
 
   # GET /bets or /bets.json
   def index
@@ -77,6 +78,12 @@ class BetsController < ApplicationController
     def validate_bet_match_is_open
       unless @bet.match.open?
         redirect_to tournament_url(@bet.match.tournament), alert: "That match is closed for betting"
+      end
+    end
+
+    def reject_while_settling_bets
+      if Tournament.current.bets_settling?
+        redirect_to tournament_url(Tournament.current), alert: "Bets are currently being settled; please try again"
       end
     end
 end
