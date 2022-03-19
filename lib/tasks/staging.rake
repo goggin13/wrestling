@@ -94,7 +94,7 @@ namespace :staging do
 
       if (existing_bet = Bet.where(match: match, user: user, type: bet.class.name).first).present?
         puts "\trm #{existing_bet.title}"
-        existing_bet.destroy
+        Bet.delete_and_refund_user(existing_bet)
       end
 
       bet = Bet.save_and_charge_user(bet)
