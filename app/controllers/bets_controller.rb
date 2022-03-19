@@ -7,9 +7,9 @@ class BetsController < ApplicationController
   def index
     if params[:user_id].present?
       @user = User.find(params[:user_id])
-      @bets = @user.bets.all
+      @bets = @user.bets.order("updated_at DESC").all
     else
-      @bets = Bet.all
+      @bets = Bet.order("updated_at DESC").all
     end
   end
 
