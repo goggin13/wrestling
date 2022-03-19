@@ -11,6 +11,8 @@ class BetsController < ApplicationController
     else
       @bets = Bet.order("updated_at DESC").all
     end
+
+    @bets = @bets.sort_by { |b| b.match.weight }
   end
 
   # GET /bets/1 or /bets/1.json

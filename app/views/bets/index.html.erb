@@ -6,19 +6,17 @@
 <% end %>
 
 <table>
-  <thead>
-    <tr>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
   <tbody>
     <% winnings = 0 %>
     <% pending_bets = 0 %>
     <% @bets.each do |bet| %>
       <tr class="<%= bet.won_lost_pending %>">
-        <td><%= bet.user.display_name %></td>
+        <td><%= bet.match.weight %> lbs</td>
+         <% if @user.nil? %>
+          <td><%= bet.user.display_name %></td>
+        <% end %>
         <td><%= bet.match.title %></td>
+        <td><%= bet.title %></td>
         <td>
           <% if bet.payout.present? %>
             <% winnings += bet.net_payout %>
