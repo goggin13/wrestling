@@ -80,22 +80,24 @@ namespace :staging do
       next if user.balance == 0
 
       wager = ["home", "away"].shuffle.first
-      amount = user.balance
       bet = nil
       i = [0,1,2].shuffle.first
       if i == 0
-        bet = MoneyLineBet.new(user: user, match: match, amount: amount, wager: wager)
+        bet = MoneyLineBet.new(user: user, match: match, wager: wager)
       elsif i == 1
-        bet = SpreadBet.new(user: user, match: match, amount: amount, wager: wager)
+        bet = SpreadBet.new(user: user, match: match, wager: wager)
       elsif i == 2
         wager = wager == "away" ? "over" : "under"
-        bet = OverUnderBet.new(user: user, match: match, amount: amount, wager: wager)
+        bet = OverUnderBet.new(user: user, match: match, wager: wager)
       end
 
       if (existing_bet = Bet.where(match: match, user: user, type: bet.class.name).first).present?
         puts "\trm #{existing_bet.title}"
         Bet.delete_and_refund_user(existing_bet)
       end
+
+      bet.user.reload
+      bet.amount = bet.user.balance
 
       bet = Bet.save_and_charge_user(bet)
       if bet.id.present?

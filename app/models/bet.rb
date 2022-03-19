@@ -15,6 +15,7 @@ class Bet < ApplicationRecord
     Bet.transaction do
       return bet unless bet.save
 
+      bet.user.reload
       bet.user.balance -= bet.amount
       bet.user.save!
 
@@ -26,6 +27,7 @@ class Bet < ApplicationRecord
 
   def self.delete_and_refund_user(bet)
     Bet.transaction do
+      bet.user.reload
       bet.user.balance += bet.amount
       bet.destroy
       bet.user.save!
@@ -98,10 +100,6 @@ class Bet < ApplicationRecord
     else
       "won"
     end
-  end
-
-  def lost?
-    complete? && !win? && !moneyback?
   end
 
   def to_sum
