@@ -63,12 +63,18 @@ https://www.sportslogos.net/teams/list_by_league/85/National_Collegiate_Athletic
 
 # Setting up development
 ```
+create .aws file
+AWS_ACCESS_KEY_ID=<wrastling_uploader 1pass>
+AWS_SECRET_ACCESS_KEY=<wrastling_uploader 1pass>
+
 ./docker/tag_and_build.sh
+./docker/start_app.sh
 ./docker/exec.sh
-bundle exec rake db:test:prepare
-bundle exec rspec --fail-fast
-RAILS_ENV=development bundle exec rails runner script/add_users.rb
-RAILS_ENV=development bundle exec rails runner script/setup_exhibition_tournament.rb
+RAILS_ENV=development bundle exec rake db:migrate
+RAILS_ENV=test bundle exec rake db:test:prepare
+RAILS_ENV=development bundle exec rails webpacker:install
+RAILS_ENV=test bundle exec rspec --fail-fast
+RAILS_ENV=development bundle exec rake staging:users staging:tournament
 ```
 
 tournament

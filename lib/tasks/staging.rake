@@ -6,8 +6,10 @@ namespace :staging do
 
     User.create!(
       :email => "goggin13@gmail.com",
+      :display_name => "goggin13",
       :password => "password",
       :password_confirmation => "password",
+      :balance => 10,
     )
 
     [
@@ -40,7 +42,7 @@ namespace :staging do
   desc "Add random bets"
   task bets: :environment do
     Bet.destroy_all
-    User.update(balance: 100)
+    User.update(balance: 10)
     Tournament.current.matches.each do |match|
       match.update_columns(closed: false, home_score: nil, away_score: nil)
       User.all.each do |user|
@@ -113,92 +115,37 @@ namespace :staging do
 
   desc "Setup Tournament"
   task tournament: :environment do
-    tournament = Tournament.find_or_create_by(name: "Dake vs. Chamizo")
+    Tournament.destroy_all
+    Match.destroy_all
+    Bet.destroy_all
+    tournament = Tournament.find_or_create_by(name: "2023 NCAA")
+    cornell = College.find_or_create_by!(name: "Cornell")
 
-    wrestlers = [
-      {
-        name: "Kyle Dake",
-        college: "Cornell",
-        college_year: 2013,
-        bio: "2x World Champion\n4x NCAA Champion\n2020 Olympic Team Trials Qualifier"
-      },
-      {
-        name: "Frank Chamizo",
-        bio: "2x World Champion\nWorld runner-up\nWorld bronze\nOlympic Bronze Medalist"
-      },
-      {
-        name: "Darrion Caldwell",
-        college: "North Carolina State University",
-        college_year: 2009,
-        bio: "NCAA Champion\nCurrent Bellator MMA Fighter"
-      },
-      {
-        name: "Luke Pletcher",
-        college: "Ohio State University",
-        college_year: 2020,
-        bio: "2x NCAA All-American\n1st seed @ cancelled 2020 NCAAs\nCoach @ University of Pittsburgh"
-      },
-      {
-        name: "Jack Mueller",
-        college: "University of Virginia",
-        college_year: 2020,
-        bio: "2x NCAA All American\n4 seed @ cancelled 2020 NCAAs",
-      },
-      {
-        name: "Roman Bravo Young",
-        college: "Penn State University",
-        college_year: 2022,
-        bio: "NCAA all american as a true freshman\n5 seed @ cancelled 2020 NCAAs",
-      },
-      {
-        name: "Vito Arujau",
-        college: "Cornell",
-        college_year: 2023,
-        bio: "33-4, 4th @ NCAA as true freshman\nRedshirt 2020 season to train for Olympics\n2020 Olympic Team Trials Qualifier",
-      },
-      {
-        name: "Sammy Alvarez",
-        college: "Rutgers",
-        college_year: 2024,
-        bio: "10th seed @ cancelled 2020 NCAAs",
-      },
-      {
-        name: "David Taylor",
-        college: "Penn State University",
-        college_year: 2014,
-        bio: "World Champion\n2x NCAA champion, 2x runner-up\n2020 Olympic Team Trials Qualifier",
-      },
-      {
-        name: "Myles Martin",
-        college: "Ohio State University",
-        college_year: 2019,
-        bio: "NCAA Champion\n4x NCAA all-american\n2020 Olympic Team Trials Qualifier",
-      }
-    ]
-
-    wrestlers.each do |w|
-      if Wrestler.where(name: w[:name]).count == 0
-        if w.has_key?(:college)
-          w[:college] = College.find_or_create_by!(name: w[:college])
-        end
-        Wrestler.create!(w)
-      end
-    end
+    wrestler_data = {
+      college: cornell,
+      college_year: 2023,
+      bio: "33-4, 4th @ NCAA as true freshman\nRedshirt 2020 season to train for Olympics\n2020 Olympic Team Trials Qualifier",
+    }
 
     matches = [
-      ["Kyle Dake", "Frank Chamizo"],
-      ["Darrion Caldwell", "Luke Pletcher"],
-      ["Jack Mueller", "Roman Bravo Young"],
-      ["Vito Arujau", "Sammy Alvarez"],
-      ["David Taylor", "Myles Martin"]
+      ["Spencer Lee", "Pat Glory"],
+      ["Roman Bravo-Young", "Daton Fix"],
+      ["Real Woods", "Andrew Alirez"],
+      ["Yianni Diakomihalis", "Sammy Sasso"],
+      ["Austin O`Connor", "Levi Haines"],
+      ["David Carr", "Keegan O`Toole"],
+      ["Carter Starocci", "Mikey Labriola"],
+      ["Parker Keckeisen", "Aaron Brooks"],
+      ["Nino Bonaccorsi", "Rocky Elam"],
+      ["Mason Parris", "Greg Kerkvliet"],
     ]
 
     tournament.matches.destroy_all
-    weights = [125, 133, 141, 149, 157, 165, 174]
+    weights = [125, 133, 141, 149, 157, 165, 174, 184, 197, 285]
     i = 0
     matches.each do |home, away|
-      home_wrestler = Wrestler.where(name: home).first!
-      away_wrestler = Wrestler.where(name: away).first!
+      home_wrestler = Wrestler.find_or_create_by!(wrestler_data.merge(name: home))
+      away_wrestler = Wrestler.find_or_create_by!(wrestler_data.merge(name: away))
       Match.create!(
         tournament: tournament,
         home_wrestler: home_wrestler,
@@ -210,6 +157,6 @@ namespace :staging do
       i += 1
     end
 
-    tournament.update!(current_match_id: nil)
+    tournament.update!(current_match_id: nil, in_session: true)
   end
 end
