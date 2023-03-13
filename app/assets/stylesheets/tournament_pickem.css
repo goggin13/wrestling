@@ -1,0 +1,28 @@
+
+.lock_image {
+  width: 50px;
+}
+
+#pickem_list {
+  text-align: center;
+}
+
+#pickem_list input[type=submit] {
+  font-size: 2em;
+}
+
+#pickem_list .selected input[type=submit] {
+  background-color: lightgreen;
+}
+
+#pickem_list .selected {
+  color: darkgreen;
+  font-weight: bolder;
+}
+
+.pickem_won {
+  color: darkgreen;
+}
+.pickem_lost {
+  color: maroon;
+}

@@ -66,4 +66,40 @@ class Leaderboard
       {user: user, balance: user.balance + pending_bet_balance}
     end.compact
   end
+
+  def pickem_results
+    user_results = User.all.map do |user|
+      presenter = TournamentPresenter.new(@tournament, user)
+      {
+        user: user,
+        correct_picks: presenter.pickem_count
+      }
+    end
+
+    ranked_users = user_results.sort_by do |user_data|
+      user_data[:correct_picks]
+    end.reverse
+
+    total_real_world_pot = user_balances.length * BUY_IN
+    results = []
+    previous_rank = 0
+    previous_correct_picks = -1
+    ranked_users.each_with_index do |user_data, index|
+      rank = if user_data[:correct_picks] == previous_correct_picks
+        previous_rank
+      else
+        index + 1
+      end
+
+      user_data[:rank] = rank
+      results << user_data
+
+      previous_correct_picks = user_data[:correct_picks]
+      previous_rank = user_data[:rank]
+    end
+
+    return [] if ranked_users.length == 0
+
+    results
+  end
 end

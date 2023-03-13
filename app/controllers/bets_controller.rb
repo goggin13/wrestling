@@ -43,6 +43,26 @@ class BetsController < ApplicationController
     end
   end
 
+  def create_pickem
+    respond_to do |format|
+      bet = Bet.new(bet_params)
+      bet = bet.becomes(bet.type.constantize)
+      @bet = PickemBet.save_and_delete_others(bet)
+      if @bet.id.present?
+        format.html {
+          redirect_to tournament_pickem_url(@bet.match.tournament), notice: @bet.success_message
+        }
+      else
+        @bet.errors.each do |field, message|
+          Rails.logger.info("Failed to save bet: #{field}-#{message}")
+        end
+        format.html {
+          redirect_to tournament_pickem_url(@bet.match.tournament), alert: "Failed to create bet"
+        }
+      end
+    end
+  end
+
   # DELETE /bets/1 or /bets/1.json
   def destroy
     Bet.delete_and_refund_user(@bet)

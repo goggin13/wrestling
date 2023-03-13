@@ -61,17 +61,20 @@
     <% end %>
 
     <table id="leaderboard">
-      <% Leaderboard.new(@tournament).results.each do |user_data| %>
+      <% previous_rank = -1 %>
+      <% Leaderboard.new(@tournament).pickem_results.each do |user_data| %>
         <tr>
-          <td><div class="leaderboard_data"><%= user_data[:rank].ordinalize %></div></td>
+          <td>
+            <div class="leaderboard_data">
+              <% if user_data[:rank] != previous_rank %>
+                <%= user_data[:rank].ordinalize %>
+                <% previous_rank = user_data[:rank] %>
+              <% end %>
+            </div>
+          </td>
           <td><div class="leaderboard_data"><%= user_avatar(user_data[:user], "50x50") %></div></td>
           <td><div class="leaderboard_data"><%= user_data[:user].display_name %></div></td>
-          <td><div class="leaderboard_data"><%= number_to_currency(user_data[:balance]) %></div></td>
-          <% if @tournament.show_take_home_data? %>
-            <td>
-              <div class="leaderboard_data"> <%= number_to_percentage(user_data[:percentage] * 100, precision: 2) %> (<%= number_to_currency(user_data[:take_home]) %>) </div>
-            </td>
-          <% end %>
+          <td><div class="leaderboard_data"><%= user_data[:correct_picks] %></div></td>
         </tr>
       <% end %>
     </table>

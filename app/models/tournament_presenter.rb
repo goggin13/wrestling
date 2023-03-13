@@ -1,6 +1,7 @@
 class TournamentPresenter
-  def initialize(tournament)
+  def initialize(tournament, user=nil)
     @tournament = tournament
+    @user = user
   end
 
   def matches
@@ -31,5 +32,18 @@ class TournamentPresenter
     end
 
     @_bets_by_match
+  end
+
+  def pickem_win?(match)
+    bet = Bet.where(user_id: @user.id, type: "PickemBet", match_id: match.id).first
+
+    bet.present? && bet.won?
+  end
+
+  def pickem_count
+    Bet.where(user_id: @user.id, type: "PickemBet")
+      .where("match_id in (?)", matches.map(&:id))
+      .filter { |b| b.won? }
+      .length
   end
 end

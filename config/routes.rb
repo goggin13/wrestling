@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :colleges
   devise_for :users
   resources :users
-  resources :bets
+  resources :bets do
+  end
+  post "bets/pickem" => "bets#create_pickem"
   resources :money_line_bets, :controller => 'bets'
   resources :spread_bets, :controller => 'bets'
   resources :over_under_bets, :controller => 'bets'
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
     get "display" => "tournaments#display"
     get "not_in_session" => "tournaments#not_in_session"
     get "administer" => "tournaments#administer"
+    get "pickem" => "tournaments#pickem"
   end
 
   root to: "tournaments#index"

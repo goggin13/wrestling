@@ -9,22 +9,18 @@ namespace :staging do
       :display_name => "goggin13",
       :password => "password",
       :password_confirmation => "password",
-      :balance => 10,
+      :balance => 100,
     )
 
     [
-      "patsqueglia@gmail.com",
       "rudolphocisneros@gmail.com",
-      "livcarrington@gmail.com",
       "klynch425@gmail.com",
-      "danstipanuk@gmail.com",
       "lucaslemanski2@gmail.com",
       "choy.ash831@gmail.com",
-      "cookediana@gmail.com",
       "erinumhoefer@gmail.com",
       "emsitterley@gmail.com",
-      "person1@gmail.com",
-      "person2@gmail.com"
+      "katepotteiger@gmail.com",
+      "seg12@cornell.edu"
     ].each do |email|
       password = SecureRandom.hex(8)
       User.create!(
@@ -32,7 +28,7 @@ namespace :staging do
         :display_name => email.split("@")[0],
         :password => password,
         :password_confirmation => password,
-        :balance => 100
+        :balance => 100,
       )
     end
 
@@ -72,6 +68,30 @@ namespace :staging do
       end
     end
   end
+
+  desc "Add random pickem bets"
+  task pickem_bets: :environment do
+    Bet.destroy_all
+    User.update(balance: 100)
+    Tournament.current.matches.each do |match|
+      match.update_columns(closed: false, home_score: nil, away_score: nil)
+      User.all.each do |user|
+        wager = ["home", "away"].shuffle.first
+        amount = 1
+        bet = PickemBet.new(user: user, match: match, amount: amount, wager: wager)
+        bet = PickemBet.save_and_delete_others(bet)
+        if bet.id.present?
+          puts "#{user.display_name} - #{bet.title}"
+        else
+          bet.errors.each do |field, message|
+            puts("Failed to save bet: #{field}-#{message}")
+          end
+          raise "failed to save bet"
+        end
+      end
+    end
+  end
+
 
   desc "roll users money to next bet"
   task roll_forward: :environment do

@@ -1,0 +1,69 @@
+<% content_for :header do %>
+  <%= current_user.email %>'s Betslip
+<% end %>
+
+<% content_for :notices do %>
+  <br/>
+<% end %>
+
+<div id="user_id" class="hidden"><%= current_user.id %></div>
+
+<div id="pickem_list">
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+
+  <h2>
+    Click on a wrestler to place a bet
+  </h2>
+
+  <ul class="tournament-match-ups">
+    <li>
+      You have made <%= @tournament_presenter.pickem_count %> correct picks so far
+    </li>
+
+
+    <% @tournament_presenter.matches.order("weight ASC").each do |match| %>
+
+      <li>
+        <% if match.complete? %>
+            <% if @tournament_presenter.pickem_win?(match) %>
+              <p class="pickem_won">
+            <% else %>
+              <p class="pickem_lost">
+            <% end %>
+              <%= match.weight %>:
+              <%= match.winner.name %> wins
+              <%= [match.home_score, match.away_score].max %>-<%= [match.home_score, match.away_score].min %>
+            </p>
+        <% else %>
+          <p>
+            <hr/>
+
+            <% if match.closed? %>
+              <%= image_tag("lock.png", class:"lock_image") %>
+            <% end %>
+
+            <%= match.weight %> lbs
+
+            <% if match.closed? %>
+              <%= image_tag("lock.png", class:"lock_image") %>
+            <% end %>
+
+            <% bet = PickemBet.new(amount: 1.0, match: match, wager: "away") %>
+            <%= render partial: "pickem_bet_form", locals: {bet: bet} %>
+
+            <% bet = PickemBet.new(amount: 1.0, match: match, wager: "home") %>
+            <%= render partial: "pickem_bet_form", locals: {bet: bet} %>
+          </p>
+        <% end %>
+      </li>
+
+    <% end %>
+  </ul>
+
+  <% if current_user.admin? %>
+    <hr/>
+    <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
+    <%= link_to 'Back', tournaments_path %>
+  <% end %>
+</div>

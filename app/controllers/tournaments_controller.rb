@@ -1,6 +1,6 @@
 class TournamentsController < ApplicationController
   before_action :require_admin!
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :bet, :display, :not_in_session, :administer]
+  before_action :set_tournament, only: [:show, :pickem, :edit, :update, :destroy, :bet, :display, :not_in_session, :administer]
   skip_before_action :authenticate_user!, only: [:bet, :show, :display, :not_in_session]
   skip_before_action :require_admin!, only: [:bet, :show, :display, :not_in_session]
 
@@ -40,6 +40,10 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1.json
   def show
     @tournament_presenter = TournamentPresenter.new(@tournament)
+  end
+
+  def pickem
+    @tournament_presenter = TournamentPresenter.new(@tournament, current_user)
   end
 
   # GET /tournaments/new

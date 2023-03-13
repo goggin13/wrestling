@@ -17,6 +17,7 @@
         <td><%= tournament.name %></td>
         <td><%= tournament.in_session %></td>
         <td><%= link_to 'Show', tournament_path(tournament) %></td>
+        <td><%= link_to 'Show PickEm', tournament_pickem_path(tournament) %></td>
         <td><%= link_to 'Administer', tournament_administer_path(tournament) %></td>
         <td><%= link_to 'Display', tournament_display_path(tournament) %></td>
         <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>

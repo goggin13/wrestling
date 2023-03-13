@@ -1,0 +1,22 @@
+<% existing_bet = Bet.where(user: current_user, match: bet.match, type: bet.type, wager: bet.wager).first %>
+
+<div class="<%= existing_bet.present? ? 'selected' : '' %>">
+
+<% if bet.match.complete? && existing_bet.present? && existing_bet.won? %>
+  You won!
+<% elsif bet.match.complete? && existing_bet.present? && !existing_bet.won? %>
+  You lost!
+<% elsif bet.match.closed? %>
+  <%= bet.pick_em_label %>
+<% else %>
+  <%= form_with(model: bet.becomes(Bet), local: true, url: bets_pickem_path) do |form| %>
+    <%= form.hidden_field :match_id %>
+    <%= form.hidden_field :type %>
+    <%= form.hidden_field :wager %>
+    <%= form.hidden_field :amount %>
+
+    <%= form.submit value: bet.pick_em_label %>
+  <% end %>
+<% end %>
+
+</div>

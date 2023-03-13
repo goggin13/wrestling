@@ -29,8 +29,12 @@ class SpreadBet < Bet
     "#{formatted_amount} #{wrestler.initials} (#{my_spread})"
   end
 
+  def pick_em_label
+    "#{wrestler.name} (#{my_spread})"
+  end
+
   def success_message
-    "Wagered #{label}"
+    "Placed bet on #{pick_em_label}"
   end
 
   def remove_message
