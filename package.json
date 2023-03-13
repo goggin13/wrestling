@@ -8,10 +8,10 @@
     "@rails/webpacker": "5.4.3",
     "cypress": "^9.5.1",
     "jquery": "^3.6.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "webpack-dev-server": "^4.11.1"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^4.11.1"
   }
 }
