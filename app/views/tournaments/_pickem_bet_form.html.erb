@@ -1,15 +1,25 @@
 <% existing_bet = Bet.where(user: current_user, match: bet.match, type: bet.type, wager: bet.wager).first %>
 
-<div class="<%= existing_bet.present? ? 'selected' : '' %>">
+<div class="pickem_form_panel <%= existing_bet.present? ? 'selected' : '' %>">
+  <% if bet.match.closed? %>
+    <%= bet.pick_em_label %>
+  <% else %>
+    <%= form_with(model: bet.becomes(Bet), local: true, url: bets_pickem_path) do |form| %>
+      <%= form.hidden_field :match_id %>
+      <%= form.hidden_field :type %>
+      <%= form.hidden_field :wager %>
+      <%= form.hidden_field :amount %>
 
-  <%= college_logo(bet.match.away_wrestler.college, size: "25x25") %>
-  <%= form_with(model: bet.becomes(Bet), local: true, url: bets_pickem_path) do |form| %>
-    <%= form.hidden_field :match_id %>
-    <%= form.hidden_field :type %>
-    <%= form.hidden_field :wager %>
-    <%= form.hidden_field :amount %>
+      <%= form.submit value: bet.pick_em_label %>
+    <% end %>
 
-    <%= form.submit value: bet.pick_em_label %>
+    <div class="pickem_form_wrestler <%= bet.wager %>">
+      <% if bet.wager == "away" %>
+        <%= college_logo(bet.match.away_wrestler.college, size: "50x50") %>
+      <% else %>
+        <%= college_logo(bet.match.home_wrestler.college, size: "50x50") %>
+      <% end %>
+    </div>
   <% end %>
 
 </div>
