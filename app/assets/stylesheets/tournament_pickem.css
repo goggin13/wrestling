@@ -20,9 +20,25 @@
   font-weight: bolder;
 }
 
+#pickem_list .not_selected {
+  color: gray;
+}
+
 .pickem_won {
   color: darkgreen;
 }
+
 .pickem_lost {
   color: maroon;
+}
+
+.pickem_form_panel {
+  /* width: 150px; */
+  /* height: 150px; */
+  /* float: left; */
+}
+
+.pickem_form_panel input[type=submit] {
+  /* white-space: normal; */
+  /* word-wrap: break-word; */
 }

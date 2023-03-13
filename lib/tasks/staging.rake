@@ -138,34 +138,64 @@ namespace :staging do
     Tournament.destroy_all
     Match.destroy_all
     Bet.destroy_all
+    Wrestler.destroy_all
     tournament = Tournament.find_or_create_by(name: "2023 NCAA")
-    cornell = College.find_or_create_by!(name: "Cornell")
-
-    wrestler_data = {
-      college: cornell,
-      college_year: 2023,
-      bio: "33-4, 4th @ NCAA as true freshman\nRedshirt 2020 season to train for Olympics\n2020 Olympic Team Trials Qualifier",
-    }
 
     matches = [
-      ["Spencer Lee", "Pat Glory"],
-      ["Roman Bravo-Young", "Daton Fix"],
-      ["Real Woods", "Andrew Alirez"],
-      ["Yianni Diakomihalis", "Sammy Sasso"],
-      ["Austin O`Connor", "Levi Haines"],
-      ["David Carr", "Keegan O`Toole"],
-      ["Carter Starocci", "Mikey Labriola"],
-      ["Parker Keckeisen", "Aaron Brooks"],
-      ["Nino Bonaccorsi", "Rocky Elam"],
-      ["Mason Parris", "Greg Kerkvliet"],
+      [
+        {name: "Spencer Lee", college: "University of Iowa"},
+        {name: "Pat Glory", college: "Princeton"},
+      ],
+      [
+        {name: "Roman Bravo-Young", college: "Penn State"},
+        {name: "Daton Fix", college: "University of Oklahoma"},
+      ],
+      [
+        {name: "Real Woods", college: "University of Iowa"},
+        {name: "Andrew Alirez", college: "University of Northern Colorado"},
+      ],
+      [
+        {name: "Yianni Diakomihalis", college: "Cornell"},
+        {name: "Sammy Sasso", college: "Ohio State"},
+      ],
+      [
+        {name: "Austin O`Connor", college: "University of North Carolina"},
+        {name: "Levi Haines", college: "Penn State"},
+      ],
+      [
+        {name: "David Carr", college: "Iowa State"},
+        {name: "Keegan O`Toole", college: "Missouri"},
+      ],
+      [
+        {name: "Carter Starocci", college: "Penn State"},
+        {name: "Mikey Labriola", college: "Nebraska"},
+      ],
+      [
+        {name: "Parker Keckeisen", college: "University of Northern Iowa"},
+        {name: "Aaron Brooks", college: "Penn State"},
+      ],
+      [
+        {name: "Nino Bonaccorsi", college: "Pittsburgh"},
+        {name: "Rocky Elam", college: "Missouri"},
+      ],
+      [
+        {name: "Mason Parris", college: "Michigan"},
+        {name: "Greg Kerkvliet", college: "Penn State"},
+      ],
     ]
 
     tournament.matches.destroy_all
     weights = [125, 133, 141, 149, 157, 165, 174, 184, 197, 285]
     i = 0
     matches.each do |home, away|
-      home_wrestler = Wrestler.find_or_create_by!(wrestler_data.merge(name: home))
-      away_wrestler = Wrestler.find_or_create_by!(wrestler_data.merge(name: away))
+      home_college = College.find_or_create_by!(name: home[:college])
+      home[:college] = home_college
+      away_college = College.find_or_create_by!(name: away[:college])
+      away[:college] = away_college
+
+      home_wrestler = Wrestler.find_or_create_by!(home)
+      away_wrestler = Wrestler.find_or_create_by!(away)
+
       Match.create!(
         tournament: tournament,
         home_wrestler: home_wrestler,

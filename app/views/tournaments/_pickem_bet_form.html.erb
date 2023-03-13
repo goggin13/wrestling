@@ -1,6 +1,6 @@
 <% existing_bet = Bet.where(user: current_user, match: bet.match, type: bet.type, wager: bet.wager).first %>
 
-<div class="pickem_form_panel <%= existing_bet.present? ? 'selected' : '' %>">
+<div class="pickem_form_panel <%= existing_bet.present? ? 'selected' : 'not_selected' %>">
   <% if bet.match.closed? %>
     <%= bet.pick_em_label %>
   <% else %>

@@ -1,5 +1,8 @@
 Wrestling Gambling App
 
+Move to dumbledore
+it's a pain to upgrade necessary stuff to work on heroku
+
 # Betting Improvement Revamp
 X upgrade bundler
 X install E2E testing framework
@@ -60,6 +63,8 @@ X deploy and test
 
 # College logos
 https://www.sportslogos.net/teams/list_by_league/85/National_Collegiate_Athletic_Assoc/NCAA/logos/
+
+https://www.sportslogos.net/leagues/list_by_sport/6/College/logos
 
 # Setting up development
 ```

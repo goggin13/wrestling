@@ -68,7 +68,8 @@ class Leaderboard
   end
 
   def pickem_results
-    user_results = User.all.map do |user|
+    users = User.where("id in (?)", Bet.select(:user_id))
+    user_results = users.map do |user|
       presenter = TournamentPresenter.new(@tournament, user)
       {
         user: user,
